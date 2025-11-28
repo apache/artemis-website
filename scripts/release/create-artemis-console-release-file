@@ -26,7 +26,7 @@ template = \
 ---
 version: {version}
 release_date: {date_string}
-title: ActiveMQ Artemis Console {version}
+title: Artemis Console {version}
 shortDescription: Bug fix release.
 ---
 """

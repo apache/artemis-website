@@ -25,7 +25,7 @@ template = \
 """
 ---
 layout: default_md
-title: ActiveMQ Artemis Console {version} Release Notes
+title: Artemis Console {version} Release Notes
 title-class: page-title-artemis
 type: artemis
 ---

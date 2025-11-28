@@ -26,7 +26,7 @@ template = \
 ---
 version: {version}
 release_date: {date_string}
-title: ActiveMQ Artemis {version}
+title: Artemis {version}
 shortDescription: Bug fix release.
 # Docs subdir name for past-releases and previous-docs pages, 'latest' is always used on the main download page.
 docs_version: {version}

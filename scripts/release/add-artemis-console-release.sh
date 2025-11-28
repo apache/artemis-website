@@ -26,17 +26,17 @@ error () {
    echo ""
    echo "Usage: ./scripts/release/add-artemis-console-release.sh <new-release-version>"
    echo ""
-   echo "Must be run from within an activemq-website checkout root."
+   echo "Must be run from within an artemis-website checkout root."
    echo ""
    echo "Example:"
-   echo "cd <path.to>/activemq-website"
+   echo "cd <path.to>/artemis-website"
    echo "./scripts/release/add-artemis-console-release.sh 1.0.0"
    echo ""
    exit 64
 }
 
 if [ ! -f serve.sh ] || [ ! -f _config.yml ]; then
-    error "This script has to be run from inside the root of an activemq-website checkout"
+    error "This script has to be run from inside the root of an artemis-website checkout"
     exit 1
 fi
 WEBSITE_DIR="$( pwd )"

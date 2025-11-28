@@ -24,13 +24,13 @@ error () {
    echo ""
    echo "** ERROR: $@ **"
    echo ""
-   echo "Usage: ./scripts/release/update-artemis-docs.sh <path.to/activemq-artemis> <previous-release-version> <new-release-version>"
+   echo "Usage: ./scripts/release/update-artemis-docs.sh <path.to/artemis> <previous-release-version> <new-release-version>"
    echo ""
-   echo "Must be run from within an activemq-website checkout root."
+   echo "Must be run from within an artemis-website checkout root."
    echo ""
    echo "Example:"
-   echo "cd <path.to>/activemq-website"
-   echo "./scripts/release/update-artemis-docs.sh ../release-work/activemq-artemis 2.30.0 2.31.0"
+   echo "cd <path.to>/artemis-website"
+   echo "./scripts/release/update-artemis-docs.sh ../release-work/artemis 2.30.0 2.31.0"
    echo ""
    exit 64
 }
@@ -51,12 +51,12 @@ PRIOR_VERSION="$2"
 NEW_VERSION="$3"
 
 if [ ! -d "$ARTEMIS_DIR" ] || [ ! -d "$ARTEMIS_DIR/artemis-server" ] || [ ! -f "$ARTEMIS_DIR/.asf.yaml" ]; then
-    error "ERROR: The provided activemq-artemis release process path does not point to an activemq-artemis checkout"
+    error "ERROR: The provided artemis release process path does not point to an artemis checkout"
     exit 1
 fi
 
 if [ ! -d "$ARTEMIS_DIR/target" ] || [ ! -d "$ARTEMIS_DIR/target/checkout" ]; then
-    error "ERROR: The provided activemq-artemis release path does not contain the release process target checkout: $ARTEMIS_DIR/target/checkout"
+    error "ERROR: The provided artemis release path does not contain the release process target checkout: $ARTEMIS_DIR/target/checkout"
     exit 1
 fi
 

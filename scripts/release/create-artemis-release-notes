@@ -25,13 +25,13 @@ template = \
 """
 ---
 layout: default_md
-title: ActiveMQ Artemis {version} Release Notes
+title: Artemis {version} Release Notes
 title-class: page-title-artemis
 type: artemis
 ---
  - [A list of commits](commit-report-{version}).
 
- - Please see the ["Versions"](https://activemq.apache.org/components/artemis/documentation/latest/versions.html) chapter in the User Guide for upgrade instructions.
+ - Please see the ["Versions"](https://artemis.apache.org/components/artemis/documentation/latest/versions.html) chapter in the User Guide for upgrade instructions.
 
 **Note**: This release requires use of Java 17 or above.
 
