@@ -1,0 +1,14 @@
+# Current release streams "x.y.[z]" prefixes
+artemis:
+  - "2.44."
+artemis_console:
+  - "1.4."
+classic:
+  - "6.1."
+  - "5.19."
+nms_amqp:
+  - "2.4."
+nms_api:
+  - "2.2."
+  - "1.8."
+
