@@ -2,9 +2,10 @@
 release_date: 2025-11-19
 title: Apache Artemis Project
 shortDescription: ActiveMQ PMC voted to establish Apache Artemis Project
-title-class: page-title-main
-type: main
+title-class: page-title-artemis
+type: artemis
 ---
+
 #### Summary
 
 In order to provide greater clarity and dedicated focus for our

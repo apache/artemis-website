@@ -1,6 +1,6 @@
 ---
 layout: default_md
-title: ActiveMQ Artemis Documentation
+title: Artemis Documentation
 title-class: page-title-artemis
 type: artemis
 redirect_from:
@@ -18,7 +18,7 @@ The user documentation for earlier versions are also available on the <a href=".
 
 #### Examples:
 
-Examples can be found in the <a href="https://github.com/apache/activemq-artemis-examples/">ActiveMQ Artemis Examples</a> repository.
+Examples can be found in the <a href="https://github.com/apache/activemq-artemis-examples/">Artemis Examples</a> repository.
 
 #### API
 

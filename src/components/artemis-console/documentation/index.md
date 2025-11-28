@@ -1,12 +1,12 @@
 ---
 layout: default_md
-title: ActiveMQ Artemis Console Documentation
+title: Apache Artemis Console Documentation
 title-class: page-title-artemis
 type: artemis
 ---
 
 * [Deploying](deploying)
-    * [Deploying in Artemis](deploying#Deploying-embedded in-ActiveMQ-Artemis)
+    * [Deploying in Artemis](deploying)
     * [Deploying in Jetty](deploying#deploying-in-jetty)
     * [Deploying in Tomcat](deploying#deploying-in-tomcat)
 * [Using the Console](console)

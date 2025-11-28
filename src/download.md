@@ -1,17 +1,12 @@
 ---
 layout: default_md
 title: Download
-title-class: page-title-main
-type: main
+title-class: page-title-artemis
+type: artemis
 ---
 
 Select the component you wish you download to view its current or previous release downloads:
 
-[ActiveMQ](components/classic/download)
+[Artemis](components/artemis/download)
 
-[ActiveMQ Artemis](components/artemis/download)
-
-[ActiveMQ CMS](components/cms/download)
-
-[ActiveMQ NMS](components/nms/download)
-
+[Artemis Console](components/artemis-console/download)

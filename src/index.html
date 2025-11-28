@@ -2,22 +2,23 @@
 layout: default
 ---
 <div class="row">
-  <div class="col-12 slider slider-main slider-sm parent d-none d-lg-block">
-    <div class="row child" style="width: 100%">
-      <div class="col-4 align-middle"></div>
-      <div class="col-4 slider-text align-middle">
-        <div class="child">
-          Flexible &amp; Powerful Open Source<br/> Multi-Protocol Messaging
-        </div>
+  <div class="col-12 slider slider-artemis slider-sm parent d-none d-xl-block justify-content-center">
+    <div class="row child " style="width: 100%">
+      <div class="col-3 align-middle"></div>
+      <div class="col-6 slider-text align-middle">
+          <p style="font-size: 50px">Apache Artemis</p>
+          <p style="font-size: 20px">Multi-Protocol Messaging</p>
+          <a style="margin-top: 20px" href="{{site.baseurl}}/components/artemis/download" class="btn btn-primary btn-lg btn-outline-light">Download<i class="fa-download fa btn-icon"></i></a>
+          <a style="margin-top: 20px" href="{{site.baseurl}}/components/artemis/" class="btn btn-primary btn-lg btn-outline-light">Find out more<i class="fa-book fa btn-icon"></i></a>
       </div>
-      <div class="col-4 align-middle" >
-        <img src="{{site.baseurl}}/assets/img/activemq_logo_white_vertical.png" style="height: 250px"/>
-      </div>
+      <div class="col-3 align-middle"></div>
     </div>
   </div>
 </div>
 
 <div class="container">
+
+{% include news.md %}
 
 <!-- General info -->
 <div class="row d-none d-lg-block">
@@ -25,46 +26,27 @@ layout: default
     <div class="card">
       <div class="card-body narative">
           <span>
-            <p>Apache ActiveMQ&reg; is the most popular open source, multi-protocol, Java-based message broker. It supports industry standard protocols so users get the benefits of client choices across a broad range of languages and platforms. Connect from clients written in JavaScript, C, C++, Python, .Net, and more. Integrate your multi-platform applications using the ubiquitous <strong>AMQP</strong> protocol. Exchange messages between your web applications using <strong>STOMP</strong> over websockets. Manage your IoT devices using <strong>MQTT</strong>. Support your existing <strong>JMS</strong> infrastructure and beyond. ActiveMQ offers the power and flexibility to support any messaging use-case.</p>
+            <p>Apache Artemis is multi-protocol message broker, supporting various industry standard protocols such as AMQP 1.0, MQTT 3.1.1, MQTT 5, and STOMP. This enables users to connect from across a broad range of languages and platforms, using clients written in Java, JavaScript, C, C++, Python, .Net, and more. Artemis offers the power and flexibility to support your messaging use-case.</p>
           </span>
       </div>
     </div>
   </div>
 </div>
 
-{% include news.md %}
-
 <!-- Components -->
 <div class="row align-middle">
-  <div class="col-lg-6 col-md-auto">
-    <div class="card card-pink">
-      <div class="card-body">
-        <h4 class="card-title text-pink">ActiveMQ</h4>
-        <p>Long established, endlessly pluggable architecture serving many generations of applications.</p>
-        <ul>
-          <li><a href="{{site.baseurl}}/components/classic/documentation/jms2">Partial Jakarta Messaging 3.1 &amp; JMS 2.0 support</a> and full JMS 1.1 support + full client implementation including JNDI</li>
-          <li>High availability using shared storage</li>
-          <li>Familiar JMS-based addressing model</li>
-          <li>Network of brokers for distributing load</li>
-          <li>KahaDB &amp; JDBC options for persistence</li>
-        </ul>
-        <a style="margin-top: 10px" href="{{site.baseurl}}/components/classic" class="btn btn-secondary">Find out more<i class="fa-info-circle fa btn-icon"></i></a>
-        <a style="margin-top: 10px" href="{{site.baseurl}}/components/classic/download" class="btn btn-secondary">Download Latest<i class="fa-download fa btn-icon"></i></a>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-6 col-md-auto">
+  <div class="col-lg-12 col-md-auto">
     <div class="card card-purple">
       <div class="card-body">
-        <h4 class="card-title text-purple">ActiveMQ Artemis</h4>
+        <h4 class="card-title text-purple">Apache Artemis</h4>
         <p>High-performance, non-blocking architecture for the next generation of messaging applications.</p>
         <ul>
+          <li>Industry standard protocols such as AMQP 1.0, MQTT 3.1.1, MQTT 5, and STOMP</li>
           <li>Full Jakarta Messaging 3.1, JMS 2.0 &amp; 1.1 support + full client implementations including JNDI</li>
           <li>High availability using shared storage or network replication</li>
           <li>Simple &amp; powerful protocol agnostic addressing model</li>
           <li>Flexible clustering for distributing load</li>
           <li>Advanced journal implementations for low-latency persistence as well as JDBC</li>
-          <li>High feature parity with ActiveMQ to ease migration</li>
           <li>Asynchronous mirroring for disaster recovery</li>
           <li>Data Driven Load Balance</li>
         </ul>
@@ -94,5 +76,3 @@ layout: default
   </div>
 </div>
 
-{% include features.html %}
-{% include users.html %}

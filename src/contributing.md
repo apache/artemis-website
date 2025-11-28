@@ -1,14 +1,14 @@
 ---
 layout: default_md
 title: Contributing
-title-class: page-title-main
-type: main
+title-class: page-title-artemis
+type: artemis
 ---
-There are many ways you can help make ActiveMQ a better piece of software - please dive in and help!
+There are many ways you can help make Artemis a better piece of software - please dive in and help!
 
  - If you have a problem with the software or the documentation the first thing you might consider is [asking a question](contact#mailing). 
  - If you think you've hit a bug or want to request a new feature feel free to open [an issue](issues) in one of our trackers.
- - If you're already familiar with an ActiveMQ component then join a [mailing list](contact#mailing) and help answers questions from the community.
+ - If you're already familiar with an Artemis component then join a [mailing list](contact#mailing) and help answers questions from the community.
 
 #### Documentation
 
@@ -20,22 +20,11 @@ If you want to get your hands on the code here are the repos for all our compone
 
 |Component|Apache Git Repository|GitHub Mirror|
 |---|---|
-|ActiveMQ|[activemq](https://gitbox.apache.org/repos/asf/activemq.git)|[activemq](https://github.com/apache/activemq)|
-|Artemis|[activemq-artemis](https://gitbox.apache.org/repos/asf/activemq-artemis.git)|[activemq-artemis](https://github.com/apache/activemq-artemis)|
-|Artemis Examples|[activemq-artemis-examples](https://gitbox.apache.org/repos/asf/activemq-artemis-examples.git)|[activemq-artemis-examples](https://github.com/apache/activemq-artemis-examples)|
-|Artemis Native|[activemq-artemis-native](https://gitbox.apache.org/repos/asf/activemq-artemis-native.git)|[activemq-artemis-native](https://github.com/apache/activemq-artemis-native)|
-|Artemis Console|[activemq-artemis-console](https://gitbox.apache.org/repos/asf/activemq-artemis-console.git)|[activemq-artemis-native](https://github.com/apache/activemq-artemis-console)|
-|NMS API|[activemq-nms-api](https://gitbox.apache.org/repos/asf/activemq-nms-api.git)|[activemq-nms-api](https://github.com/apache/activemq-nms-api)|
-|NMS AMQP|[activemq-nms-amqp](https://gitbox.apache.org/repos/asf/activemq-nms-amqp.git)|[activemq-nms-amqp](https://github.com/apache/activemq-nms-amqp)|
-|NMS EMS|[activemq-nms-ems](https://gitbox.apache.org/repos/asf/activemq-nms-ems.git)|[activemq-nms-ems](https://github.com/apache/activemq-nms-ems)|
-|NMS OpenWire|[activemq-nms-openwire](https://gitbox.apache.org/repos/asf/activemq-nms-openwire.git)|[activemq-nms-openwire](https://github.com/apache/activemq-nms-openwire)|
-|NMS MSMQ|[activemq-nms-msmq](https://gitbox.apache.org/repos/asf/activemq-nms-msmq.git)|[activemq-nms-msmq](https://github.com/apache/activemq-nms-msmq)|
-|NMS STOMP|[activemq-nms-stomp](https://gitbox.apache.org/repos/asf/activemq-nms-stomp.git)|[activemq-nms-stomp](https://github.com/apache/activemq-nms-stomp)|
-|NMS XMS|[activemq-nms-xms](https://gitbox.apache.org/repos/asf/activemq-nms-xms.git)|[activemq-nms-xms](https://github.com/apache/activemq-nms-xms)|
-|NMS ZMQ|[activemq-nms-zmq](https://gitbox.apache.org/repos/asf/activemq-nms-zmq.git)|[activemq-nms-zmq](https://github.com/apache/activemq-nms-zmq)|
-|CLI Tools|[activemq-cli-tools](https://gitbox.apache.org/repos/asf/activemq-cli-tools.git)|[activemq-cli-tools](https://github.com/apache/activemq-cli-tools)|
-|CPP|[activemq-cpp](https://gitbox.apache.org/repos/asf/activemq-cpp.git)|[activemq-cpp](https://github.com/apache/activemq-cpp)|
-|Website|[activemq-website](https://gitbox.apache.org/repos/asf/activemq-website.git)|[activemq-website](https://github.com/apache/activemq-website)|
+|Artemis|[artemis](https://gitbox.apache.org/repos/asf/activemq-artemis.git)|[artemis](https://github.com/apache/activemq-artemis)|
+|Artemis Console|[artemis-console](https://gitbox.apache.org/repos/asf/activemq-artemis-console.git)|[artemis-console](https://github.com/apache/activemq-artemis-console)|
+|Artemis Examples|[artemis-examples](https://gitbox.apache.org/repos/asf/activemq-artemis-examples.git)|[artemis-examples](https://github.com/apache/activemq-artemis-examples)|
+|Artemis Native|[artemis-native](https://gitbox.apache.org/repos/asf/activemq-artemis-native.git)|[artemis-native](https://github.com/apache/activemq-artemis-native)|
+|Website|[artemis-website](https://gitbox.apache.org/repos/asf/artemis-website.git)|[artemis-website](https://github.com/apache/artemis-website)|
 
 #### Becoming a commmitter
 
@@ -45,5 +34,5 @@ If you're interested in becoming a "committer" please check out this [this guide
 
 |List|Subscribe|Unsubscribe|Archives|Summary|
 |---|---|---|---|---|
-|Commits|[commits-subscribe@activemq.apache.org](mailto:commits-subscribe@activemq.apache.org)|[commits-unsubscribe@activemq.apache.org](mailto:commits-unsubscribe@activemq.apache.org)|[Apache](https://lists.apache.org/list.html?commits@activemq.apache.org), [Apache 2](http://mail-archives.apache.org/mod_mbox/activemq-commits/), [Markmail](http://activemq.markmail.org/search/list:org.apache.activemq.commits)|notifications when the project source code gets updated|
-|Gitbox|[gitbox-subscribe@activemq.apache.org](mailto:gitbox-subscribe@activemq.apache.org)|[gitbox-unsubscribe@activemq.apache.org](mailto:gitbox-unsubscribe@activemq.apache.org)|[Apache](https://lists.apache.org/list.html?gitbox@activemq.apache.org), [Apache 2](http://mail-archives.apache.org/mod_mbox/activemq-gitbox/), [Markmail](http://activemq.markmail.org/search/list:org.apache.activemq.gitbox)|comments and other events for pull-requests|
+|Commits|[commits-subscribe@artemis.apache.org](mailto:commits-subscribe@artemis.apache.org)|[commits-unsubscribe@artemis.apache.org](mailto:commits-unsubscribe@artemis.apache.org)|[Apache](https://lists.apache.org/list.html?commits@artemis.apache.org)|notifications when the project source code gets updated|
+|Issues|[issues-subscribe@artemis.apache.org](mailto:issues-subscribe@artemis.apache.org)|[issues-unsubscribe@artemis.apache.org](mailto:issues-unsubscribe@artemis.apache.org)|[Apache](https://lists.apache.org/list.html?issues@artemis.apache.org)|comments and other events for pull-requests and issues|

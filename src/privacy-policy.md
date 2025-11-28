@@ -1,7 +1,7 @@
 ---
 layout: default_md
-title: ActiveMQ Privacy Policy 
-title-class: page-title-main
+title: Artemis Privacy Policy
+title-class: page-title-artemis
 type: main
 ---
 

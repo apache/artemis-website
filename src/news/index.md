@@ -1,8 +1,8 @@
 ---
 layout: default_md
 title: News 
-title-class: page-title-main
-type: main
+title-class: page-title-artemis
+type: artemis
 ---
 
 [Home](/) > [News](/news)

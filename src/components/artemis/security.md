@@ -1,11 +1,11 @@
 ---
 layout: default_md
-title: Security Advisories - ActiveMQ Artemis
+title: Security Advisories - Artemis
 title-class: page-title-artemis
 type: artemis
 ---
 
-Details of security problems fixed in released versions of Apache ActiveMQ Artemis are detailed below.
+Details of security problems fixed in released versions of Apache Artemis are detailed below.
 
 See the main [Security Advisories](../../security-advisories) page for details for other components and general information such as reporting new security issues.
 

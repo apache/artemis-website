@@ -1,17 +1,14 @@
 ---
 layout: default_md
-title: ActiveMQ Artemis Console Documentation
+title: Apache Artemis Console Documentation
 title-class: page-title-artemis
 type: artemis
 ---
 [Documentation](index) > [Deploying](deploying)
 
-## Deploying embedded in ActiveMQ Artemis
+## Deploying embedded in Artemis
 
-Currently not supported. This will arrive in ActiveMQ Artemis 3.0. This is because the new console requires changes to use Jakarta APIs for the embedded
-web server and other possible breaking changes not suited to make in Artemis 2.x releases.
-
-Prior to Artemis 3.0 the new console is aimed at deployment in standalone server, e.g as outlined below for Jetty and Tomcat.
+The console releases are integrated into subsequent Apache Artemis releases.
 
 ## Deploying in Jetty
 

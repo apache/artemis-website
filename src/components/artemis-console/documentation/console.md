@@ -1,6 +1,6 @@
 ---
 layout: default_md
-title: ActiveMQ Artemis Console Documentation
+title: Apache Artemis Console Documentation
 title-class: page-title-artemis
 type: artemis
 ---

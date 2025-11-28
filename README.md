@@ -1,11 +1,11 @@
-Apache ActiveMQ Website
+Apache Artemis Website
 =======================
 
-This is the repository for the Apache ActiveMQ website, hosted at [activemq.apache.org](https://activemq.apache.org/).
+This is the repository for the Apache Artemis website, hosted at [artemis.apache.org](https://artemis.apache.org/).
 
 How it works
 ------------
-This branch of the repo contains the source files that are used to generate the HTML that ultimately gets pushed to the site. When a commit is made to the branch, a Jekyll build is automatically performed in CI and the generated site output committed back to the `asf-site` branch within the `output` directory. The generated content on `asf-site` is then automatically published to the live web server at https://activemq.apache.org/.
+This branch of the repo contains the source files that are used to generate the HTML that ultimately gets pushed to the site. When a commit is made to the branch, a Jekyll build is automatically performed in CI and the generated site output committed back to the `asf-site` branch within the `output` directory. The generated content on `asf-site` is then automatically published to the live web server at https://artemis.apache.org/.
 
 See the *Contributing* section below for more.
 
@@ -21,7 +21,7 @@ You need to install the [Bundler](https://bundler.io/) tool with:
 
 Then ensure you are within a checkout directory of the website repo for instructions/commands that follow.
 
-You can optionally isolate the ActiveMQ website dependencies from your general environment by configuring Bundler to use a local install path
+You can optionally isolate the Artemis website dependencies from your general environment by configuring Bundler to use a local install path
 with `bundle config set path --local vendor/bundle` from within the site checkout. This sets the _./.bundle/config_ file to have Bundle install
 items in the _./vendor/bundle_ directory. Both are ignored in _.gitignore_ to help prevent showing or checking in changes to them.
 
@@ -54,18 +54,18 @@ It works best when starting without existing full _site output, which can be cle
 
 Contributing to the site
 ------------------------
-If you would like to make a change to the ActiveMQ site:
+If you would like to make a change to the Artemis site:
 
-1. Fork the [Apache ActiveMQ site repository](https://github.com/apache/activemq-website) to your github account.
+1. Fork the [Apache Artemis site repository](https://github.com/apache/artemis-website) to your github account.
 2. Create a new branch from `main`
 3. Test your changes locally
 4. Add commit(s) to your branch
 5. Open a pull request on the github mirror
-6. An ActiveMQ committer will review and merge your changes
+6. An Artemis committer will review and merge your changes
 
 If you are a committer, do the following:
 
-1. Clone `https://gitbox.apache.org/repos/asf/activemq-website.git`.
+1. Clone `https://gitbox.apache.org/repos/asf/artemis-website.git`.
 2. Update the `main` branch with your (or a Pull Request's) changes.
 3. Run `serve.sh` or `build.sh`and verify the updates look appropriate.
 4. Push the changes to the ASF remote.

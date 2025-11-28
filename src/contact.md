@@ -1,8 +1,8 @@
 ---
 layout: default_md
 title: Contact Us
-title-class: page-title-main
-type: main
+title-class: page-title-artemis
+type: artemis
 ---
 Whether you have a simple question about configuration, a use-case you're confused about, a new feature you want to discuss, etc. the community is here to help.
 
@@ -11,20 +11,20 @@ If you're fairly certain you're hitting a bug [please report it](issues) via one
 #### Mailing Lists
 
 The **best** way to contact folks in the community is by using one of the mailing lists.
- - **Users**: for users configuring & managing an ActiveMQ broker as well as messaging application developers
- - **Dev**: for developers working _directly_ on one of the ActiveMQ code-bases
+ - **Users**: for users configuring & managing an Artemis broker as well as messaging application developers
+ - **Dev**: for developers working _directly_ on one of the Artemis code-bases
 
 To subscribe to or unsubscribe from a list simply:
- 1. Send a blank email to the appropriate address (see below).
+ 1. Send an empty email to the appropriate management address (see below).
  1. The automated mailing list manager will send an reply (either a confirmation request or an error message, e.g. if you are not subscribed).
  1. Reply to the confirmation message.
 
 <a class="anchor" name="mailing"></a>
 
-|List|Subscribe|Unsubscribe|Web&nbsp;Interface|Archives|
+|List|Subscribe|Unsubscribe|Archive / Web-interface|
 |---|---|---|---|---|
-|Users|[users-subscribe@activemq.apache.org](mailto:users-subscribe@activemq.apache.org)|[users-unsubscribe@activemq.apache.org](mailto:users-unsubscribe@activemq.apache.org)|[Apache](https://lists.apache.org/list.html?users@activemq.apache.org)|[Apache](http://mail-archives.apache.org/mod_mbox/activemq-users/), [Markmail](http://activemq.markmail.org/search/list:org.apache.activemq.users)|
-|Dev|[dev-subscribe@activemq.apache.org](mailto:dev-subscribe@activemq.apache.org)|[dev-unsubscribe@activemq.apache.org](mailto:dev-unsubscribe@activemq.apache.org)|[Apache](https://lists.apache.org/list.html?dev@activemq.apache.org)|[Apache](http://mail-archives.apache.org/mod_mbox/activemq-dev/), [Markmail](http://activemq.markmail.org/search/list:org.apache.activemq.dev)|
+|Users|[users-subscribe@artemis.apache.org](mailto:users-subscribe@artemis.apache.org)|[users-unsubscribe@artemis.apache.org](mailto:users-unsubscribe@artemis.apache.org)|[Apache](https://lists.apache.org/list.html?users@artemis.apache.org)|
+|Dev|[dev-subscribe@artemis.apache.org](mailto:dev-subscribe@artemis.apache.org)|[dev-unsubscribe@artemis.apache.org](mailto:dev-unsubscribe@artemis.apache.org)|[Apache](https://lists.apache.org/list.html?dev@artemis.apache.org)|
 
 Mailing list participants are expected to abide by the well-established rules of "netiquette," as well as the ASF's published [Code of Conduct](https://www.apache.org/foundation/policies/conduct.html).
 
@@ -35,4 +35,4 @@ If you're curious you can [read more](https://apache.org/foundation/mailinglists
 
 #### Chat
 
-If for some reason a mailing list doesn't work for you then you can potentially chat with other community members in real-time using **[Slack](https://slack.com/)**. Access to the [ASF Slack](https://the-asf.slack.com) requires an invitation. If you want an invitation to the ActiveMQ Slack channel simply send a request to the [users mailing list](#mailing).
+If for some reason a mailing list doesn't work for you then you can potentially chat with other community members in real-time using **[Slack](https://slack.com/)**. Access to the [ASF Slack](https://the-asf.slack.com) requires an invitation. If you want an invitation to the Artemis Slack channel simply send a request to the [users mailing list](#mailing).

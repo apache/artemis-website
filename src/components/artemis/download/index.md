@@ -1,11 +1,11 @@
 ---
 layout: default_md
-title: Download ActiveMQ Artemis
+title: Download Artemis
 title-class: page-title-artemis
 type: artemis
 ---
 
-This is the current ActiveMQ Artemis release. For prior releases, please see the <a href="past_releases">past releases</a> page.
+This is the current Artemis release. For prior releases, please see the <a href="past_releases">past releases</a> page.
 
 It is important to [verify the integrity](#verify-the-integrity-of-downloads) of the files you download.
 
@@ -24,7 +24,7 @@ It is important to [verify the integrity](#verify-the-integrity-of-downloads) of
 
 --------------------------------------
 
-The source release for ActiveMQ Artemis Native integration layer can be found on its own [download](./native_download) page. The broker binary archives above already include a pre-compiled version of this component.
+The source release for Artemis Native integration layer can be found on its own [download](./native_download) page. The broker binary archives above already include a pre-compiled version of this component.
 
 --------------------------------------
 #### Verify the Integrity of Downloads
