@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Artemis</title>
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <script defer src="/js/fontawesome-all.min.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"></script>
+    <script src="/js/jquery.slim.min.js" integrity="sha384-5AkRS45j4ukf+JbWAfHL8P4onPA9p0KwwP7pUdjSQA3ss9edbJUJc/XcYAiheSSz"></script>
+    <script src="/js/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"></script>
+    <script src="/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand mr-auto" href="/"><img src="/assets/img/artemis_text_black_small.png" style="height: 50px"/></a>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="ml-auto collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/news">News</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownComponents" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Components<span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="navbarDropdownComponents">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="multi-column-dropdown">
+                                    <li class="nav-item"><a class="dropdown-item" href="/components/artemis/">Artemis</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/components/artemis-console/">Artemis Console</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownCommunity" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Community<span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-center multi-column columns-1" aria-labelledby="navbarDropdownCommunity">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="multi-column-dropdown">
+                                    <li class="nav-item"><a class="dropdown-item" href="/contact">Contact Us</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/contributing">Contribute</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/issues">Report Issues</a></li>
+                                </ul>
+                            </div>
+                          </div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownTeam" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/assets/img/asf_logo_wide.png" style="height:25px"> <span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-center multi-column columns-1" aria-labelledby="navbarDropdownTeam">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="multi-column-dropdown">
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org">The Apache Software Foundation</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/licenses/">License</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/security-advisories">Security</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/events/current-event">Events</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://people.apache.org/phonebook.html?pmc=artemis">PMC & Committers</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="content">
+  <div class="page-title-artemis">
+    <div class="container">
+      <h1>Contributing</h1>
+    </div>
+  </div>
+  <div class="container" >
+    <div class="row" style="margin-top: 30px">
+      <div class="col-12 artemis">
+        <p>There are many ways you can help make Artemis a better piece of software - please dive in and help!</p>
+
+<ul>
+  <li>If you have a problem with the software or the documentation the first thing you might consider is <a href="contact#mailing">asking a question</a>.</li>
+  <li>If you think you’ve hit a bug or want to request a new feature feel free to open <a href="issues">an issue</a> in one of our trackers.</li>
+  <li>If you’re already familiar with an Artemis component then join a <a href="contact#mailing">mailing list</a> and help answers questions from the community.</li>
+</ul>
+
+<h4 id="documentation">Documentation</h4>
+
+<p>If anything in any component’s documentation is confusing or not clear please <a href="contact">let us know</a>.</p>
+
+<h4 id="code">Code</h4>
+
+<p>If you want to get your hands on the code here are the repos for all our components. It’s typically best to use the GitHub mirror as that will allow you to easily send pull requests which can be reviewed by project committers and merged. The Gitbox links redirect to GitHub for browsing.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Apache Git Repository</th>
+      <th>GitHub Mirror</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Artemis</td>
+      <td><a href="https://gitbox.apache.org/repos/asf/activemq-artemis.git">artemis</a></td>
+      <td><a href="https://github.com/apache/activemq-artemis">artemis</a></td>
+    </tr>
+    <tr>
+      <td>Artemis Console</td>
+      <td><a href="https://gitbox.apache.org/repos/asf/activemq-artemis-console.git">artemis-console</a></td>
+      <td><a href="https://github.com/apache/activemq-artemis-console">artemis-console</a></td>
+    </tr>
+    <tr>
+      <td>Artemis Examples</td>
+      <td><a href="https://gitbox.apache.org/repos/asf/activemq-artemis-examples.git">artemis-examples</a></td>
+      <td><a href="https://github.com/apache/activemq-artemis-examples">artemis-examples</a></td>
+    </tr>
+    <tr>
+      <td>Artemis Native</td>
+      <td><a href="https://gitbox.apache.org/repos/asf/activemq-artemis-native.git">artemis-native</a></td>
+      <td><a href="https://github.com/apache/activemq-artemis-native">artemis-native</a></td>
+    </tr>
+    <tr>
+      <td>Website</td>
+      <td><a href="https://gitbox.apache.org/repos/asf/artemis-website.git">artemis-website</a></td>
+      <td><a href="https://github.com/apache/artemis-website">artemis-website</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="becoming-a-commmitter">Becoming a commmitter</h4>
+
+<p>If you’re interested in becoming a “committer” please check out this <a href="https://infra.apache.org/new-committers-guide.html">this guide from Apache</a>.</p>
+
+<h4 id="mailing-lists-for-development-updates">Mailing Lists for Development Updates</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>List</th>
+      <th>Subscribe</th>
+      <th>Unsubscribe</th>
+      <th>Archives</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Commits</td>
+      <td><a href="mailto:commits-subscribe@artemis.apache.org">commits-subscribe@artemis.apache.org</a></td>
+      <td><a href="mailto:commits-unsubscribe@artemis.apache.org">commits-unsubscribe@artemis.apache.org</a></td>
+      <td><a href="https://lists.apache.org/list.html?commits@artemis.apache.org">Apache</a></td>
+      <td>notifications when the project source code gets updated</td>
+    </tr>
+    <tr>
+      <td>Issues</td>
+      <td><a href="mailto:issues-subscribe@artemis.apache.org">issues-subscribe@artemis.apache.org</a></td>
+      <td><a href="mailto:issues-unsubscribe@artemis.apache.org">issues-unsubscribe@artemis.apache.org</a></td>
+      <td><a href="https://lists.apache.org/list.html?issues@artemis.apache.org">Apache</a></td>
+      <td>comments and other events for pull-requests and issues</td>
+    </tr>
+  </tbody>
+</table>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row sitemap">
+  <div class="col-sm-12">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div style="text-align: center; margin-bottom: 0px; margin-top: 30px; font-size: 65%" class="col-sm-6">
+              <p><a href="https://www.apache.org/foundation/marks/list/">Apache, Artemis, Apache Artemis</a>, the Apache logo, and the Apache Artemis project logo are trademarks of The Apache Software Foundation. Copyright &copy; 2025, The Apache Software Foundation. Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</p>
+            </div>
+            <div class="col-sm-3">
+              <div >
+                <a href="https://www.apache.org"><img class="float-right" style="margin-top: 10px; max-height: 80px" src="/assets/img/Apache_PoweredBy.png"/></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

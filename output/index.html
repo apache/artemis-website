@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Artemis</title>
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <script defer src="/js/fontawesome-all.min.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"></script>
+    <script src="/js/jquery.slim.min.js" integrity="sha384-5AkRS45j4ukf+JbWAfHL8P4onPA9p0KwwP7pUdjSQA3ss9edbJUJc/XcYAiheSSz"></script>
+    <script src="/js/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"></script>
+    <script src="/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand mr-auto" href="/"><img src="/assets/img/artemis_text_black_small.png" style="height: 50px"/></a>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="ml-auto collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/news">News</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownComponents" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Components<span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="navbarDropdownComponents">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="multi-column-dropdown">
+                                    <li class="nav-item"><a class="dropdown-item" href="/components/artemis/">Artemis</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/components/artemis-console/">Artemis Console</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownCommunity" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Community<span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-center multi-column columns-1" aria-labelledby="navbarDropdownCommunity">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="multi-column-dropdown">
+                                    <li class="nav-item"><a class="dropdown-item" href="/contact">Contact Us</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/contributing">Contribute</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/issues">Report Issues</a></li>
+                                </ul>
+                            </div>
+                          </div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownTeam" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/assets/img/asf_logo_wide.png" style="height:25px"> <span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-center multi-column columns-1" aria-labelledby="navbarDropdownTeam">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="multi-column-dropdown">
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org">The Apache Software Foundation</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/licenses/">License</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/security-advisories">Security</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/events/current-event">Events</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://people.apache.org/phonebook.html?pmc=artemis">PMC & Committers</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <div class="content">
+      <div class="row">
+  <div class="col-12 slider slider-artemis slider-sm parent d-none d-xl-block justify-content-center">
+    <div class="row child " style="width: 100%">
+      <div class="col-3 align-middle"></div>
+      <div class="col-6 slider-text align-middle">
+          <p style="font-size: 50px">Apache Artemis</p>
+          <p style="font-size: 20px">Multi-Protocol Messaging</p>
+          <a style="margin-top: 20px" href="/components/artemis/download" class="btn btn-primary btn-lg btn-outline-light">Download<i class="fa-download fa btn-icon"></i></a>
+          <a style="margin-top: 20px" href="/components/artemis/" class="btn btn-primary btn-lg btn-outline-light">Find out more<i class="fa-book fa btn-icon"></i></a>
+      </div>
+      <div class="col-3 align-middle"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+ 
+ <div class="row align-middle">
+
+<div class="card-group w-100">
+ 
+<div class="card card-grey-small">
+<div class="card-body ml-0 p-2">
+
+    <h6 class="card-title"><a class="text-blue" href="/news/artemis-tlp">Apache Artemis Project</a></h6>
+
+
+
+    ActiveMQ PMC voted to establish Apache Artemis Project<a style="display: unset;" class="nav-link pl-0 ml-0" href="/news/artemis-tlp">...more</a>
+
+    <p class="small text-muted text-right font-italic mb-0">Nov 19th, 2025</p>
+</div>
+</div>
+
+ 
+<div class="card card-grey-small">
+<div class="card-body ml-0 p-2">
+
+    <h6 class="card-title"><a class="text-blue" href="/components/artemis-console/download/">Artemis Console 1.4.0</a></h6>
+
+
+
+    HawtIO Upgrade and Bug fix release.<a style="display: unset;" class="nav-link pl-0 ml-0" href="/components/artemis-console/download/">...more</a>
+
+    <p class="small text-muted text-right font-italic mb-0">Nov 11th, 2025</p>
+</div>
+</div>
+
+ 
+<div class="card card-grey-small">
+<div class="card-body ml-0 p-2">
+
+    <h6 class="card-title"><a class="text-blue" href="/components/artemis/download/">Artemis 2.44.0</a></h6>
+
+
+
+    Adds Java 25 support, an option to disable HTTP/2, and fixes various bugs.<a style="display: unset;" class="nav-link pl-0 ml-0" href="/components/artemis/download/">...more</a>
+
+    <p class="small text-muted text-right font-italic mb-0">Nov 3rd, 2025</p>
+</div>
+</div>
+
+  
+</div>
+</div>
+
+
+<!-- General info -->
+<div class="row d-none d-lg-block">
+  <div class="col-sm-12 narative">
+    <div class="card">
+      <div class="card-body narative">
+          <span>
+            <p>Apache Artemis is multi-protocol message broker, supporting various industry standard protocols such as AMQP 1.0, MQTT 3.1.1, MQTT 5, and STOMP. This enables users to connect from across a broad range of languages and platforms, using clients written in Java, JavaScript, C, C++, Python, .Net, and more. Artemis offers the power and flexibility to support your messaging use-case.</p>
+          </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Components -->
+<div class="row align-middle">
+  <div class="col-lg-12 col-md-auto">
+    <div class="card card-purple">
+      <div class="card-body">
+        <h4 class="card-title text-purple">Apache Artemis</h4>
+        <p>High-performance, non-blocking architecture for the next generation of messaging applications.</p>
+        <ul>
+          <li>Industry standard protocols such as AMQP 1.0, MQTT 3.1.1, MQTT 5, and STOMP</li>
+          <li>Full Jakarta Messaging 3.1, JMS 2.0 &amp; 1.1 support + full client implementations including JNDI</li>
+          <li>High availability using shared storage or network replication</li>
+          <li>Simple &amp; powerful protocol agnostic addressing model</li>
+          <li>Flexible clustering for distributing load</li>
+          <li>Advanced journal implementations for low-latency persistence as well as JDBC</li>
+          <li>Asynchronous mirroring for disaster recovery</li>
+          <li>Data Driven Load Balance</li>
+        </ul>
+        <a style="margin-top: 10px" href="/components/artemis" class="btn btn-warning">Find out more<i class="fa-info-circle fa btn-icon"></i></a>
+        <a style="margin-top: 10px" href="/components/artemis/download" class="btn btn-warning">Download Latest<i class="fa-download fa btn-icon"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row narative-alt">
+  <div class="col-12">
+    <div class="container">
+      <!-- Narative 2 -->
+      <div class="row">
+        <div class="col-sm-12 narative-alt">
+          <div class="card">
+            <div class="card-body narative-alt">
+              <div class="card-body narative-alt">
+                <span>Enjoy the benefits of open source by <a href="contributing">contributing to a code-base</a>, asking a question on one of our <a href="contact#mailing">mailing lists</a>, or <a href="issues">reporting a bug or requesting a feature</a>. When you participate, we all win. That's the power of community. That's the power of open source.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+    <div class="row sitemap">
+  <div class="col-sm-12">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div style="text-align: center; margin-bottom: 0px; margin-top: 30px; font-size: 65%" class="col-sm-6">
+              <p><a href="https://www.apache.org/foundation/marks/list/">Apache, Artemis, Apache Artemis</a>, the Apache logo, and the Apache Artemis project logo are trademarks of The Apache Software Foundation. Copyright &copy; 2025, The Apache Software Foundation. Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</p>
+            </div>
+            <div class="col-sm-3">
+              <div >
+                <a href="https://www.apache.org"><img class="float-right" style="margin-top: 10px; max-height: 80px" src="/assets/img/Apache_PoweredBy.png"/></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

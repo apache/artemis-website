@@ -1,0 +1,22 @@
+# Additional site settings, with more excludes to omit various larger content,
+# like the javadocs, and also older release content, only leaving the smaller
+# subset more typically [live-]updated, giving a much faster [re-]build.
+
+# These need to be exact paths, not wildcards.
+exclude: [
+vendor,
+components/artemis/documentation/javadocs/javadoc-latest,
+components/artemis/documentation/2.32.0,
+components/artemis/documentation/2.32.0,
+components/artemis/documentation/2.33.0,
+components/artemis/documentation/2.34.0,
+components/artemis/documentation/2.35.0,
+components/artemis/documentation/2.36.0,
+components/artemis/documentation/2.37.0,
+components/artemis/documentation/2.38.0,
+components/artemis/documentation/2.39.0,
+components/artemis/documentation/2.40.0,
+components/artemis/documentation/2.41.0,
+components/artemis/documentation/2.42.0,
+components/artemis/documentation/2.43.0
+]
