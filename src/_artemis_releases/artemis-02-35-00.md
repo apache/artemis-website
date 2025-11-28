@@ -6,4 +6,5 @@ shortDescription: Bug fix release. Junit Upgrade.
 # Docs subdir name for past-releases and previous-docs pages, 'latest' is always used on the main download page.
 docs_version: 2.35.0
 java_version: 11+
+activemq_tlp: true
 ---

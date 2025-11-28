@@ -6,4 +6,5 @@ shortDescription: Adds Java 25 support, an option to disable HTTP/2, and fixes v
 # Docs subdir name for past-releases and previous-docs pages, 'latest' is always used on the main download page.
 docs_version: 2.44.0
 java_version: 17+
+activemq_tlp: true
 ---
