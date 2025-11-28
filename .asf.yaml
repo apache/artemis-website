@@ -1,0 +1,9 @@
+github:
+  description: "Apache Artemis Website"
+  homepage: https://artemis.apache.org
+  labels:
+    - website
+    - jekyll
+jekyll:
+   whoami: main
+   target: asf-site
