@@ -63,7 +63,7 @@ fi
 RELEASE_DIR="$ARTEMIS_DIR/target/checkout"
 
 LATEST_DOCS=$WEBSITE_DIR/src/components/artemis/documentation/latest/
-PRIOR_DOCS=$WEBSITE_DIR/src/components/artemis/documentation/$PRIOR_VERSION/
+PRIOR_DOCS=$WEBSITE_DIR/src/components/artemis/documentation/previous/$PRIOR_VERSION/
 
 LATEST_JAVADOCS=$WEBSITE_DIR/src/components/artemis/documentation/javadocs/javadoc-latest/
 NEW_DOCS=$RELEASE_DIR/artemis-website/target/classes/user-manual/
