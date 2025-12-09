@@ -13,7 +13,7 @@
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Apache ActiveMQ Artemis Hacking Guide</h1>
+<h1>Apache Artemis Hacking Guide</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -81,7 +81,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This hacking guide outlines how developers can get involved in contributing to the Apache ActiveMQ Artemis project.</p>
+<p>This hacking guide outlines how developers can get involved in contributing to the Apache Artemis project.</p>
 </div>
 </div>
 </div>
@@ -89,7 +89,7 @@
 <h2 id="working-with-the-code"><a class="anchor" href="#working-with-the-code"></a><a class="link" href="#working-with-the-code">1. Working with the Code</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>While the canonical Apache ActiveMQ Artemis git repository is hosted on Apache hardware at <a href="https://gitbox.apache.org/repos/asf/activemq-artemis.git" class="bare">https://gitbox.apache.org/repos/asf/activemq-artemis.git</a> contributors are encouraged (but not required) to use a mirror on GitHub for collaboration and pull-request review functionality.
+<p>While the canonical Apache Artemis git repository is hosted on Apache hardware at <a href="https://gitbox.apache.org/repos/asf/artemis.git" class="bare">https://gitbox.apache.org/repos/asf/artemis.git</a> contributors are encouraged (but not required) to use a mirror on GitHub for collaboration and pull-request review functionality.
 Follow the steps below to get set up with GitHub, etc.</p>
 </div>
 <div class="paragraph">
@@ -108,15 +108,15 @@ Follow the steps below to get set up with GitHub, etc.</p>
 <li>
 <p>Fork the apache-artemis repository into your account</p>
 <div class="paragraph">
-<p><a href="https://github.com/apache/activemq-artemis" class="bare">https://github.com/apache/activemq-artemis</a></p>
+<p><a href="https://github.com/apache/artemis" class="bare">https://github.com/apache/artemis</a></p>
 </div>
 </li>
 <li>
 <p>Clone your newly forked copy onto your local workspace:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="sh"><span class="nv">$ </span>git clone git@github.com:&lt;your-user-name&gt;/activemq-artemis.git
-Cloning into <span class="s1">'activemq-artemis'</span>...
+<pre class="rouge highlight nowrap"><code data-lang="sh"><span class="nv">$ </span>git clone git@github.com:&lt;your-user-name&gt;/artemis.git
+Cloning into <span class="s1">'artemis'</span>...
 remote: Counting objects: 63800, <span class="k">done</span><span class="nb">.</span>
 remote: Compressing objects: 100% <span class="o">(</span>722/722<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
 remote: Total 63800 <span class="o">(</span>delta 149<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>, pack-reused 62748
@@ -124,7 +124,7 @@ Receiving objects: 100% <span class="o">(</span>63800/63800<span class="o">)</sp
 Resolving deltas: 100% <span class="o">(</span>28800/28800<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
 Checking connectivity... <span class="k">done</span><span class="nb">.</span>
 
-<span class="nv">$ </span><span class="nb">cd </span>activemq-artemis</code></pre>
+<span class="nv">$ </span><span class="nb">cd </span>artemis</code></pre>
 </div>
 </div>
 </li>
@@ -132,7 +132,7 @@ Checking connectivity... <span class="k">done</span><span class="nb">.</span>
 <p>Add a remote reference to <code>upstream</code> for pulling future updates</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="sh"><span class="nv">$ </span>git remote add upstream https://github.com/apache/activemq-artemis</code></pre>
+<pre class="rouge highlight nowrap"><code data-lang="sh"><span class="nv">$ </span>git remote add upstream https://github.com/apache/artemis</code></pre>
 </div>
 </div>
 </li>
@@ -454,7 +454,7 @@ Output will be placed in the <code>target/classes/user-manual</code>, <code>targ
 <p>ActiveMQ Artemis does not ship with the Artemis Native ASYNCIO library in the <em>source</em> distribution. This need to be built prior to running <code>mvn install</code>, to ensure that the ASYNCIO journal type is available in the resulting build. Don&#8217;t worry if you don&#8217;t want to use ASYNCIO or your system does not support libaio, ActiveMQ Artemis will check at runtime to see if the required libraries and system dependencies are available, if not it will default to using NIO.</p>
 </div>
 <div class="paragraph">
-<p>To build the ActiveMQ Artemis ASYNCIO native libraries, please follow <a href="https://github.com/apache/activemq-artemis-native">these instructions</a>.</p>
+<p>To build the ActiveMQ Artemis ASYNCIO native libraries, please follow <a href="https://github.com/apache/artemis-native">these instructions</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -524,26 +524,26 @@ Almost every test in the  test-suite follows this pattern - configure broker, st
 </div>
 <div class="paragraph">
 <p>The test-suite uses JUnit to manage test execution and life-cycle.
-Most tests extend <a href="https://github.com/apache/activemq-artemis/blob/main/artemis-server/src/test/java/org/apache/activemq/artemis/tests/util/ActiveMQTestBase.java"><code>org.apache.activemq.artemis.tests.util.ActiveMQTestBase</code></a> which contains JUnit setup and tear-down methods as well as a wealth of utility functions to configure, start, manage, and stop brokers as well as perform other common tasks.</p>
+Most tests extend <a href="https://github.com/apache/artemis/blob/main/artemis-server/src/test/java/org/apache/activemq/artemis/tests/util/ActiveMQTestBase.java"><code>org.apache.activemq.artemis.tests.util.ActiveMQTestBase</code></a> which contains JUnit setup and tear-down methods as well as a wealth of utility functions to configure, start, manage, and stop brokers as well as perform other common tasks.</p>
 </div>
 <div class="paragraph">
-<p>Check out <a href="https://github.com/apache/activemq-artemis/blob/main/tests/integration-tests/src/test/java/org/apache/activemq/artemis/tests/integration/SimpleTest.java"><code>org.apache.activemq.artemis.tests.integration.SimpleTest</code></a>.
+<p>Check out <a href="https://github.com/apache/artemis/blob/main/tests/integration-tests/src/test/java/org/apache/activemq/artemis/tests/integration/SimpleTest.java"><code>org.apache.activemq.artemis.tests.integration.SimpleTest</code></a>.
 It&#8217;s a very simple test-case that extends <code>org.apache.activemq.artemis.tests.util.ActiveMQTestBase</code> and uses its methods to configure a server, run a test, and then <code>super.tearDown()</code> cleans it up once the test completes.
 The test-case  includes comments to explain everything.
 As the name implies, this is a simple test-case that demonstrates the most basic functionality of the test-suite.
 A simple test like this takes less than a second to run on modern hardware.</p>
 </div>
 <div class="paragraph">
-<p>Although <code>org.apache.activemq.artemis.tests.integration.SimpleTest</code> is simple it could be simpler still by extending <a href="https://github.com/apache/activemq-artemis/blob/main/artemis-server/src/test/java/org/apache/activemq/artemis/tests/util/SingleServerTestBase.java"><code>org.apache.activemq.artemis.tests.util.SingleServerTestBase</code></a>.
+<p>Although <code>org.apache.activemq.artemis.tests.integration.SimpleTest</code> is simple it could be simpler still by extending <a href="https://github.com/apache/artemis/blob/main/artemis-server/src/test/java/org/apache/activemq/artemis/tests/util/SingleServerTestBase.java"><code>org.apache.activemq.artemis.tests.util.SingleServerTestBase</code></a>.
 This class does all the setup of a simple server automatically and provides the test-case with a <code>ServerLocator</code>,  <code>ClientSessionFactory</code>, and <code>ClientSession</code> instance.
-<a href="https://github.com/apache/activemq-artemis/blob/main//tests/integration-tests/src/test/java/org/apache/activemq/artemis/tests/integration/SingleServerSimpleTest.java"><code>org.apache.activemq.artemis.tests.integration.SingleServerSimpleTest</code></a> is an example based on <code>org.apache.activemq.artemis.tests.integration.SimpleTest</code> but extends <code>org.apache.activemq.artemis.tests.util.SingleServerTestBase</code> which eliminates all the setup and class variables which are provided by <code>SingleServerTestBase</code> itself.</p>
+<a href="https://github.com/apache/artemis/blob/main/tests/integration-tests/src/test/java/org/apache/activemq/artemis/tests/integration/SingleServerSimpleTest.java"><code>org.apache.activemq.artemis.tests.integration.SingleServerSimpleTest</code></a> is an example based on <code>org.apache.activemq.artemis.tests.integration.SimpleTest</code> but extends <code>org.apache.activemq.artemis.tests.util.SingleServerTestBase</code> which eliminates all the setup and class variables which are provided by <code>SingleServerTestBase</code> itself.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="writing-web-tests"><a class="anchor" href="#writing-web-tests"></a><a class="link" href="#writing-web-tests">3.3. Writing Web Tests</a></h3>
 <div class="paragraph">
 <p>The broker has a web console based on <a href="https://github.com/hawtio/hawtio">hawtio</a> and the <code>smoke-tests</code> are used to test it.
-For instance, the <a href="https://github.com/apache/activemq-artemis/blob/main/tests/smoke-tests/src/test/java/org/apache/activemq/artemis/tests/smoke/console/ConsoleTest.java">ConsoleTest</a> checks the web console using the <a href="https://github.com/SeleniumHQ/selenium">selenium framework</a>.
+For instance, the <a href="https://github.com/apache/artemis/blob/main/tests/smoke-tests/src/test/java/org/apache/activemq/artemis/tests/smoke/console/ConsoleTest.java">ConsoleTest</a> checks the web console using the <a href="https://github.com/SeleniumHQ/selenium">selenium framework</a>.
 The tests can be executed on the Chrome and Firefox browsers by using a remote server, local browsers or <a href="https://www.testcontainers.org/modules/webdriver_containers">testcontainers</a>.
 To configure the browsers on which execute the tests set the <code>webdriver.browsers</code> property with the comma-separated list of the browsers, i.e. <code>-Dwebdriver.browsers=chrome,firefox</code>.
 To use a remote server set the <code>webdriver.remote.server</code> property with the URL of the server, ie -Dwebdriver.remote.server=http://localhost:4444/wd/hub To use your local Google Chrome browser download the <a href="https://chromedriver.chromium.org/">WebDriver for Chrome</a> and set the <code>webdriver.chrome.driver</code> property with the WebDriver path, ie <code>-Dwebdriver.chrome.driver=/home/artemis/chromedriver_linux64/chromedriver</code>.
@@ -592,7 +592,7 @@ Debug information should be called through <code>logger.debug</code>.</p>
 This includes the server instance itself and any resources created to connect to it (e.g. instances of <code>ServerLocator</code>, <code>ClientSessionFactory</code>, <code>ClientSession</code>, etc.).
 This task is typically completed in the test&#8217;s <code>tearDown()</code> method.
 However, <code>ActiveMQTestBase</code>  (and other classes which extend it) simplifies this process.
-As <a href="https://github.com/apache/activemq-artemis/blob/main/tests/integration-tests/src/test/java/org/apache/activemq/artemis/tests/integration/SimpleTest.java"><code>org.apache.activemq.artemis.tests.integration.SimpleTest</code></a> demonstrates, there are several methods you can use when creating your test which will ensure proper clean up <em>automatically</em> when the test is torn down.
+As <a href="https://github.com/apache/artemis/blob/main/tests/integration-tests/src/test/java/org/apache/activemq/artemis/tests/integration/SimpleTest.java"><code>org.apache.activemq.artemis.tests.integration.SimpleTest</code></a> demonstrates, there are several methods you can use when creating your test which will ensure proper clean up <em>automatically</em> when the test is torn down.
 These include:</p>
 </div>
 <div class="ulist">
@@ -810,10 +810,10 @@ For the purposes of this document, let&#8217;s assume these ref/repo association
 <div class="ulist">
 <ul>
 <li>
-<p><code>origin</code> : <a href="https://github.com/(your-user-name)/activemq-artemis.git" class="bare">https://github.com/(your-user-name)/activemq-artemis.git</a></p>
+<p><code>origin</code> : <a href="https://github.com/(your-user-name)/artemis.git" class="bare">https://github.com/(your-user-name)/artemis.git</a></p>
 </li>
 <li>
-<p><code>upstream</code> : <a href="https://github.com/apache/activemq-artemis" class="bare">https://github.com/apache/activemq-artemis</a></p>
+<p><code>upstream</code> : <a href="https://github.com/apache/artemis" class="bare">https://github.com/apache/artemis</a></p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -821,7 +821,7 @@ For the purposes of this document, let&#8217;s assume these ref/repo association
 Here we call it <code>apache</code>.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>git remote add apache https://gitbox.apache.org/repos/asf/activemq-artemis.git</code></pre>
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>git remote add apache https://gitbox.apache.org/repos/asf/artemis.git</code></pre>
 </div>
 </div>
 </li>
@@ -832,7 +832,7 @@ Just be sure to edit all references to the remote repo name so it&#8217;s consis
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight nowrap"><code data-lang="console"><span class="go"> [remote "upstream"]
-     url = git@github.com:apache/activemq-artemis.git
+     url = git@github.com:apache/artemis.git
      fetch = +refs/heads/*:refs/remotes/upstream/*
      fetch = +refs/pull/*/head:refs/remotes/upstream/pr/*</span></code></pre>
 </div>
@@ -863,7 +863,7 @@ remote: Compressing objects: 100% (188/188), done.
 remote: Total 566 (delta 64), reused 17 (delta 17), pack-reused 351
 Receiving objects: 100% (566/566), 300.67 KiB | 0 bytes/s, done.
 Resolving deltas: 100% (78/78), done.
-From github.com:apache/activemq-artemis
+From github.com:apache/artemis
 </span><span class="gp">* [new ref]         refs/pull/105/head -&gt;</span><span class="w"> </span>upstream/pr/105</code></pre>
 </div>
 </div>
@@ -952,13 +952,13 @@ This will execute the exact steps described on this previous section.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span><span class="nb">pwd</span>
-<span class="go">/checkouts/apache-activemq-artemis
+<span class="go">/checkouts/apache-artemis
 
 </span><span class="gp">$</span><span class="w"> </span>./scripts/merge-PR.sh 175 ARTEMIS-229 address on Security Interface</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The previous example was taken from a real case that generated this <a href="https://github.com/apache/activemq-artemis/commit/e85bb3ca4a75b0f1dfbe717ff90b34309e2de794">merge commit on #175</a>.</p>
+<p>The previous example was taken from a real case that generated this <a href="https://github.com/apache/artemis/commit/e85bb3ca4a75b0f1dfbe717ff90b34309e2de794">merge commit on #175</a>.</p>
 </div>
 </li>
 <li>
