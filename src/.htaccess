@@ -1,6 +1,7 @@
 RewriteEngine On
 RewriteCond %{HTTPS} !=on [NC]
 RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+RewriteRule ^components/artemis/documentation/latest/embedding-activemq.html(.*)$ https://%{SERVER_NAME}/components/artemis/documentation/latest/embedding-artemis.html$1 [R=301,L]
 RewriteRule ^components/artemis/documentation/2.32.0(/?.*)$ https://%{SERVER_NAME}/components/artemis/documentation/previous/2.32.0$1 [R=301,L]
 RewriteRule ^components/artemis/documentation/2.33.0(/?.*)$ https://%{SERVER_NAME}/components/artemis/documentation/previous/2.33.0$1 [R=301,L]
 RewriteRule ^components/artemis/documentation/2.34.0(/?.*)$ https://%{SERVER_NAME}/components/artemis/documentation/previous/2.34.0$1 [R=301,L]
