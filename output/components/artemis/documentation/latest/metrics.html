@@ -282,16 +282,20 @@ Underlying data gathered from Java&#8217;s <a href="https://docs.oracle.com/en/j
 <p>Collects metrics from Netty&#8217;s <a href="https://netty.io/4.1/api/io/netty/buffer/PooledByteBufAllocatorMetric.html">PooledByteBufAllocatorMetric</a>.</p>
 </div>
 <div class="paragraph">
-<p>Disabled by default.
-File descriptors::
-Gauges current and max-allowed open files.</p>
+<p>Disabled by default.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="file-descriptors"><a class="anchor" href="#file-descriptors"></a><a class="link" href="#file-descriptors">1.4.5. File descriptors</a></h4>
+<div class="paragraph">
+<p>Gauges current and max-allowed open files.</p>
 </div>
 <div class="paragraph">
 <p>Disabled by default.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="processor"><a class="anchor" href="#processor"></a><a class="link" href="#processor">1.4.5. Processor</a></h4>
+<h4 id="processor"><a class="anchor" href="#processor"></a><a class="link" href="#processor">1.4.6. Processor</a></h4>
 <div class="paragraph">
 <p>Gauges system CPU count, CPU usage, and 1-minute load average as well as process CPU usage.</p>
 </div>
@@ -300,7 +304,7 @@ Gauges current and max-allowed open files.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="uptime"><a class="anchor" href="#uptime"></a><a class="link" href="#uptime">1.4.6. Uptime</a></h4>
+<h4 id="uptime"><a class="anchor" href="#uptime"></a><a class="link" href="#uptime">1.4.7. Uptime</a></h4>
 <div class="paragraph">
 <p>Gauges process start time and uptime.</p>
 </div>
@@ -309,7 +313,7 @@ Gauges current and max-allowed open files.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="logging"><a class="anchor" href="#logging"></a><a class="link" href="#logging">1.4.7. Logging</a></h4>
+<h4 id="logging"><a class="anchor" href="#logging"></a><a class="link" href="#logging">1.4.8. Logging</a></h4>
 <div class="paragraph">
 <p>Counts the number of logging events per logging category (e.g. <code>WARN</code>, <code>ERROR</code>, etc.).</p>
 </div>
@@ -333,7 +337,7 @@ If you&#8217;re embedding the broker and using a different logging implementatio
 </div>
 </div>
 <div class="sect3">
-<h4 id="security-caches"><a class="anchor" href="#security-caches"></a><a class="link" href="#security-caches">1.4.8. Security caches</a></h4>
+<h4 id="security-caches"><a class="anchor" href="#security-caches"></a><a class="link" href="#security-caches">1.4.9. Security caches</a></h4>
 <div class="paragraph">
 <p>The following authentication &amp; authorization cache metrics are exported.
 They are all tagged by <code>cache</code> (either <code>authentication</code> or <code>authorization</code>).
@@ -363,7 +367,7 @@ Additional tags are noted.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="executor-services"><a class="anchor" href="#executor-services"></a><a class="link" href="#executor-services">1.4.9. Executor Services</a></h4>
+<h4 id="executor-services"><a class="anchor" href="#executor-services"></a><a class="link" href="#executor-services">1.4.10. Executor Services</a></h4>
 <div class="paragraph">
 <p>Metrics for executor services cover both the major instances of <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutorService.html"><code>java.util.concurrent.ExecutorService</code></a> used by the broker to manage threads as well as <a href="https://netty.io/4.1/api/io/netty/util/concurrent/EventExecutor.html"><code>EventExecutors</code></a> associated with instances of Netty&#8217;s <a href="https://netty.io/4.1/api/io/netty/channel/EventLoopGroup.html"><code>EventLoopGroup</code></a>.</p>
 </div>
