@@ -81,81 +81,46 @@
 <div class="content">
   <div class="page-title-artemis">
     <div class="container">
-      <h1>Download Apache Artemis Console</h1>
+      <h1>Artemis Console 1.5.0 Release Notes</h1>
     </div>
   </div>
   <div class="container" >
     <div class="row" style="margin-top: 30px">
       <div class="col-12 artemis">
-        
-<p>This is the current Artemis Console release. For prior releases, please see the <a href="past_releases">past releases</a> page.</p>
+        <h2 id="bugs-fixed">Bugs Fixed</h2>
 
-<p>It is important to <a href="#verify-the-integrity-of-downloads">verify the integrity</a> of the files you download.</p>
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5677">ARTEMIS-5677</a> - Excessive padding in JMX tree in web console</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5743">ARTEMIS-5743</a> - Web console status page difficult to read when unauthorized</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5760">ARTEMIS-5760</a> - Web console fails with limited users</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5771">ARTEMIS-5771</a> - Display creation time for producer</li>
+</ul>
 
-<h4 id="apache-artemis-console-150--jan-13th-2026">Apache Artemis Console 1.5.0  (Jan 13th, 2026)</h4>
-<p><a href="release-notes-1.5.0">Release Notes</a> | <a href="../documentation/">Documentation</a></p>
+<h2 id="improvements">Improvements</h2>
 
-<table>
-  <tbody>
-    <tr>
-      <td>tar.gz</td>
-      <td><a href="https://www.apache.org/dyn/closer.lua?filename=artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-bin.tar.gz&amp;action=download">apache-artemis-console-1.5.0-bin.tar.gz</a></td>
-      <td><a href="https://downloads.apache.org/artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-bin.tar.gz.sha512">SHA512</a></td>
-      <td><a href="https://downloads.apache.org/artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-bin.tar.gz.asc">ASC Signature</a></td>
-    </tr>
-    <tr>
-      <td>ZIP</td>
-      <td><a href="https://www.apache.org/dyn/closer.lua?filename=artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-bin.zip&amp;action=download">apache-artemis-console-1.5.0-bin.zip</a></td>
-      <td><a href="https://downloads.apache.org/artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-bin.zip.sha512">SHA512</a></td>
-      <td><a href="https://downloads.apache.org/artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-bin.zip.asc">ASC Signature</a></td>
-    </tr>
-    <tr>
-      <td>Source tar.gz</td>
-      <td><a href="https://www.apache.org/dyn/closer.lua?filename=artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-source-release.tar.gz&amp;action=download">apache-artemis-console-1.5.0-source-release.tar.gz</a></td>
-      <td><a href="https://downloads.apache.org/artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-source-release.tar.gz.sha512">SHA512</a></td>
-      <td><a href="https://downloads.apache.org/artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-source-release.tar.gz.asc">ASC Signature</a></td>
-    </tr>
-    <tr>
-      <td>Source ZIP</td>
-      <td><a href="https://www.apache.org/dyn/closer.lua?filename=artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-source-release.zip&amp;action=download">apache-artemis-console-1.5.0-source-release.zip</a></td>
-      <td><a href="https://downloads.apache.org/artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-source-release.zip.sha512">SHA512</a></td>
-      <td><a href="https://downloads.apache.org/artemis/artemis-console/1.5.0/apache-artemis-console-1.5.0-source-release.zip.asc">ASC Signature</a></td>
-    </tr>
-  </tbody>
-</table>
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5417">ARTEMIS-5417</a> - JMX Tree Improvements</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5742">ARTEMIS-5742</a> - Implement readSpecifiedAttributes method</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5772">ARTEMIS-5772</a> - Hardcoded refresh rate for broker information</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5788">ARTEMIS-5788</a> - Create Artemis Tree Processor for JMX tree in the console</li>
+</ul>
 
-<hr />
+<h2 id="tasks">Tasks</h2>
 
-<h4 id="verify-the-integrity-of-downloads">Verify the Integrity of Downloads</h4>
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5810">ARTEMIS-5810</a> - rename and rebrand the console to reflect the new TLP</li>
+</ul>
 
-<p>It is essential that you verify the integrity of the downloaded files using the ASC signature or SHA checksum.</p>
+<h2 id="dependency-upgrades">Dependency Upgrades</h2>
 
-<p>The ASC signatures can be verified using PGP or GPG. Begin by following these steps:</p>
-
-<ol>
-  <li>Download the <a href="https://downloads.apache.org/artemis/KEYS">KEYS</a> file.</li>
-  <li>Download the <code class="language-plaintext highlighter-rouge">.asc</code> signature for the relevant distribution file.</li>
-  <li>Verify the signature.
-    <ul>
-      <li>If using GPG:
-        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ gpg --import KEYS
- $ gpg --verify &lt;file-name&gt;.asc &lt;file-name&gt;
-</code></pre></div>        </div>
-      </li>
-      <li>If using PGP:
-        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ pgp -ka KEYS
- $ pgp &lt;file-name&gt;.asc
-</code></pre></div>        </div>
-      </li>
-    </ul>
-  </li>
-</ol>
-
-<p>Alternatively you can [also] verify the SHA-512 checksum of the file. For example, using the <code class="language-plaintext highlighter-rouge">sha512sum</code> command:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sha512sum -c &lt;file-name&gt;.sha512
-</code></pre></div></div>
-
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5774">ARTEMIS-5774</a> - Bump web console to Jetty 12.1.4</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5791">ARTEMIS-5791</a> - Upgrade js-yaml to 3.14.2</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5792">ARTEMIS-5792</a> - upgrade node-forge to 1.3.2</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5793">ARTEMIS-5793</a> - upgrade express to 4.22.1</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5794">ARTEMIS-5794</a> - upgrade mdast-util-to-hast to 13.2.1</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-5796">ARTEMIS-5796</a> - Upgrade glob to 10.5.0</li>
+</ul>
 
       </div>
     </div>
