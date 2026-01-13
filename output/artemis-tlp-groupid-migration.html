@@ -87,18 +87,18 @@
   <div class="container" >
     <div class="row" style="margin-top: 30px">
       <div class="col-12 artemis">
-        <p>With the move for Artemis to become an independent Apache project, the Maven groupId for Apache Artemis modules is changing from <em>org.apache.activemq</em> over to <em>org.apache.artemis</em> beginning with the Apache Artemis 2.50.0 release.</p>
+        <p>With the <a href="/news/artemis-tlp">move for Artemis to become an independent Apache project</a>, the Maven groupId for Apache Artemis modules is changing from <em>org.apache.activemq</em> over to <em>org.apache.artemis</em> beginning with the Apache Artemis 2.50.0 and Artemis Console 1.5.0 releases.</p>
 
 <h2 id="dependency-update-example">Dependency Update Example</h2>
 
-<p>For example, if you used the following dependency declaration in your build:</p>
+<p>For example, if you originally used the following dependency declaration in your build:</p>
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;dependency&gt;</span>
        <span class="nt">&lt;groupId&gt;</span>org.apache.activemq<span class="nt">&lt;/groupId&gt;</span>
        <span class="nt">&lt;artifactId&gt;</span>artemis-jms-client<span class="nt">&lt;/artifactId&gt;</span>
        <span class="nt">&lt;version&gt;</span>2.50.0<span class="nt">&lt;/version&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></div></div>
-<p>It should have its groupId updated to instead become:</p>
+<p>It should have its groupId updated to <em>org.apache.artemis</em> instead, becoming:</p>
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;dependency&gt;</span>
        <span class="nt">&lt;groupId&gt;</span>org.apache.artemis<span class="nt">&lt;/groupId&gt;</span>
        <span class="nt">&lt;artifactId&gt;</span>artemis-jms-client<span class="nt">&lt;/artifactId&gt;</span>
