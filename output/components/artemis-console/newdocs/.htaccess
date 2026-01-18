@@ -1,3 +1,4 @@
 RewriteEngine On
 
-RewriteRule ^latest/?(.*)$ /components/artemis-console/newdocs/1.5.0/$1 [L]
+RewriteRule ^latest$ /components/artemis-console/newdocs/1.5.0 [L]
+RewriteRule ^latest/(.*)$ /components/artemis-console/newdocs/1.5.0/$1 [L]
