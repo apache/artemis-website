@@ -1,5 +1,7 @@
 RewriteEngine On
 
+RewriteBase /components/artemis-console/newdocs/
+
 # 1. Force the trailing slash for the "bare" URL so paths don't break
 RewriteRule ^latest$ latest/ [R=301,L]
 
