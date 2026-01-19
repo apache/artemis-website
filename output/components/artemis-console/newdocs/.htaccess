@@ -1,4 +1,7 @@
 RewriteEngine On
 
-RewriteRule ^latest$ /components/artemis-console/newdocs/1.5.0/ [L]
+# 1. Force the trailing slash for the "bare" URL so paths don't break
+RewriteRule ^latest$ /latest/ [R=301,L]
+
+# 2. Internal rewrite for everything else
 RewriteRule ^latest/(.*)$ /components/artemis-console/newdocs/1.5.0/$1 [L]
