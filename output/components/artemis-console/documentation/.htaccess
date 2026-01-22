@@ -2,6 +2,9 @@ RewriteEngine On
 
 RewriteBase /components/artemis-console/documentation/
 
+# 1. There's no landing page so redirect to the latest docs
+RewriteRule ^$ latest/ [L,R=301]
+
 # 2. Force the trailing slash for the "bare" version URL so paths don't break
 RewriteRule ^version/1.5.0$ version/1.5.0/ [R=301,L]
 
