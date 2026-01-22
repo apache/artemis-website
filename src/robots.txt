@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /components/artemis/documentation/previous/
+Disallow: /components/artemis-console/documentation/version/

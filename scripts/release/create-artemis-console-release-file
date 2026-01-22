@@ -28,6 +28,7 @@ version: {version}
 release_date: {date_string}
 title: Artemis Console {version}
 shortDescription: Bug fix release.
+docs_version: {version}
 ---
 """
 

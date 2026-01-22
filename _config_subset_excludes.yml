@@ -6,5 +6,6 @@
 exclude: [
 vendor,
 components/artemis/documentation/javadocs/javadoc-latest,
-components/artemis/documentation/previous/
+components/artemis/documentation/previous/,
+components/artemis-console/documentation/version/
 ]

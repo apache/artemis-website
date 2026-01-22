@@ -6,7 +6,7 @@
           <p style="font-size: 50px">{{ page.project_name }}</p>
           <p style="font-size: 20px">{{ page.project_info }}</p>
           <a style="margin-top: 20px" href="download" class="btn btn-primary btn-lg btn-outline-light">Download<i class="fa-download fa btn-icon"></i></a>
-          <a style="margin-top: 20px" href="documentation" class="btn btn-primary btn-lg btn-outline-light">Read the Docs<i class="fa-book fa btn-icon"></i></a>
+          <a style="margin-top: 20px" href="{{ page.documentation_dir | default: 'documentation' }}" class="btn btn-primary btn-lg btn-outline-light">Read the Docs<i class="fa-book fa btn-icon"></i></a>
       </div>
       <div class="col-3 align-middle"></div>
     </div>

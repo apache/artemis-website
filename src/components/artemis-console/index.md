@@ -4,6 +4,7 @@ project_name: Apache Artemis Console
 project_info: The Next Generation Artemis Console built on HawtIO 4
 project_class: artemis
 project_color: purple
+documentation_dir: documentation/latest/
 ---
 
 Apache Artemis Console is the next generation console for Artemis that is built on top of [HawtIO](https://hawt.io/) and written using [React](https://react.dev/) and [Patternfly](https://www.patternfly.org/).

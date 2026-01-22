@@ -1,3 +1,10 @@
+{% if include.latest_docs %}
+  {% assign docs_version = "latest" %}
+  {% assign docs_prefix = "../documentation" %}
+{% else %}
+  {% assign docs_version = include.release.docs_version %}
+  {% assign docs_prefix = "../documentation/version" %}
+{% endif %}
 {% if include.release.activemq_tlp %}
   {% assign project_dir = "activemq" %}
   {% assign component_dir = "activemq-artemis-console" %}
@@ -7,7 +14,7 @@
 {% endif %}
 
 #### Apache Artemis Console {{include.release.version}}  ({{include.release.release_date | date_to_string: "ordinal", "US"}})
-[Release Notes](release-notes-{{include.release.version}}) | [Documentation](../documentation/)
+[Release Notes](release-notes-{{include.release.version}}) | [Documentation]({{docs_prefix}}/{{docs_version}})
 
 {% if include.is_current_release %}
   {% capture distro_url_base %}https://www.apache.org/dyn/closer.lua?filename={{project_dir}}/{{component_dir}}/{{include.release.version}}{% endcapture %}
