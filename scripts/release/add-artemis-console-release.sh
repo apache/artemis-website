@@ -24,13 +24,13 @@ error () {
    echo ""
    echo "** ERROR: $@ **"
    echo ""
-   echo "Usage: ./scripts/release/add-artemis-console-release.sh <new-release-version>"
+   echo "Usage: ./scripts/release/add-artemis-console-release.sh <path.to/artemis-console> <previous-release-version> <new-release-version>"
    echo ""
    echo "Must be run from within an artemis-website checkout root."
    echo ""
    echo "Example:"
    echo "cd <path.to>/artemis-website"
-   echo "./scripts/release/add-artemis-console-release.sh 1.0.0"
+   echo "./scripts/release/add-artemis-console-release.sh ../release-work/artemis-console 1.4.0 1.5.0"
    echo ""
    exit 64
 }
@@ -41,16 +41,21 @@ if [ ! -f serve.sh ] || [ ! -f _config.yml ]; then
 fi
 WEBSITE_DIR="$( pwd )"
 
-if [ "$#" -lt 1 ]; then
-  error "The new Artemis Console release version must be specified"
+if [ "$#" -lt 3 ]; then
+  error "The Artemis Console release process checkout, prior Artemis Consle release, and new Artemis Console release versions must all be specified"
   exit 1
 fi
 
-NEW_VERSION="$1"
+ARTEMIS_CONSOLE_DIR="$( cd -- "$1" >/dev/null 2>&1 ; pwd -P )"
+PRIOR_VERSION="$2"
+NEW_VERSION="$3"
 
 ./scripts/release/create-artemis-console-release-file $NEW_VERSION
 
 ./scripts/release/create-artemis-console-release-notes $NEW_VERSION
+
+cd $WEBSITE_DIR
+./scripts/release/update-artemis-console-docs.sh $ARTEMIS_CONSOLE_DIR $PRIOR_VERSION $NEW_VERSION
 
 echo ""
 echo "Files created for adding release. See output above for details."
