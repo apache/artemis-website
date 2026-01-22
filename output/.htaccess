@@ -14,3 +14,7 @@ RewriteRule ^components/artemis/documentation/2.40.0(/?.*)$ https://%{SERVER_NAM
 RewriteRule ^components/artemis/documentation/2.41.0(/?.*)$ https://%{SERVER_NAME}/components/artemis/documentation/previous/2.41.0$1 [R=301,L]
 RewriteRule ^components/artemis/documentation/2.42.0(/?.*)$ https://%{SERVER_NAME}/components/artemis/documentation/previous/2.42.0$1 [R=301,L]
 RewriteRule ^components/artemis/documentation/2.43.0(/?.*)$ https://%{SERVER_NAME}/components/artemis/documentation/previous/2.43.0$1 [R=301,L]
+RewriteRule ^components/artemis-console/documentation(/?)$ https://%{SERVER_NAME}/components/artemis-console/documentation/latest/ [R=301,L]
+RewriteRule ^components/artemis-console/documentation/index(.*)$ https://%{SERVER_NAME}/components/artemis-console/documentation/latest/ [R=301,L]
+RewriteRule ^components/artemis-console/documentation/console(.*)$ https://%{SERVER_NAME}/components/artemis-console/documentation/latest/ [R=301,L]
+RewriteRule ^components/artemis-console/documentation/deploying(.*)$ https://%{SERVER_NAME}/components/artemis-console/documentation/latest/ [R=301,L]

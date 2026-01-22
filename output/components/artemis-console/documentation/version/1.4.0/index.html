@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
         <a class="navbar-brand mr-auto" href="/"><img src="/assets/img/artemis_text_black_small.png" style="height: 50px"/></a>
         <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,66 +78,42 @@
     </div>
 </nav>
 
-    <div class="content">
-      <div class="row">
-  <div class="col-12 slider slider-artemis slider-sm parent d-none d-xl-block">
-    <div class="row child" style="width: 100%">
-      <div class="col-3 align-middle"></div>
-      <div class="col-6 slider-text align-middle">
-          <p style="font-size: 50px">Apache Artemis Console</p>
-          <p style="font-size: 20px">The Next Generation Artemis Console built on HawtIO 4</p>
-          <a style="margin-top: 20px" href="download" class="btn btn-primary btn-lg btn-outline-light">Download<i class="fa-download fa btn-icon"></i></a>
-          <a style="margin-top: 20px" href="documentation/latest/" class="btn btn-primary btn-lg btn-outline-light">Read the Docs<i class="fa-book fa btn-icon"></i></a>
+<div class="content">
+  <div class="page-title-artemis">
+    <div class="container">
+      <h1>Apache Artemis Console Documentation</h1>
+    </div>
+  </div>
+  <div class="container" >
+    <div class="row" style="margin-top: 30px">
+      <div class="col-12 artemis">
+        <ul>
+  <li><a href="deploying">Deploying</a>
+    <ul>
+      <li><a href="deploying">Deploying in Artemis</a></li>
+      <li><a href="deploying#deploying-in-jetty">Deploying in Jetty</a></li>
+      <li><a href="deploying#deploying-in-tomcat">Deploying in Tomcat</a></li>
+    </ul>
+  </li>
+  <li><a href="console">Using the Console</a>
+    <ul>
+      <li><a href="console#connecting-to-the-broker">Connecting to the Broker</a></li>
+      <li><a href="console#navigating-theartemis-views">Navigating the Artemis Views</a>
+        <ul>
+          <li><a href="console#artemis-jmx-view">The Artemis JMX View</a></li>
+          <li><a href="console#artemis-view">The Artemis View</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
       </div>
-      <div class="col-3 align-middle"></div>
     </div>
   </div>
 </div>
-
-			<div class="row project-narative">
-			  <div class="col-12">
-			    <div class="container artemis">
-			      <!-- Narative 2 -->
-			      <div class="row">
-			        <div class="col-12">
-			          <div class="card card-purple">
-			            <div class="card-body">
-			              <div class="row">
-			                <div class="col-sm-12 col-md-10">
-			                  <div class="card">
-			                    <div class="card-body">
-			                      <p>Apache Artemis Console is the next generation console for Artemis that is built on top of <a href="https://hawt.io/">HawtIO</a> and written using <a href="https://react.dev/">React</a> and <a href="https://www.patternfly.org/">Patternfly</a>.</p>
-
-<p>The console connects to the <a href="https://jolokia.org/">Jolokia</a> endpoint and allows the management of Artemis resources.</p>
-
-<hr />
-
-<h4 id="features">Features</h4>
-
-<ul>
-  <li>Resource Management including</li>
-  <li>Creation and Deletion of Addresses and Queues</li>
-  <li>Moving and Deleting of Messages</li>
-  <li>Sending and Browsing of Messages</li>
-  <li>Deploy Standalone and connect to any running Artemis Broker</li>
-  <li>Supports <a href="https://datatracker.ietf.org/doc/html/rfc6749">Oauth2</a> Authentication</li>
-  <li>Exposes runtime and Artemis JMX management</li>
-  <li>View Artemis Network Status</li>
-</ul>
-
-			                    </div>
-			                  </div>
-			                </div>
-			              </div>
-			            </div>
-			          </div>
-			        </div>
-			      </div>
-			    </div>
-			  </div>
-			</div>      
-    </div>
-    <div class="row sitemap">
+<div class="row sitemap">
   <div class="col-sm-12">
     <div class="container">
       <div class="row">
