@@ -36,7 +36,7 @@ error () {
 }
 
 if [ ! -f serve.sh ] || [ ! -f _config.yml ]; then
-    error "This script has to be run from inside the root of an activemq-website checkout"
+    error "This script has to be run from inside the root of an artemis-website checkout"
     exit 1
 fi
 WEBSITE_DIR="$( pwd )"
