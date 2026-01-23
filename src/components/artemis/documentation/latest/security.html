@@ -34,52 +34,58 @@
 <div id="header">
 <h1>Authentication &amp; Authorization</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#basic-configuration">1. Basic Configuration</a></li>
-<li><a href="#caching-security-operations">2. Caching Security Operations</a></li>
-<li><a href="#tracking-the-validated-user">3. Tracking the Validated User</a></li>
-<li><a href="#role-based-security-for-addresses">4. Role based security for addresses</a>
+<li><a href="#boot-time-security-configuration-via-system-properties">2. Boot-time Security Configuration via System Properties</a>
 <ul class="sectlevel2">
-<li><a href="#fine-grained-security-using-fully-qualified-queue-name">4.1. Fine-grained security using fully qualified queue name</a></li>
-<li><a href="#applying-view-and-edit-permissions-to-the-management-api">4.2. Applying <code>view</code> and <code>edit</code> permissions to the management api</a></li>
+<li><a href="#jaas-security-via-system-properties">2.1. JAAS Security via System Properties</a></li>
+<li><a href="#custom-security-manager-via-system-properties">2.2. Custom Security Manager via System Properties</a></li>
 </ul>
 </li>
-<li><a href="#security-setting-plugin">5. Security Setting Plugin</a>
+<li><a href="#caching-security-operations">3. Caching Security Operations</a></li>
+<li><a href="#tracking-the-validated-user">4. Tracking the Validated User</a></li>
+<li><a href="#role-based-security-for-addresses">5. Role-based security for addresses</a>
 <ul class="sectlevel2">
-<li><a href="#available-plugins">5.1. Available plugins</a></li>
+<li><a href="#fine-grained-security-using-a-fully-qualified-queue-name">5.1. Fine-grained security using a fully qualified queue name</a></li>
+<li><a href="#applying-view-and-edit-permissions-to-the-management-api">5.2. Applying <code>view</code> and <code>edit</code> permissions to the management api</a></li>
 </ul>
 </li>
-<li><a href="#secure-sockets-layer-ssl-transport">6. Secure Sockets Layer (SSL) Transport</a></li>
-<li><a href="#user-credentials">7. User credentials</a>
+<li><a href="#security-setting-plugin">6. Security Setting Plugin</a>
 <ul class="sectlevel2">
-<li><a href="#jaas-security-manager">7.1. JAAS Security Manager</a></li>
-<li><a href="#jaas-login-modules">7.2. JAAS Login Modules</a></li>
-<li><a href="#scram-sha-sasl-mechanism">7.3. SCRAM-SHA SASL Mechanism</a></li>
-<li><a href="#kerberos-authentication">7.4. Kerberos Authentication</a></li>
-<li><a href="#role-mapping">7.5. Role Mapping</a></li>
-<li><a href="#basic-security-manager">7.6. Basic Security Manager</a></li>
+<li><a href="#available-plugins">6.1. Available plugins</a></li>
 </ul>
 </li>
-<li><a href="#mapping-external-roles">8. Mapping external roles</a></li>
-<li><a href="#sasl">9. SASL</a></li>
-<li><a href="#changing-the-usernamepassword-for-clustering">10. Changing the username/password for clustering</a></li>
-<li><a href="#securing-the-console">11. Securing the console</a>
+<li><a href="#secure-sockets-layer-ssl-transport">7. Secure Sockets Layer (SSL) Transport</a></li>
+<li><a href="#user-credentials">8. User credentials</a>
 <ul class="sectlevel2">
-<li><a href="#config-access-using-client-certificates">11.1. Config access using client certificates</a></li>
+<li><a href="#jaas-security-manager">8.1. JAAS Security Manager</a></li>
+<li><a href="#jaas-login-modules">8.2. JAAS Login Modules</a></li>
+<li><a href="#scram-sha-sasl-mechanism">8.3. SCRAM-SHA SASL Mechanism</a></li>
+<li><a href="#kerberos-authentication">8.4. Kerberos Authentication</a></li>
+<li><a href="#role-mapping">8.5. Role Mapping</a></li>
+<li><a href="#basic-security-manager">8.6. Basic Security Manager</a></li>
 </ul>
 </li>
-<li><a href="#controlling-jms-objectmessage-deserialization">12. Controlling JMS ObjectMessage deserialization</a>
+<li><a href="#mapping-external-roles">9. Mapping external roles</a></li>
+<li><a href="#sasl">10. SASL</a></li>
+<li><a href="#changing-the-usernamepassword-for-clustering">11. Changing the username/password for clustering</a></li>
+<li><a href="#securing-the-console">12. Securing the console</a>
 <ul class="sectlevel2">
-<li><a href="#config-via-connection-factories">12.1. Config via Connection Factories</a></li>
-<li><a href="#config-via-system-properties">12.2. Config via system properties</a></li>
-<li><a href="#config-for-resource-adapters">12.3. Config for resource adapters</a></li>
+<li><a href="#config-access-using-client-certificates">12.1. Config access using client certificates</a></li>
 </ul>
 </li>
-<li><a href="#masking-passwords">13. Masking Passwords</a></li>
-<li><a href="#custom-security-manager">14. Custom Security Manager</a></li>
-<li><a href="#per-acceptor-security-domains">15. Per-Acceptor Security Domains</a></li>
-<li><a href="#uuid-resources">16. UUID Resources</a></li>
+<li><a href="#controlling-jms-objectmessage-deserialization">13. Controlling JMS ObjectMessage deserialization</a>
+<ul class="sectlevel2">
+<li><a href="#config-via-connection-factories">13.1. Config via Connection Factories</a></li>
+<li><a href="#config-via-system-properties">13.2. Config via system properties</a></li>
+<li><a href="#config-for-resource-adapters">13.3. Config for resource adapters</a></li>
+</ul>
+</li>
+<li><a href="#masking-passwords">14. Masking Passwords</a></li>
+<li><a href="#custom-security-manager">15. Custom Security Manager</a></li>
+<li><a href="#per-acceptor-security-domains">16. Per-Acceptor Security Domains</a></li>
+<li><a href="#uuid-resources">17. UUID Resources</a></li>
 </ul>
 </div>
 </div>
@@ -87,7 +93,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter describes how security works with Apache ActiveMQ Artemis and how you can configure it.</p>
+<p>This chapter describes how security works with Apache Artemis and how you can configure it.</p>
 </div>
 </div>
 </div>
@@ -111,7 +117,88 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="caching-security-operations"><a class="anchor" href="#caching-security-operations"></a><a class="link" href="#caching-security-operations">2. Caching Security Operations</a></h2>
+<h2 id="boot-time-security-configuration-via-system-properties"><a class="anchor" href="#boot-time-security-configuration-via-system-properties"></a><a class="link" href="#boot-time-security-configuration-via-system-properties">2. Boot-time Security Configuration via System Properties</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Security configuration can be provided at boot time via system properties, which will override any security settings defined in <code>bootstrap.xml</code>.
+This is useful for containerized deployments or scenarios where configuration needs to be injected without modifying configuration files.</p>
+</div>
+<div class="sect2">
+<h3 id="jaas-security-via-system-properties"><a class="anchor" href="#jaas-security-via-system-properties"></a><a class="link" href="#jaas-security-via-system-properties">2.1. JAAS Security via System Properties</a></h3>
+<div class="paragraph">
+<p>To configure JAAS security at boot time, use the following system properties:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">securityconfig.jaas.domain</dt>
+<dd>
+<p>The name of the JAAS login configuration entry to use for authentication.
+This is equivalent to the <code>domain</code> attribute of the <code>&lt;jaas-security&gt;</code> element in <code>bootstrap.xml</code>.</p>
+</dd>
+<dt class="hdlist1">securityconfig.jaas.certificateDomain</dt>
+<dd>
+<p>The name of the JAAS login configuration entry to use for certificate-based authentication.
+This is equivalent to the <code>certificate-domain</code> attribute of the <code>&lt;jaas-security&gt;</code> element in <code>bootstrap.xml</code>.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>For example, to start the broker with JAAS security configured via system properties:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="sh">./artemis run <span class="nt">-Dsecurityconfig</span>.jaas.domain<span class="o">=</span>MyDomain <span class="nt">-Dsecurityconfig</span>.jaas.certificateDomain<span class="o">=</span>MyCertDomain</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="custom-security-manager-via-system-properties"><a class="anchor" href="#custom-security-manager-via-system-properties"></a><a class="link" href="#custom-security-manager-via-system-properties">2.2. Custom Security Manager via System Properties</a></h3>
+<div class="paragraph">
+<p>To configure a custom security manager at boot time, use the following system properties:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">securityconfig.manager.className</dt>
+<dd>
+<p>The fully qualified class name of the security manager implementation.
+This is equivalent to the <code>class-name</code> attribute of the <code>&lt;security-manager&gt;</code> element in <code>bootstrap.xml</code>.</p>
+</dd>
+<dt class="hdlist1">securityconfig.manager.properties.&lt;key&gt;</dt>
+<dd>
+<p>Properties to pass to the security manager.
+Each property key after the <code>properties.</code> prefix will be passed as a configuration property to the security manager.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>For example, to start the broker with the basic security manager configured via system properties:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="sh">./artemis run <span class="se">\</span>
+  <span class="nt">-Dsecurityconfig</span>.manager.className<span class="o">=</span>org.apache.activemq.artemis.spi.core.security.ActiveMQBasicSecurityManager <span class="se">\</span>
+  <span class="nt">-Dsecurityconfig</span>.manager.properties.bootstrapUser<span class="o">=</span>admin <span class="se">\</span>
+  <span class="nt">-Dsecurityconfig</span>.manager.properties.bootstrapPassword<span class="o">=</span>admin <span class="se">\</span>
+  <span class="nt">-Dsecurityconfig</span>.manager.properties.bootstrapRole<span class="o">=</span>amq</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When security configuration is provided via system properties, it takes precedence over any security configuration in <code>bootstrap.xml</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="caching-security-operations"><a class="anchor" href="#caching-security-operations"></a><a class="link" href="#caching-security-operations">3. Caching Security Operations</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For performance reasons both <strong>authentication and authorization is cached</strong> independently.
@@ -129,7 +216,7 @@ The default is <code>10000</code> ms.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="tracking-the-validated-user"><a class="anchor" href="#tracking-the-validated-user"></a><a class="link" href="#tracking-the-validated-user">3. Tracking the Validated User</a></h2>
+<h2 id="tracking-the-validated-user"><a class="anchor" href="#tracking-the-validated-user"></a><a class="link" href="#tracking-the-validated-user">4. Tracking the Validated User</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To assist in security auditing the <code>populate-validated-user</code> option exists.
@@ -147,22 +234,14 @@ This option is <code>false</code> by default.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="role-based-security-for-addresses"><a class="anchor" href="#role-based-security-for-addresses"></a><a class="link" href="#role-based-security-for-addresses">4. Role based security for addresses</a></h2>
+<h2 id="role-based-security-for-addresses"><a class="anchor" href="#role-based-security-for-addresses"></a><a class="link" href="#role-based-security-for-addresses">5. Role-based security for addresses</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis contains a flexible role-based security model for applying security to queues, based on their addresses.</p>
+<p>Role-based security is applied to queues based on their address.
+Either an exact match on the address or a <a href="wildcard-syntax.html#wildcard-syntax">wildcard match</a> can be used.</p>
 </div>
 <div class="paragraph">
-<p>As explained in <a href="core.html#using-core">Using Core</a>, Apache ActiveMQ Artemis core consists mainly of sets of queues bound to addresses.
-A message is sent to an address and the server looks up the set of queues that are bound to that address, the server then routes the message to those set of queues.</p>
-</div>
-<div class="paragraph">
-<p>Apache ActiveMQ Artemis allows sets of permissions to be defined against the queues based on their address.
-An exact match on the address can be used or a <a href="wildcard-syntax.html#wildcard-syntax">wildcard match</a> can be used.</p>
-</div>
-<div class="paragraph">
-<p>There are different permissions that can be given to the set of queues which match the address.
-Those permissions are:</p>
+<p>Here are different permissions that can be granted:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -209,7 +288,7 @@ Those permissions are:</p>
 </dl>
 </div>
 <div class="paragraph">
-<p>The following two permissions pertain to operations on the <a href="management.html#management">management apis</a> of the broker. They split management operations into two sets, read only for <code>view</code>, and <code>edit</code> for mutating operations. The split is controlled by a regular expression. Methods that match will require the <code>view</code> permission, all others require <code>edit</code>. The regular expression can be modified through the configuration attribute <a href="configuration-index.html#view-permission-method-match-pattern"><code>view-permission-method-match-pattern</code></a>. These permissions are applicable to the <a href="management.html#fine-grained-rbac-on-management-messages">management address</a> and to <a href="management.html#jmx-authorization-in-broker-xml">MBean access</a>. They are granted to match addresses prefixed with the <a href="configuration-index.html#management-rbac-prefix">management prefix</a>.</p>
+<p>The following two permissions pertain to operations on the <a href="management.html#management">management apis</a> of the broker. They split management operations into two sets, read-only for <code>view</code>, and <code>edit</code> for mutating operations. The split is controlled by a regular expression. Methods that match will require the <code>view</code> permission, all others require <code>edit</code>. The regular expression can be modified through the configuration attribute <a href="configuration-index.html#view-permission-method-match-pattern"><code>view-permission-method-match-pattern</code></a>. These permissions are applicable to the <a href="management.html#fine-grained-rbac-on-management-messages">management address</a> and to <a href="management.html#jmx-authorization-in-broker-xml">MBean access</a>. They are granted to match addresses prefixed with the <a href="configuration-index.html#management-rbac-prefix">management prefix</a>.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -245,27 +324,24 @@ If the user has any of those roles, he/she will be granted that permission for t
 <div class="paragraph">
 <p>Using the default <a href="wildcard-syntax.html#wildcard-syntax">wildcard syntax</a> the <code>#</code> character signifies "any sequence of words".
 Words are delimited by the <code>.</code> character.
-Therefore, the above security block applies to any address that starts with the string "globalqueues.europe.".</p>
+Therefore, the above security block applies to any address that starts with the string <code>globalqueues.europe.</code>.</p>
 </div>
 <div class="paragraph">
-<p>Only users who have the <code>admin</code> role can create or delete durable queues bound to an address that starts with the string "globalqueues.europe."</p>
+<p>Only users who have the <code>admin</code> role can create or delete durable queues bound to an address that starts with the string <code>globalqueues.europe.</code>.</p>
 </div>
 <div class="paragraph">
-<p>Any users with the roles <code>admin</code>, <code>guest</code>, or <code>europe-users</code> can create or delete temporary queues bound to an address that starts with the string "globalqueues.europe."</p>
+<p>Any users with the roles <code>admin</code>, <code>guest</code>, or <code>europe-users</code> can create or delete temporary queues bound to an address that starts with the string <code>globalqueues.europe.</code>.</p>
 </div>
 <div class="paragraph">
-<p>Any users with the roles <code>admin</code> or <code>europe-users</code> can send messages to these addresses or consume messages from queues bound to an address that starts with the string "globalqueues.europe."</p>
+<p>Any users with the roles <code>admin</code> or <code>europe-users</code> can send messages to these addresses or consume messages from queues bound to an address that starts with the string <code>globalqueues.europe.</code>.</p>
 </div>
 <div class="paragraph">
-<p>The mapping between a user and what roles they have is handled by the security manager.
-Apache ActiveMQ Artemis ships with a user manager that reads user credentials from a file on disk, and can also plug into JAAS or JBoss Application Server security.</p>
+<p>The security manager handles the mapping between a user and what roles they have.
+For more information on configuring the security manager, please see <a href="#user-credentials">here</a>.</p>
 </div>
 <div class="paragraph">
-<p>For more information on configuring the security manager, please see 'Changing the Security Manager'.</p>
-</div>
-<div class="paragraph">
-<p>There can be zero or more <code>security-setting</code> elements in each xml file.
-Where more than one match applies to a set of addresses the <em>more specific</em> match takes precedence.</p>
+<p>There can be zero or more <code>security-setting</code> elements where more than one match applies to a set of addresses.
+The <em>more specific</em> match takes precedence.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s look at an example of that, here&#8217;s another <code>security-setting</code> block:</p>
@@ -289,10 +365,10 @@ The permissions <code>createDurableQueue</code>, <code>deleteDurableQueue</code>
 </div>
 <div class="paragraph">
 <p>By not inheriting permissions, it allows you to effectively deny permissions in more specific <code>security-setting</code> blocks by simply not specifying them.
-Otherwise it would not be possible to deny permissions in sub-groups of addresses.</p>
+Otherwise, it would not be possible to deny permissions in sub-groups of addresses.</p>
 </div>
 <div class="sect2">
-<h3 id="fine-grained-security-using-fully-qualified-queue-name"><a class="anchor" href="#fine-grained-security-using-fully-qualified-queue-name"></a><a class="link" href="#fine-grained-security-using-fully-qualified-queue-name">4.1. Fine-grained security using fully qualified queue name</a></h3>
+<h3 id="fine-grained-security-using-a-fully-qualified-queue-name"><a class="anchor" href="#fine-grained-security-using-a-fully-qualified-queue-name"></a><a class="link" href="#fine-grained-security-using-a-fully-qualified-queue-name">5.1. Fine-grained security using a fully qualified queue name</a></h3>
 <div class="paragraph">
 <p>In certain situations it may be necessary to configure security that is more fine-grained that simply across an entire address.
 For example, consider an address with multiple queues:</p>
@@ -371,7 +447,7 @@ The explicit goal of using FQQN here is to be <em>exact</em>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="applying-view-and-edit-permissions-to-the-management-api"><a class="anchor" href="#applying-view-and-edit-permissions-to-the-management-api"></a><a class="link" href="#applying-view-and-edit-permissions-to-the-management-api">4.2. Applying <code>view</code> and <code>edit</code> permissions to the management api</a></h3>
+<h3 id="applying-view-and-edit-permissions-to-the-management-api"><a class="anchor" href="#applying-view-and-edit-permissions-to-the-management-api"></a><a class="link" href="#applying-view-and-edit-permissions-to-the-management-api">5.2. Applying <code>view</code> and <code>edit</code> permissions to the management api</a></h3>
 <div class="paragraph">
 <p>The <code>view</code> and <code>edit</code> permissions are optionally applied to the management apis of the broker.</p>
 </div>
@@ -388,7 +464,7 @@ The explicit goal of using FQQN here is to be <em>exact</em>.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="security-setting-plugin"><a class="anchor" href="#security-setting-plugin"></a><a class="link" href="#security-setting-plugin">5. Security Setting Plugin</a></h2>
+<h2 id="security-setting-plugin"><a class="anchor" href="#security-setting-plugin"></a><a class="link" href="#security-setting-plugin">6. Security Setting Plugin</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Aside from configuring sets of permissions via XML these permissions can alternatively be configured via a plugin which implements <code>org.apache.activemq.artemis.core.server.SecuritySettingPlugin</code> e.g.:</p>
@@ -427,12 +503,12 @@ However, there are two configuration details that will be specified for every im
 <p>See the JavaDoc on <code>org.apache.activemq.artemis.core.server.SecuritySettingPlugin</code> for further details about the interface and what each method is expected to do.</p>
 </div>
 <div class="sect2">
-<h3 id="available-plugins"><a class="anchor" href="#available-plugins"></a><a class="link" href="#available-plugins">5.1. Available plugins</a></h3>
+<h3 id="available-plugins"><a class="anchor" href="#available-plugins"></a><a class="link" href="#available-plugins">6.1. Available plugins</a></h3>
 <div class="sect3">
-<h4 id="legacyldapsecuritysettingplugin"><a class="anchor" href="#legacyldapsecuritysettingplugin"></a><a class="link" href="#legacyldapsecuritysettingplugin">5.1.1. LegacyLDAPSecuritySettingPlugin</a></h4>
+<h4 id="legacyldapsecuritysettingplugin"><a class="anchor" href="#legacyldapsecuritysettingplugin"></a><a class="link" href="#legacyldapsecuritysettingplugin">6.1.1. LegacyLDAPSecuritySettingPlugin</a></h4>
 <div class="paragraph">
-<p>This plugin will read the security information that was previously handled by <a href="http://activemq.apache.org/security.html"><code>LDAPAuthorizationMap</code></a> and the <a href="http://activemq.apache.org/cached-ldap-authorization-module.html"><code>cachedLDAPAuthorizationMap</code></a> in Apache ActiveMQ Classic and turn it into Artemis security settings where possible.
-The security implementations of ActiveMQ Classic and Artemis don&#8217;t match perfectly so some translation must occur to achieve near equivalent functionality.</p>
+<p>This plugin will read the security information that was previously handled by <a href="http://activemq.apache.org/security.html"><code>LDAPAuthorizationMap</code></a> and the <a href="http://activemq.apache.org/cached-ldap-authorization-module.html"><code>cachedLDAPAuthorizationMap</code></a> in Apache ActiveMQ and turn it into Artemis security settings where possible.
+The security implementations of ActiveMQ and Artemis don&#8217;t match perfectly so some translation must occur to achieve near equivalent functionality.</p>
 </div>
 <div class="paragraph">
 <p>Here is an example of the plugin&#8217;s configuration:</p>
@@ -595,12 +671,12 @@ The default value is <code>.</code>.</p>
 </dl>
 </div>
 <div class="paragraph">
-<p>The name of the queue or topic defined in LDAP will serve as the "match" for the security-setting, the permission value will be mapped from the ActiveMQ Classic type to the Artemis type, and the role will be mapped as-is.</p>
+<p>The name of the queue or topic defined in LDAP will serve as the "match" for the security-setting, the permission value will be mapped from the ActiveMQ type to the Artemis type, and the role will be mapped as-is.</p>
 </div>
 <div class="paragraph">
-<p>ActiveMQ Classic only has 3 permission types - <code>read</code>, <code>write</code>, and <code>admin</code>.
+<p>ActiveMQ only has 3 permission types - <code>read</code>, <code>write</code>, and <code>admin</code>.
 These permission types are described on their <a href="http://activemq.apache.org/security.html">website</a>.
-However, as described previously, ActiveMQ Artemis has 9 permission types - <code>createAddress</code>, <code>deleteAddress</code>, <code>createDurableQueue</code>, <code>deleteDurableQueue</code>, <code>createNonDurableQueue</code>, <code>deleteNonDurableQueue</code>, <code>send</code>, <code>consume</code>, <code>browse</code>, and <code>manage</code>.
+However, as described previously, Artemis has 9 permission types - <code>createAddress</code>, <code>deleteAddress</code>, <code>createDurableQueue</code>, <code>deleteDurableQueue</code>, <code>createNonDurableQueue</code>, <code>deleteNonDurableQueue</code>, <code>send</code>, <code>consume</code>, <code>browse</code>, and <code>manage</code>.
 Here&#8217;s how the old types are mapped to the new types:</p>
 </div>
 <div class="dlist">
@@ -625,12 +701,12 @@ Here&#8217;s how the old types are mapped to the new types:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>This mapping doesn&#8217;t include the Artemis <code>manage</code> permission type by default since there is no type analogous for that in ActiveMQ Classic.
+<p>This mapping doesn&#8217;t include the Artemis <code>manage</code> permission type by default since there is no type analogous for that in ActiveMQ.
 However, if <code>mapAdminToManage</code> is <code>true</code> then the legacy <code>admin</code> permission will be mapped to the <code>manage</code> permission.</p>
 </li>
 <li>
-<p>The <code>admin</code> permission in ActiveMQ Classic relates to whether or not the broker will auto-create a destination if it doesn&#8217;t exist and the user sends a message to it.
-Artemis automatically allows the automatic creation of a destination if the user has permission to send message to it.
+<p>The <code>admin</code> permission in ActiveMQ relates to whether or not the broker will auto-create a destination if it doesn&#8217;t exist and the user sends a message to it.
+Artemis automatically allows the automatic creation of a destination if the user has permission to send messages to it.
 Therefore, the plugin will map the <code>admin</code> permission to the 6 aforementioned permissions in Artemis by default.
 If <code>mapAdminToManage</code> is <code>true</code> then the legacy <code>admin</code> permission will be mapped to the <code>manage</code> permission as well.</p>
 </li>
@@ -641,10 +717,10 @@ If <code>mapAdminToManage</code> is <code>true</code> then the legacy <code>admi
 </div>
 </div>
 <div class="sect1">
-<h2 id="secure-sockets-layer-ssl-transport"><a class="anchor" href="#secure-sockets-layer-ssl-transport"></a><a class="link" href="#secure-sockets-layer-ssl-transport">6. Secure Sockets Layer (SSL) Transport</a></h2>
+<h2 id="secure-sockets-layer-ssl-transport"><a class="anchor" href="#secure-sockets-layer-ssl-transport"></a><a class="link" href="#secure-sockets-layer-ssl-transport">7. Secure Sockets Layer (SSL) Transport</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When messaging clients are connected to servers, or servers are connected to other servers (e.g. via bridges) over an untrusted network then Apache ActiveMQ Artemis allows that traffic to be encrypted using the Secure Sockets Layer (SSL) transport.</p>
+<p>When messaging clients are connected to servers, or servers are connected to other servers (e.g. via bridges) over an untrusted network, then traffic can be encrypted using the Secure Sockets Layer (SSL) transport.</p>
 </div>
 <div class="paragraph">
 <p>For more information on configuring the SSL transport, please see <a href="configuring-transports.html#configuring-the-transport">Configuring the Transport</a>.</p>
@@ -652,16 +728,16 @@ If <code>mapAdminToManage</code> is <code>true</code> then the legacy <code>admi
 </div>
 </div>
 <div class="sect1">
-<h2 id="user-credentials"><a class="anchor" href="#user-credentials"></a><a class="link" href="#user-credentials">7. User credentials</a></h2>
+<h2 id="user-credentials"><a class="anchor" href="#user-credentials"></a><a class="link" href="#user-credentials">8. User credentials</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis ships with three security manager implementations:</p>
+<p>Three security manager implementations are available:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p>The flexible, pluggable <code>ActiveMQJAASSecurityManager</code> which supports any standard JAAS login module.
-Artemis ships with several login modules which will be discussed further down.
+Several login modules (discussed later) are available.
 This is the default security manager.</p>
 </li>
 <li>
@@ -675,11 +751,12 @@ All user &amp; role data is stored in the broker&#8217;s bindings journal which 
 </ul>
 </div>
 <div class="sect2">
-<h3 id="jaas-security-manager"><a class="anchor" href="#jaas-security-manager"></a><a class="link" href="#jaas-security-manager">7.1. JAAS Security Manager</a></h3>
+<h3 id="jaas-security-manager"><a class="anchor" href="#jaas-security-manager"></a><a class="link" href="#jaas-security-manager">8.1. JAAS Security Manager</a></h3>
 <div class="paragraph">
 <p>When using the Java Authentication and Authorization Service (JAAS) much of the configuration depends on which login module is used.
 However, there are a few commonalities for every case.
 The first place to look is in <code>bootstrap.xml</code>.
+Alternatively, JAAS security can be configured at boot time via system properties as described in <a href="#jaas-security-via-system-properties">JAAS Security via System Properties</a>.
 Here is an example using the <code>PropertiesLogin</code> JAAS login module which reads user, password, and role information from properties files:</p>
 </div>
 <div class="listingblock">
@@ -724,10 +801,10 @@ In short, the file defines:</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>By default, the location and name of <code>login.config</code> is specified on the Artemis command-line which is set by <code>etc/artemis.profile</code> on linux and  <code>etc\artemis.profile.cmd</code> on Windows.</p>
+<p>By default, the location and name of <code>login.config</code> is specified on the command-line which is set by <code>etc/artemis.profile</code> on Linux and  <code>etc\artemis.profile.cmd</code> on Windows.</p>
 </div>
 <div class="sect3">
-<h4 id="dual-authentication"><a class="anchor" href="#dual-authentication"></a><a class="link" href="#dual-authentication">7.1.1. Dual Authentication</a></h4>
+<h4 id="dual-authentication"><a class="anchor" href="#dual-authentication"></a><a class="link" href="#dual-authentication">8.1.1. Dual Authentication</a></h4>
 <div class="paragraph">
 <p>The JAAS Security Manager also supports another configuration parameter - <code>certificate-domain</code>.
 This is useful when you want to authenticate clients connecting with SSL connections based on their SSL certificates (e.g. using the <code>CertificateLoginModule</code> discussed below) but you still want to authenticate clients connecting with non-SSL connections with, e.g., username and password.
@@ -764,9 +841,9 @@ CertLogin {
 </div>
 </div>
 <div class="sect2">
-<h3 id="jaas-login-modules"><a class="anchor" href="#jaas-login-modules"></a><a class="link" href="#jaas-login-modules">7.2. JAAS Login Modules</a></h3>
+<h3 id="jaas-login-modules"><a class="anchor" href="#jaas-login-modules"></a><a class="link" href="#jaas-login-modules">8.2. JAAS Login Modules</a></h3>
 <div class="sect3">
-<h4 id="guestloginmodule"><a class="anchor" href="#guestloginmodule"></a><a class="link" href="#guestloginmodule">7.2.1. GuestLoginModule</a></h4>
+<h4 id="guestloginmodule"><a class="anchor" href="#guestloginmodule"></a><a class="link" href="#guestloginmodule">8.2.1. GuestLoginModule</a></h4>
 <div class="paragraph">
 <p>Allows users without credentials (and, depending on how it is configured, possibly also users with invalid credentials) to access the broker.
 Normally, the guest login module is chained with another login module, such as a properties login module.
@@ -894,7 +971,7 @@ The properties login module is not invoked.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="propertiesloginmodule"><a class="anchor" href="#propertiesloginmodule"></a><a class="link" href="#propertiesloginmodule">7.2.2. PropertiesLoginModule</a></h4>
+<h4 id="propertiesloginmodule"><a class="anchor" href="#propertiesloginmodule"></a><a class="link" href="#propertiesloginmodule">8.2.2. PropertiesLoginModule</a></h4>
 <div class="paragraph">
 <p>The JAAS properties login module provides a simple store of authentication data, where the relevant user data is stored in a pair of flat files.
 This is convenient for demonstrations and testing, but for an enterprise system, the integration with LDAP is preferable.
@@ -947,8 +1024,8 @@ For example, to define the users <code>system</code>, <code>user</code>, and <co
 Such passwords should follow the syntax <code>ENC(&lt;hash&gt;)</code>.</p>
 </div>
 <div class="paragraph">
-<p>Hashed passwords can easily be added to <code>artemis-users.properties</code> using the <code>user</code> CLI command from the Artemis <em>instance</em>.
-This command will not work  from the Artemis home, and it will also not work unless the broker has been started.</p>
+<p>Hashed passwords can easily be added to <code>artemis-users.properties</code> using the <code>user</code> CLI command from the broker <em>instance</em>.
+This command will not work from the broker home, and it will also not work unless the broker is running.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -970,8 +1047,8 @@ For example, to define the roles <code>admins</code>, <code>users</code>, and <c
 </div>
 </div>
 <div class="paragraph">
-<p>As mentioned above, the Artemis command-line interface supports a command to <code>add</code> a user.
-Commands to <code>list</code> (one or all) users, <code>remove</code> a user, and <code>reset</code> a user&#8217;s password and/or role(s) are also supported via the command-line interface as well as the normal management interfaces (e.g. JMX, web console, etc.).</p>
+<p>As mentioned above, the <a href="using-cli.html#command-line-interface">command-line interface</a> supports a command to <code>add</code> a user.
+Commands to <code>list</code> (one or all) users, <code>remove</code> a user, and <code>reset</code> a user&#8217;s password and/or role(s) are also supported via the <a href="using-cli.html#command-line-interface">command-line interface</a> as well as the normal management interfaces (e.g. JMX, web console, etc.).</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -991,10 +1068,10 @@ LDAP is recommended for enterprise level production use-cases.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ldaploginmodule"><a class="anchor" href="#ldaploginmodule"></a><a class="link" href="#ldaploginmodule">7.2.3. LDAPLoginModule</a></h4>
+<h4 id="ldaploginmodule"><a class="anchor" href="#ldaploginmodule"></a><a class="link" href="#ldaploginmodule">8.2.3. LDAPLoginModule</a></h4>
 <div class="paragraph">
 <p>The LDAP login module enables you to perform authentication and authorization by checking the incoming credentials against user data stored in a central X.500 directory server.
-For systems that already have an X.500 directory server in place, this means that you can rapidly integrate ActiveMQ Artemis with the existing security database and user accounts can be managed using the X.500 system.
+For systems that already have an X.500 directory server in place, this means that you can rapidly integrate the broker with the existing security database and user accounts can be managed using the X.500 system.
 It is implemented by <code>org.apache.activemq.artemis.spi.core.security.jaas.LDAPLoginModule</code>.</p>
 </div>
 <div class="dlist">
@@ -1225,9 +1302,166 @@ Define a <code>member</code> attribute for each member of the role/group, settin
 <p>If you want to add roles to user entries, you would need to customize the directory schema, by adding a suitable attribute type to the user entry&#8217;s object class.
 The chosen attribute type must be capable of handling multiple values.</p>
 </div>
+<div class="sect4">
+<h5 id="ldaploginsslsocketfactory"><a class="anchor" href="#ldaploginsslsocketfactory"></a><a class="link" href="#ldaploginsslsocketfactory">LDAPLoginSSLSocketFactory</a></h5>
+<div class="paragraph">
+<p>To secure the connection to your LDAP server using SSL/TLS, you can configure <code>LDAPLoginModule</code> to use <code>LDAPLoginSSLSocketFactory</code>.
+This socket factory provides comprehensive SSL configuration options including keystore, truststore, and certificate validation settings.</p>
+</div>
+<div class="paragraph">
+<p>To use <code>LDAPLoginSSLSocketFactory</code>, you need to:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Enable SSL/TLS by setting the property <code>java.naming.security.protocol</code> to 'ssl' or by using <code>ldaps://</code> protocol in your <code>connectionURL</code>.</p>
+</li>
+<li>
+<p>Set <code>java.naming.ldap.factory.socket</code> to <code>org.apache.activemq.artemis.spi.core.security.jaas.LDAPLoginSSLSocketFactory</code>.</p>
+</li>
+<li>
+<p>Configure the SSL-related options as described below.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an example configuration in <code>login.config</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">LDAPLogin {
+   org.apache.activemq.artemis.spi.core.security.jaas.LDAPLoginModule required
+       debug=false
+       initialContextFactory=com.sun.jndi.ldap.LdapCtxFactory
+       connectionURL="ldaps://ldapserver:636"
+       java.naming.ldap.factory.socket=org.apache.activemq.artemis.spi.core.security.jaas.LDAPLoginSSLSocketFactory
+       connectionUsername="uid=admin,ou=system"
+       connectionPassword="secret"
+       userBase="ou=User,ou=ActiveMQ,ou=system"
+       userSearchMatching="(uid={0})"
+       userSearchSubtree=false
+       roleBase="ou=Group,ou=ActiveMQ,ou=system"
+       roleName=cn
+       roleSearchMatching="(member=uid={1})"
+       roleSearchSubtree=true
+       truststorePath="/path/to/truststore.jks"
+       truststorePassword="trustpass"
+       keystorePath="/path/to/keystore.jks"
+       keystorePassword="keypass";
+};</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following SSL configuration options are supported:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">keyStoreProvider</dt>
+<dd>
+<p>The provider used for the keystore.
+For example, <code>SUN</code>, <code>SunJCE</code>, etc.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">keystoreType</dt>
+<dd>
+<p>The type of keystore being used.
+For example, <code>PKCS12</code>, <code>JKS</code>, <code>JCEKS</code>, <code>PEM</code> etc.
+Default is <code>JKS</code>.</p>
+</dd>
+<dt class="hdlist1">keystorePath</dt>
+<dd>
+<p>The path to the keystore file containing the client certificate and private key.
+This is only required if client certificate authentication is needed.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">keystorePassword</dt>
+<dd>
+<p>The password for the keystore file.
+Supports <a href="masking-passwords.html#masking-passwords">password masking</a>.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">keystoreAlias</dt>
+<dd>
+<p>The alias of the certificate to use from the keystore if multiple certificates exist.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">truststoreProvider</dt>
+<dd>
+<p>The provider used for the truststore.
+For example, <code>SUN</code>, <code>SunJCE</code>, etc.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">truststoreType</dt>
+<dd>
+<p>The type of truststore being used.
+For example, <code>PKCS12</code>, <code>JKS</code>, <code>JCEKS</code>, <code>PEM</code> etc.
+Default is <code>JKS</code>.</p>
+</dd>
+<dt class="hdlist1">truststorePath</dt>
+<dd>
+<p>The path to the truststore file containing the trusted CA certificates.
+This is required to validate the LDAP server&#8217;s certificate.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">truststorePassword</dt>
+<dd>
+<p>The password for the truststore file.
+Supports <a href="masking-passwords.html#masking-passwords">password masking</a>.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">crlPath</dt>
+<dd>
+<p>The path to a Certificate Revocation List (CRL) file for additional certificate validation when using PKIX trust manager.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">crcOptions</dt>
+<dd>
+<p>Comma-separated list of PKIXRevocationChecker options to configure certificate revocation checking behavior when using PKIX trust manager.
+Available options include: <code>ONLY_END_ENTITY</code>, <code>PREFER_CRLS</code>, <code>NO_FALLBACK</code>, <code>SOFT_FAIL</code>.
+For further details about these options, see <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/cert/PKIXRevocationChecker.Option.html">PKIXRevocationChecker.Option JavaDoc</a>.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">ocspResponderURL</dt>
+<dd>
+<p>This is valid on either an <code>acceptor</code> or <code>connector</code>.
+The URL of the OCSP (Online Certificate Status Protocol) responder to use for certificate revocation checking when using PKIX trust manager.
+This overrides the default OCSP responder specified in the certificate&#8217;s Authority Information Access (AIA) extension.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">trustAll</dt>
+<dd>
+<p>Boolean flag to disable certificate validation and trust all certificates.
+Default is <code>false</code>.</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Setting this to <code>true</code> is insecure and should only be used for testing purposes.
+</td>
+</tr>
+</table>
+</div>
+</dd>
+<dt class="hdlist1">trustManagerFactoryPlugin</dt>
+<dd>
+<p>The fully qualified class name of a custom trust manager factory plugin for advanced certificate validation scenarios.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">passwordCodec</dt>
+<dd>
+<p>The fully qualified class name of a custom password codec for decoding masked passwords.
+See <a href="masking-passwords.html#masking-passwords">password masking</a> for more details.
+Default is <code>org.apache.activemq.artemis.utils.DefaultSensitiveStringCodec</code>.</p>
+</dd>
+</dl>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="certificateloginmodule"><a class="anchor" href="#certificateloginmodule"></a><a class="link" href="#certificateloginmodule">7.2.4. CertificateLoginModule</a></h4>
+<h4 id="certificateloginmodule"><a class="anchor" href="#certificateloginmodule"></a><a class="link" href="#certificateloginmodule">8.2.4. CertificateLoginModule</a></h4>
 <div class="paragraph">
 <p>The JAAS certificate authentication login module must be used in combination with SSL and the clients must be configured with their own certificate.
 In this scenario, authentication is actually performed during the SSL/TLS handshake, not directly by the JAAS certificate authentication plug-in.
@@ -1403,7 +1637,7 @@ For example, to define the roles <code>admins</code>, <code>users</code>, and <c
 </div>
 </div>
 <div class="sect3">
-<h4 id="scrampropertiesloginmodule"><a class="anchor" href="#scrampropertiesloginmodule"></a><a class="link" href="#scrampropertiesloginmodule">7.2.5. SCRAMPropertiesLoginModule</a></h4>
+<h4 id="scrampropertiesloginmodule"><a class="anchor" href="#scrampropertiesloginmodule"></a><a class="link" href="#scrampropertiesloginmodule">8.2.5. SCRAMPropertiesLoginModule</a></h4>
 <div class="paragraph">
 <p>The SCRAM properties login module implements the SASL challenge response for the SCRAM-SHA mechanism.
 The data in the properties file reference via <code>org.apache.activemq.jaas.properties.user</code> needs to be generated by the login module it&#8217;s self, as part of user registration.
@@ -1421,7 +1655,7 @@ For more usage detail refer to <a href="#scram-sha-sasl-mechanism">SCRAM-SHA SAS
 </div>
 </div>
 <div class="sect3">
-<h4 id="scramloginmodule"><a class="anchor" href="#scramloginmodule"></a><a class="link" href="#scramloginmodule">7.2.6. SCRAMLoginModule</a></h4>
+<h4 id="scramloginmodule"><a class="anchor" href="#scramloginmodule"></a><a class="link" href="#scramloginmodule">8.2.6. SCRAMLoginModule</a></h4>
 <div class="paragraph">
 <p>The SCRAM login module converts a valid SASL SCRAM-SHA Authenticated identity into a JAAS User Principal.
 This Principal can then be used for <a href="#role-mapping">role mapping</a>.</p>
@@ -1435,7 +1669,7 @@ This Principal can then be used for <a href="#role-mapping">role mapping</a>.</p
 </div>
 </div>
 <div class="sect3">
-<h4 id="externalcertificateloginmodule"><a class="anchor" href="#externalcertificateloginmodule"></a><a class="link" href="#externalcertificateloginmodule">7.2.7. ExternalCertificateLoginModule</a></h4>
+<h4 id="externalcertificateloginmodule"><a class="anchor" href="#externalcertificateloginmodule"></a><a class="link" href="#externalcertificateloginmodule">8.2.7. ExternalCertificateLoginModule</a></h4>
 <div class="paragraph">
 <p>The external certificate login module is used to propagate a validated TLS client certificate&#8217;s subjectDN into a JAAS UserPrincipal.
 This allows subsequent login modules to do role mapping for the TLS client certificate.</p>
@@ -1448,7 +1682,7 @@ This allows subsequent login modules to do role mapping for the TLS client certi
 </div>
 </div>
 <div class="sect3">
-<h4 id="principalconversionloginmodule"><a class="anchor" href="#principalconversionloginmodule"></a><a class="link" href="#principalconversionloginmodule">7.2.8. PrincipalConversionLoginModule</a></h4>
+<h4 id="principalconversionloginmodule"><a class="anchor" href="#principalconversionloginmodule"></a><a class="link" href="#principalconversionloginmodule">8.2.8. PrincipalConversionLoginModule</a></h4>
 <div class="paragraph">
 <p>The principal conversion login module is used to convert an existing validated Principal  into a JAAS UserPrincipal.
 The module is configured with a list of class names used to match existing Principals.
@@ -1463,7 +1697,7 @@ If no UserPrincipal exists, the first matching Principal will be added as a User
 </div>
 </div>
 <div class="sect3">
-<h4 id="krb5loginmodule"><a class="anchor" href="#krb5loginmodule"></a><a class="link" href="#krb5loginmodule">7.2.9. Krb5LoginModule</a></h4>
+<h4 id="krb5loginmodule"><a class="anchor" href="#krb5loginmodule"></a><a class="link" href="#krb5loginmodule">8.2.9. Krb5LoginModule</a></h4>
 <div class="paragraph">
 <p>The Kerberos login module is used to propagate a validated SASL GSSAPI kerberos token identity into a validated JAAS UserPrincipal.
 This allows subsequent login modules to do role mapping for the kerberos identity.</p>
@@ -1479,7 +1713,7 @@ This allows subsequent login modules to do role mapping for the kerberos identit
 </div>
 </div>
 <div class="sect3">
-<h4 id="kubernetesloginmodule"><a class="anchor" href="#kubernetesloginmodule"></a><a class="link" href="#kubernetesloginmodule">7.2.10. KubernetesLoginModule</a></h4>
+<h4 id="kubernetesloginmodule"><a class="anchor" href="#kubernetesloginmodule"></a><a class="link" href="#kubernetesloginmodule">8.2.10. KubernetesLoginModule</a></h4>
 <div class="paragraph">
 <p>The Kubernetes login module enables you to perform authentication and authorization by validating the <code>Bearer</code> token against the Kubernetes API.
 The authentication is done by submitting a <code>TokenReview</code> request that the Kubernetes cluster validates.
@@ -1534,10 +1768,10 @@ For example, to define the roles admins, users, and guests, you could create a f
 </div>
 </div>
 <div class="sect2">
-<h3 id="scram-sha-sasl-mechanism"><a class="anchor" href="#scram-sha-sasl-mechanism"></a><a class="link" href="#scram-sha-sasl-mechanism">7.3. SCRAM-SHA SASL Mechanism</a></h3>
+<h3 id="scram-sha-sasl-mechanism"><a class="anchor" href="#scram-sha-sasl-mechanism"></a><a class="link" href="#scram-sha-sasl-mechanism">8.3. SCRAM-SHA SASL Mechanism</a></h3>
 <div class="paragraph">
 <p>SCRAM (Salted Challenge Response Authentication Mechanism) is an authentication mechanism that can establish mutual authentication using passwords.
-Apache ActiveMQ Artemis supports SCRAM-SHA-256 and SCRAM-SHA-512 SASL mechanisms to provide authentication for AMQP connections.</p>
+SCRAM-SHA-256 and SCRAM-SHA-512 SASL mechanisms can provide authentication for AMQP connections.</p>
 </div>
 <div class="paragraph">
 <p>The following properties of SCRAM make it safe to use SCRAM-SHA even on unencrypted connections:</p>
@@ -1555,7 +1789,7 @@ Only the proof is exchanged.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="configuring-the-server-to-use-scram-sha"><a class="anchor" href="#configuring-the-server-to-use-scram-sha"></a><a class="link" href="#configuring-the-server-to-use-scram-sha">7.3.1. Configuring the server to use SCRAM-SHA</a></h4>
+<h4 id="configuring-the-server-to-use-scram-sha"><a class="anchor" href="#configuring-the-server-to-use-scram-sha"></a><a class="link" href="#configuring-the-server-to-use-scram-sha">8.3.1. Configuring the server to use SCRAM-SHA</a></h4>
 <div class="paragraph">
 <p>The desired SCRAM-SHA mechanisms must be enabled on the AMQP acceptor in <code>broker.xml</code> by adding them to the <code>saslMechanisms</code> list url parameter.
 In this example, SASL is restricted to only the <code>SCRAM-SHA-256</code> mechanism:</p>
@@ -1583,7 +1817,7 @@ The mechanism makes use of JAAS to complete the SASL exchanges.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="configuring-a-user-with-scram-sha-data-on-the-server"><a class="anchor" href="#configuring-a-user-with-scram-sha-data-on-the-server"></a><a class="link" href="#configuring-a-user-with-scram-sha-data-on-the-server">7.3.2. Configuring a user with SCRAM-SHA data on the server</a></h4>
+<h4 id="configuring-a-user-with-scram-sha-data-on-the-server"><a class="anchor" href="#configuring-a-user-with-scram-sha-data-on-the-server"></a><a class="link" href="#configuring-a-user-with-scram-sha-data-on-the-server">8.3.2. Configuring a user with SCRAM-SHA data on the server</a></h4>
 <div class="paragraph">
 <p>With SCRAM-SHA, the server&#8217;s users properties file do not contain any passwords, instead they contain derivative data that can be used to respond to a challenge.
 The secure encoded form of the password must be generated using the main method of org.apache.activemq.artemis.spi.core.security.jaas.SCRAMPropertiesLoginModule from the artemis-server module and inserting the resulting lines into your artemis-users.properties file.</p>
@@ -1599,14 +1833,14 @@ The secure encoded form of the password must be generated using the main method 
 </div>
 </div>
 <div class="sect2">
-<h3 id="kerberos-authentication"><a class="anchor" href="#kerberos-authentication"></a><a class="link" href="#kerberos-authentication">7.4. Kerberos Authentication</a></h3>
+<h3 id="kerberos-authentication"><a class="anchor" href="#kerberos-authentication"></a><a class="link" href="#kerberos-authentication">8.4. Kerberos Authentication</a></h3>
 <div class="paragraph">
 <p>You must have the Kerberos infrastructure set up in your deployment environment before the server can accept Kerberos credentials.
 The server can acquire its Kerberos acceptor credentials by using JAAS and a Kerberos login module.
 The JDK provides the <a href="https://docs.oracle.com/javase/8/docs/jre/api/security/jaas/spec/com/sun/security/auth/module/Krb5LoginModule.html">Krb5LoginModule</a> which executes the necessary Kerberos protocol steps to authenticate and obtain Kerberos credentials.</p>
 </div>
 <div class="sect3">
-<h4 id="gssapi-sasl-mechanism"><a class="anchor" href="#gssapi-sasl-mechanism"></a><a class="link" href="#gssapi-sasl-mechanism">7.4.1. GSSAPI SASL Mechanism</a></h4>
+<h4 id="gssapi-sasl-mechanism"><a class="anchor" href="#gssapi-sasl-mechanism"></a><a class="link" href="#gssapi-sasl-mechanism">8.4.1. GSSAPI SASL Mechanism</a></h4>
 <div class="paragraph">
 <p>Using SASL over <a href="amqp.html#amqp">AMQP</a>, Kerberos authentication is supported using the <code>GSSAPI</code> SASL mechanism.
 With SASL doing Kerberos authentication, TLS can be used to provide integrity and confidentially to the communications channel in the normal way.</p>
@@ -1641,17 +1875,17 @@ An alternative configuration scope can be specified on the AMQP acceptor using t
 </div>
 </div>
 <div class="sect2">
-<h3 id="role-mapping"><a class="anchor" href="#role-mapping"></a><a class="link" href="#role-mapping">7.5. Role Mapping</a></h3>
+<h3 id="role-mapping"><a class="anchor" href="#role-mapping"></a><a class="link" href="#role-mapping">8.5. Role Mapping</a></h3>
 <div class="paragraph">
-<p>On the server, a Kerberos or SCRAM-SHA JAAS authenticated Principal must be added to the Subject&#8217;s principal set as an Apache ActiveMQ Artemis UserPrincipal using the corresponding Apache ActiveMQ Artemis <code>Krb5LoginModule</code> or <code>SCRAMLoginModule</code> login modules.
+<p>On the server, a Kerberos or SCRAM-SHA JAAS authenticated principal must be added to the Subject&#8217;s principal set as a <code>UserPrincipal</code> using the corresponding <code>Krb5LoginModule</code> or <code>SCRAMLoginModule</code> login modules.
 They are separate to allow conversion and role mapping to be as restrictive or permissive as desired.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="#propertiesloginmodule">PropertiesLoginModule</a> or <a href="#ldaploginmodule">LDAPLoginModule</a> can then be used to map the authenticated  Principal to an Apache ActiveMQ Artemis <a href="#role-based-security-for-addresses">Role</a>.
-Note that in the case of Kerberos, the Peer Principal does not exist as an Apache ActiveMQ Artemis user, only as a role member.</p>
+<p>The <a href="#propertiesloginmodule"><code>PropertiesLoginModule</code></a> or <a href="#ldaploginmodule"><code>LDAPLoginModule</code></a> can then be used to map the authenticated  Principal to a <a href="#role-based-security-for-addresses">role</a>.
+Note that in the case of Kerberos, the Peer Principal does not exist as a user, only as a role member.</p>
 </div>
 <div class="paragraph">
-<p>In the following example, any existing Kerberos authenticated peer will convert to an Apache ActiveMQ Artemis user principal and will have role mapping applied by the LDAPLoginModule as appropriate.</p>
+<p>In the following example, any existing Kerberos authenticated peer will convert to a user principal and will have role mapping applied by the <code>LDAPLoginModule</code> as appropriate.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1678,7 +1912,7 @@ Note that in the case of Kerberos, the Peer Principal does not exist as an Apach
 </div>
 </div>
 <div class="sect2">
-<h3 id="basic-security-manager"><a class="anchor" href="#basic-security-manager"></a><a class="link" href="#basic-security-manager">7.6. Basic Security Manager</a></h3>
+<h3 id="basic-security-manager"><a class="anchor" href="#basic-security-manager"></a><a class="link" href="#basic-security-manager">8.6. Basic Security Manager</a></h3>
 <div class="paragraph">
 <p>As the name suggests, the <code>ActiveMQBasicSecurityManager</code> is <em>basic</em>.
 It is not pluggable like the JAAS security manager and it <em>only</em> supports authentication via username and password credentials.
@@ -1700,7 +1934,7 @@ Nevertheless, if you just want to share user data between a single live/backup p
 <p>User management is provided by the broker&#8217;s management API.
 This includes the ability to add, list, update, and remove users &amp; roles.
 As with all management functions, this is available via JMX, management messages, HTTP (via Jolokia), web console, etc.
-These functions are also available from the ActiveMQ Artemis command-line interface.
+These functions are also available from the <a href="using-cli.html#command-line-interface">command-line interface</a>.
 Having the broker store this data directly means that it must be running in order to manage users.
 There is no way to modify the bindings data manually.</p>
 </div>
@@ -1710,7 +1944,7 @@ MBean access via JConsole or other remote JMX tool will go through the basic sec
 Management messages will also go through the basic security manager.</p>
 </div>
 <div class="sect3">
-<h4 id="configuration"><a class="anchor" href="#configuration"></a><a class="link" href="#configuration">7.6.1. Configuration</a></h4>
+<h4 id="configuration"><a class="anchor" href="#configuration"></a><a class="link" href="#configuration">8.6.1. Configuration</a></h4>
 <div class="paragraph">
 <p>The configuration for the <code>ActiveMQBasicSecurityManager</code> happens in <code>bootstrap.xml</code> just like it does for all security manager implementations.
 Start by removing <code>&lt;jaas-security /&gt;</code> section and add <code>&lt;security-manager /&gt;</code> configuration as described below.</p>
@@ -1870,7 +2104,7 @@ For example if you&#8217;ve specified a <code>bootstrapUser</code> then the <cod
 </div>
 </div>
 <div class="sect1">
-<h2 id="mapping-external-roles"><a class="anchor" href="#mapping-external-roles"></a><a class="link" href="#mapping-external-roles">8. Mapping external roles</a></h2>
+<h2 id="mapping-external-roles"><a class="anchor" href="#mapping-external-roles"></a><a class="link" href="#mapping-external-roles">9. Mapping external roles</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Roles from external authentication providers (i.e. LDAP) can be mapped to internally used roles.
@@ -1914,7 +2148,7 @@ It can not be used to map the role required to access the web console.
 </div>
 </div>
 <div class="sect1">
-<h2 id="sasl"><a class="anchor" href="#sasl"></a><a class="link" href="#sasl">9. SASL</a></h2>
+<h2 id="sasl"><a class="anchor" href="#sasl"></a><a class="link" href="#sasl">10. SASL</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="amqp.html#amqp">AMQP</a> supports SASL.
@@ -1936,7 +2170,7 @@ EXTERNAL will only be chosen if a subject is available from the TLS client certi
 </div>
 </div>
 <div class="sect1">
-<h2 id="changing-the-usernamepassword-for-clustering"><a class="anchor" href="#changing-the-usernamepassword-for-clustering"></a><a class="link" href="#changing-the-usernamepassword-for-clustering">10. Changing the username/password for clustering</a></h2>
+<h2 id="changing-the-usernamepassword-for-clustering"><a class="anchor" href="#changing-the-usernamepassword-for-clustering"></a><a class="link" href="#changing-the-usernamepassword-for-clustering">11. Changing the username/password for clustering</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In order for cluster connections to work correctly, each node in the cluster must make connections to the other nodes.
@@ -1948,11 +2182,10 @@ The username/password they use for this should always be changed from the instal
 </div>
 </div>
 <div class="sect1">
-<h2 id="securing-the-console"><a class="anchor" href="#securing-the-console"></a><a class="link" href="#securing-the-console">11. Securing the console</a></h2>
+<h2 id="securing-the-console"><a class="anchor" href="#securing-the-console"></a><a class="link" href="#securing-the-console">12. Securing the console</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Artemis comes with a web console that allows user to browse Artemis documentation via an embedded server.
-By default the web access is plain HTTP.
+<p>By default the web access is plain HTTP.
 It is configured in <code>bootstrap.xml</code>:</p>
 </div>
 <div class="listingblock">
@@ -1965,7 +2198,7 @@ It is configured in <code>bootstrap.xml</code>:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Alternatively you can edit the above configuration to enable secure access using HTTPS protocol.
+<p>Alternatively, you can edit the above configuration to enable secure access using HTTPS protocol.
 e.g.:</p>
 </div>
 <div class="listingblock">
@@ -2010,7 +2243,7 @@ This is needed only if <code>clientAuth</code> is <code>true</code>.</p>
 </dl>
 </div>
 <div class="sect2">
-<h3 id="config-access-using-client-certificates"><a class="anchor" href="#config-access-using-client-certificates"></a><a class="link" href="#config-access-using-client-certificates">11.1. Config access using client certificates</a></h3>
+<h3 id="config-access-using-client-certificates"><a class="anchor" href="#config-access-using-client-certificates"></a><a class="link" href="#config-access-using-client-certificates">12.1. Config access using client certificates</a></h3>
 <div class="paragraph">
 <p>The web console supports authentication with client certificates, see the following steps:</p>
 </div>
@@ -2069,20 +2302,22 @@ keytool -storetype pkcs12 -keystore client-truststore.p12 -storepass securepass 
 </div>
 </div>
 <div class="sect1">
-<h2 id="controlling-jms-objectmessage-deserialization"><a class="anchor" href="#controlling-jms-objectmessage-deserialization"></a><a class="link" href="#controlling-jms-objectmessage-deserialization">12. Controlling JMS ObjectMessage deserialization</a></h2>
+<h2 id="controlling-jms-objectmessage-deserialization"><a class="anchor" href="#controlling-jms-objectmessage-deserialization"></a><a class="link" href="#controlling-jms-objectmessage-deserialization">13. Controlling JMS ObjectMessage deserialization</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Artemis provides a simple class filtering mechanism with which a user can specify which packages are to be trusted and which are not. Objects whose classes are from trusted packages can be deserialized without problem, whereas those from 'not trusted' packages will be denied deserialization.</p>
+<p>A simple class filtering mechanism is available so that a user can specify which packages are to be trusted and which are not.
+Objects whose classes are from trusted packages can be deserialized without problem, whereas those from 'not trusted' packages will be denied deserialization.</p>
 </div>
 <div class="paragraph">
-<p>Artemis keeps a <code>deny list</code> to keep track of packages that are not trusted and a <code>allow list</code> for trusted packages. By default both lists are empty, meaning any serializable object is allowed to be deserialized.
+<p>A <code>deny list</code> tracks packages that are not trusted and an <code>allow list</code> tracks trusted packages.
+By default, both lists are empty, meaning <em>any</em> serializable object is allowed to be deserialized.
 If an object whose class matches one of the packages in deny list, it is not allowed to be deserialized.
 If it matches one in the allow list the object can be deserialized.
 If a package appears in both deny list and allow list, the one in deny list takes precedence.
-If a class neither matches with <code>deny list</code> nor with the <code>allow list</code>, the class deserialization will be denied unless the allow list is empty (meaning the user doesn&#8217;t specify the allow list at all).</p>
+If a class neither matches with deny list nor with the allow list, the class deserialization will be denied unless the allow list is empty (meaning the user doesn&#8217;t specify the allow list at all).</p>
 </div>
 <div class="paragraph">
-<p>A class is considered as a 'match' if:</p>
+<p>A class is considered as a "match" if:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2095,7 +2330,7 @@ If a class neither matches with <code>deny list</code> nor with the <code>allow 
 </ul>
 </div>
 <div class="paragraph">
-<p>For example, if a class full name is "org.apache.pkg1.Class1", some matching
+<p>For example, if a class full name is <code>org.apache.pkg1.Class1</code>, some matching
 entries could be:</p>
 </div>
 <div class="ulist">
@@ -2107,15 +2342,15 @@ entries could be:</p>
 <p><code>org.apache.pkg1</code> - exact package match.</p>
 </li>
 <li>
-<p><code>org.apache</code>&#8201;&#8212;&#8201;sub package match.</p>
+<p><code>org.apache</code>&#8201;&#8212;&#8201;sub-package match.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>A <code>*</code> means 'match-all' in a deny or allow list.</p>
+<p>A <code>*</code> means "match-all".</p>
 </div>
 <div class="sect2">
-<h3 id="config-via-connection-factories"><a class="anchor" href="#config-via-connection-factories"></a><a class="link" href="#config-via-connection-factories">12.1. Config via Connection Factories</a></h3>
+<h3 id="config-via-connection-factories"><a class="anchor" href="#config-via-connection-factories"></a><a class="link" href="#config-via-connection-factories">13.1. Config via Connection Factories</a></h3>
 <div class="paragraph">
 <p>To specify the <em>allow</em> and <em>deny</em> lists one can use the URL parameters <code>deserializationDenyList</code> and <code>deserializationAllowList</code>.
 For example, using JMS:</p>
@@ -2130,7 +2365,7 @@ For example, using JMS:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="config-via-system-properties"><a class="anchor" href="#config-via-system-properties"></a><a class="link" href="#config-via-system-properties">12.2. Config via system properties</a></h3>
+<h3 id="config-via-system-properties"><a class="anchor" href="#config-via-system-properties"></a><a class="link" href="#config-via-system-properties">13.2. Config via system properties</a></h3>
 <div class="paragraph">
 <p>There are two system properties available for specifying deny list and allow list:</p>
 </div>
@@ -2152,7 +2387,7 @@ However if you create a ConnectionFactory and set a new set of deny/allow lists 
 </div>
 </div>
 <div class="sect2">
-<h3 id="config-for-resource-adapters"><a class="anchor" href="#config-for-resource-adapters"></a><a class="link" href="#config-for-resource-adapters">12.3. Config for resource adapters</a></h3>
+<h3 id="config-for-resource-adapters"><a class="anchor" href="#config-for-resource-adapters"></a><a class="link" href="#config-for-resource-adapters">13.3. Config for resource adapters</a></h3>
 <div class="paragraph">
 <p>Message beans using a JMS resource adapter to receive messages can also control their object deserialization via properly configuring relevant properties for their resource adapters.
 There are two properties that you can configure with connection factories in a resource adapter:</p>
@@ -2176,7 +2411,7 @@ There are two properties that you can configure with connection factories in a r
 </div>
 </div>
 <div class="sect1">
-<h2 id="masking-passwords"><a class="anchor" href="#masking-passwords"></a><a class="link" href="#masking-passwords">13. Masking Passwords</a></h2>
+<h2 id="masking-passwords"><a class="anchor" href="#masking-passwords"></a><a class="link" href="#masking-passwords">14. Masking Passwords</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For details about masking passwords in broker.xml please see the <a href="masking-passwords.html#masking-passwords">Masking Passwords</a> chapter.</p>
@@ -2184,12 +2419,14 @@ There are two properties that you can configure with connection factories in a r
 </div>
 </div>
 <div class="sect1">
-<h2 id="custom-security-manager"><a class="anchor" href="#custom-security-manager"></a><a class="link" href="#custom-security-manager">14. Custom Security Manager</a></h2>
+<h2 id="custom-security-manager"><a class="anchor" href="#custom-security-manager"></a><a class="link" href="#custom-security-manager">15. Custom Security Manager</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The underpinnings of the broker&#8217;s security implementation can be changed if so desired.
 The broker uses a component called a "security manager" to implement the actual authentication and authorization checks.
-By default, the broker uses <code>org.apache.activemq.artemis.spi.core.security.ActiveMQJAASSecurityManager</code> to provide JAAS integration, but users can provide their own implementation of <code>org.apache.activemq.artemis.spi.core.security.ActiveMQSecurityManager5</code> and configure it in <code>bootstrap.xml</code> using the <code>security-manager</code> element, e.g.:</p>
+By default, the broker uses <code>org.apache.activemq.artemis.spi.core.security.ActiveMQJAASSecurityManager</code> to provide JAAS integration, but users can provide their own implementation of <code>org.apache.activemq.artemis.spi.core.security.ActiveMQSecurityManager5</code> and configure it in <code>bootstrap.xml</code> using the <code>security-manager</code> element.
+Alternatively, a custom security manager can be configured at boot time via system properties as described in <a href="#custom-security-manager-via-system-properties">Custom Security Manager via System Properties</a>.
+Here is an example of configuring a custom security manager in <code>bootstrap.xml</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2210,7 +2447,7 @@ By default, the broker uses <code>org.apache.activemq.artemis.spi.core.security.
 </div>
 </div>
 <div class="sect1">
-<h2 id="per-acceptor-security-domains"><a class="anchor" href="#per-acceptor-security-domains"></a><a class="link" href="#per-acceptor-security-domains">15. Per-Acceptor Security Domains</a></h2>
+<h2 id="per-acceptor-security-domains"><a class="anchor" href="#per-acceptor-security-domains"></a><a class="link" href="#per-acceptor-security-domains">16. Per-Acceptor Security Domains</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>It&#8217;s possible to override the broker&#8217;s JAAS security domain by specifying a security domain on an individual <code>acceptor</code>.
@@ -2227,7 +2464,7 @@ Simply use the <code>securityDomain</code> parameter and indicate which domain f
 </div>
 </div>
 <div class="sect1">
-<h2 id="uuid-resources"><a class="anchor" href="#uuid-resources"></a><a class="link" href="#uuid-resources">16. UUID Resources</a></h2>
+<h2 id="uuid-resources"><a class="anchor" href="#uuid-resources"></a><a class="link" href="#uuid-resources">17. UUID Resources</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>uuid-namespace</code> value can be used with a <code>security-setting</code> match just as it can with an <a href="address-model.html#uuid-resources"><code>address-setting</code></a>.

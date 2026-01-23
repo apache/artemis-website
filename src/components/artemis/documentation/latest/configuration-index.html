@@ -34,13 +34,14 @@
 <div id="header">
 <h1>Configuration Reference</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#broker-configuration">1. Broker Configuration</a>
 <ul class="sectlevel2">
 <li><a href="#broker-xml">1.1. broker.xml</a></li>
 <li><a href="#system-properties">1.2. System properties</a></li>
 <li><a href="#broker-properties">1.3. Broker properties</a></li>
+<li><a href="#jaas">1.4. JAAS</a></li>
 </ul>
 </li>
 <li><a href="#the-core-configuration">2. The core configuration</a></li>
@@ -233,17 +234,38 @@ acceptorConfigurations.tcp.params.port=61616</pre>
 </li>
 </ol>
 </div>
-<div class="sect3">
-<h4 id="usage"><a class="anchor" href="#usage"></a><a class="link" href="#usage">1.3.1. Usage</a></h4>
+</div>
+<div class="sect2">
+<h3 id="jaas"><a class="anchor" href="#jaas"></a><a class="link" href="#jaas">1.4. JAAS</a></h3>
 <div class="paragraph">
-<p>The <code>artemis run</code> command script supports <code>--properties &lt;properties file url&gt;</code>, where a properties file can be configured.</p>
+<p>Broker properties can configure JAAS via the <code>jaasConfigs</code> collection, this provides a means to dynamically configure the jaas realms accessed by the broker. The jaas configuration provider will look first for any realm configured in the <code>jaasConfigs</code> collection before delegating to the platform defaults.
+For example, to configure the <code>guestRealm</code> and use it from the above <code>tcp</code> acceptor, configure properties of the form:</p>
 </div>
-<div class="paragraph">
-<p>There is a related <a href="management.html#server-management">server management operation</a> <code>exportConfigAsProperties</code> that will export the current configuration as broker properties. Use this to get a better understanding of how properties apply to the broker configuration and how they map from xml.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">acceptorConfigurations.tcp.params.securityDomain=guestRealm
+jaasConfigs.guestRealm.modules.guest.loginModuleClass=org.apache.activemq.artemis.spi.core.security.jaas.GuestLoginModule
+jaasConfigs.guestRealm.modules.guest.controlFlag=required</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="attribute-names-with-dots"><a class="anchor" href="#attribute-names-with-dots"></a><a class="link" href="#attribute-names-with-dots">1.3.2. Attribute Names with Dots</a></h4>
+<h4 id="usage"><a class="anchor" href="#usage"></a><a class="link" href="#usage">1.4.1. Usage</a></h4>
+<div class="paragraph">
+<p>The <code>artemis run</code> command script supports <code>--properties &lt;path to properties files comma list&gt;</code> where properties file paths can be configured.
+If a properties path string ends in a '/' it represents a directory. Any file name matching the regex <code>.*\.(json|properties)</code> in that directory is treated as broker configuration.</p>
+</div>
+<div class="paragraph">
+<p>It is possible to override the default regex filter pattern with a <code>filter</code> query parameter on the directory path, e.g: <code>--properties '/home/x/broker_props/?filter=.*\.custom_props'</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="broker-configuration-in-properties-format"><a class="anchor" href="#broker-configuration-in-properties-format"></a><a class="link" href="#broker-configuration-in-properties-format">1.4.2. Broker configuration in properties format</a></h4>
+<div class="paragraph">
+<p>The <a href="management.html#server-management">server management operation</a> <code>exportConfigAsProperties</code> will export the current configuration of a broker as broker properties. Use this to get a better understanding of how properties apply to the broker configuration and how they map from xml.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="attribute-names-with-dots"><a class="anchor" href="#attribute-names-with-dots"></a><a class="link" href="#attribute-names-with-dots">1.4.3. Attribute Names with Dots</a></h4>
 <div class="paragraph">
 <p>Dots are significant in property keys because they identify the nesting level. If attribute names contain dots those need to be quoted. The quote string is specified via the property <code>key.surround</code> and has a default value of the double quote character: <code>"</code>.</p>
 </div>
@@ -257,7 +279,7 @@ acceptorConfigurations.tcp.params.port=61616</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="error-reporting"><a class="anchor" href="#error-reporting"></a><a class="link" href="#error-reporting">1.3.3. Error reporting</a></h4>
+<h4 id="error-reporting"><a class="anchor" href="#error-reporting"></a><a class="link" href="#error-reporting">1.4.4. Error reporting</a></h4>
 <div class="paragraph">
 <p>The free form text format of a java properties file and the inexact mapping from xml attribute to key=value can make it tricky to correctly configure broker properties.
 Properties that don&#8217;t match or fail to apply are tracked through the status attribute of the broker, visible through the <a href="management.html#server-management">server management operation</a> <code>getStatus</code>.</p>
@@ -572,7 +594,7 @@ The system will create as many files as needed however when reclaiming files it 
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="persistence.html#configuring-the-message-journal">journal-sync-non-transactional</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">if true wait for non transaction data to be synced to the journal before returning response to client.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if true wait for non-transaction data to be synced to the journal before returning response to client.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
 </tr>
 <tr>
@@ -816,7 +838,7 @@ In most cases this should be set to '1'.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">internal-naming-prefix</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">the prefix used when naming the internal queues and addresses required for implementing certain behaviours.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>$.activemq.internal</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>$.activemq.internal.</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="security.html#tracking-the-validated-user">populate-validated-user</a></p></td>

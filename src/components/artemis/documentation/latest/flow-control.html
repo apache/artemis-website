@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Flow Control</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#consumer-flow-control">1. Consumer Flow Control</a>
 <ul class="sectlevel2">
@@ -44,7 +44,7 @@
 </li>
 <li><a href="#producer-flow-control">2. Producer flow control</a>
 <ul class="sectlevel2">
-<li><a href="#window-based-flow-control-2">2.1. Window based flow control</a></li>
+<li><a href="#window-based-flow-control-2">2.1. Window-based flow control</a></li>
 <li><a href="#rate-limited-flow-control-2">2.2. Rate limited flow control</a></li>
 </ul>
 </li>
@@ -65,20 +65,21 @@
 <div class="paragraph">
 <p>This controls the flow of data between the server and the client as the client consumes messages.
 For performance reasons clients normally buffer messages before delivering to the consumer via the <code>receive()</code> method or asynchronously via a message listener.
-If the consumer cannot process messages as fast as they are being delivered and stored in the internal buffer, then you could end up with a situation where messages would keep building up possibly causing out of memory on the client if they cannot be processed in time.</p>
+If the consumer cannot process messages as fast as they are being delivered and stored in the internal buffer.
+Ultimately, you could end up with a situation where messages would keep building up, possibly causing out of memory on the client if they cannot be processed in time.</p>
 </div>
 <div class="sect2">
 <h3 id="window-based-flow-control"><a class="anchor" href="#window-based-flow-control"></a><a class="link" href="#window-based-flow-control">1.1. Window-Based Flow Control</a></h3>
 <div class="paragraph">
-<p>By default, Apache ActiveMQ Artemis consumers buffer messages from the server in a client side buffer before the client consumes them.
-This improves performance: otherwise every time the client consumes a message, Apache ActiveMQ Artemis would have to go the server to request the next message.
-In turn, this message would then get sent to the client side, if one was available.</p>
+<p>By default, Core consumers buffer messages from the broker in a client side buffer before the client consumes them.
+This improves performance: otherwise every time the client consumes a message, the client would have to request the next message from the queue on the broker.
+In turn, this message would then get sent to the client side if one was available.</p>
 </div>
 <div class="paragraph">
 <p>A network round trip would be involved for <em>every</em> message and considerably reduce performance.</p>
 </div>
 <div class="paragraph">
-<p>To prevent this, Apache ActiveMQ Artemis pre-fetches messages into a buffer on each consumer.
+<p>To prevent this, the Core client pre-fetches messages into a buffer on each consumer.
 The total maximum size of messages (in bytes) that will be buffered on each consumer is determined by the <code>consumerWindowSize</code> parameter.</p>
 </div>
 <div class="paragraph">
@@ -142,7 +143,7 @@ Messages will remain on the server side ready to be consumed by other consumers.
 In that case, setting the value of <code>consumerWindowSize</code> to optimize performance depends on the messaging use case and requires benchmarks to find the optimal value, but a value of 1MiB is fine in most cases.</p>
 </div>
 <div class="paragraph">
-<p>Please see <a href="examples.html#examples">the examples chapter</a> for an example which shows how to configure ActiveMQ Artemis to prevent consumer buffering when dealing with slow consumers.</p>
+<p>Please see <a href="examples.html#examples">the examples chapter</a> for an example which shows how to configure the broker to prevent consumer buffering when dealing with slow consumers.</p>
 </div>
 </div>
 </div>
@@ -169,9 +170,9 @@ The default value is <code>-1</code>.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Rate limited flow control can be used in conjunction with window based flow control.
-Rate limited flow control only effects how many messages a client can consume in a second and not how many messages are in its buffer.
-So if you had a slow rate limit and a high window based limit the clients internal buffer would soon fill up with messages.</p>
+<p>Rate-limited flow control can be used in conjunction with window-based flow control.
+Rate-limited flow control only effects how many messages a client can consume in a second and not how many messages are in its buffer.
+So if you had a slow rate limit and a high window-based limit, the clients internal buffer would soon fill up with messages.</p>
 </div>
 </td>
 </tr>
@@ -184,16 +185,16 @@ So if you had a slow rate limit and a high window based limit the clients intern
 <h2 id="producer-flow-control"><a class="anchor" href="#producer-flow-control"></a><a class="link" href="#producer-flow-control">2. Producer flow control</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis also can limit the amount of data sent from a client to a server to prevent the server being overwhelmed.</p>
+<p>The Core client also can limit the amount of data sent to a server to prevent the server from being overwhelmed.</p>
 </div>
 <div class="sect2">
-<h3 id="window-based-flow-control-2"><a class="anchor" href="#window-based-flow-control-2"></a><a class="link" href="#window-based-flow-control-2">2.1. Window based flow control</a></h3>
+<h3 id="window-based-flow-control-2"><a class="anchor" href="#window-based-flow-control-2"></a><a class="link" href="#window-based-flow-control-2">2.1. Window-based flow control</a></h3>
 <div class="paragraph">
-<p>In a similar way to consumer window based flow control, Apache ActiveMQ Artemis producers, by default, can only send messages to an address as long as they have sufficient credits to do so.
-The amount of credits required to send a message is given by the size of the message.</p>
+<p>Similarly to consumer window-based flow control, Core producers, by default, can only send messages to an address as long as they have enough credits to do so.
+The number of credits required to send a message is given by the size of the message.</p>
 </div>
 <div class="paragraph">
-<p>As producers run low on credits they request more from the server, when the server sends them more credits they can send more messages.</p>
+<p>As producers run low on credits, they request more from the server; when the server sends them more credits, they can send more messages.</p>
 </div>
 <div class="paragraph">
 <p>The amount of credits a producer requests in one go is known as the <em>window size</em> and it is controlled by the <code>producerWindowSize</code> URI parameter.</p>
@@ -202,11 +203,11 @@ The amount of credits required to send a message is given by the size of the mes
 <p>The window size therefore determines the amount of bytes that can be in-flight at any one time before more need to be requested - this prevents the remoting connection from getting overloaded.</p>
 </div>
 <div class="sect3">
-<h4 id="blocking-core-producers"><a class="anchor" href="#blocking-core-producers"></a><a class="link" href="#blocking-core-producers">2.1.1. Blocking CORE Producers</a></h4>
+<h4 id="blocking-core-producers"><a class="anchor" href="#blocking-core-producers"></a><a class="link" href="#blocking-core-producers">2.1.1. Blocking Core Producers</a></h4>
 <div class="paragraph">
-<p>When using the CORE protocol (used by both the Artemis Core Client and Artemis JMS Client) the server will always aim give the same number of credits as have been requested.
+<p>When using the Core protocol (used by both the broker&#8217;s Core client and JMS client) the server will always aim to give the same number of credits as have been requested.
 However, it is also possible to set a maximum size on any address, and the server will never send more credits to any one producer than what is available according to the address&#8217;s upper memory limit.
-Although a single producer will be issued more credits than available (at the time of issue) it is possible that more than 1 producer be associated with the same address and so it is theoretically possible that more credits are allocated across total producers than what is available.
+Although a single producer will be issued more credits than available (at the time of issue) it is possible that more than 1 producer will be associated with the same address and so it is theoretically possible that more credits are allocated across total producers than what is available.
 It is therefore possible to go over the address limit by approximately:</p>
 </div>
 <div class="listingblock">
@@ -290,32 +291,31 @@ It is also possible for a misbehaving client to ignore the flow control credits 
 <div class="sect3">
 <h4 id="blocking-amqp-producers"><a class="anchor" href="#blocking-amqp-producers"></a><a class="link" href="#blocking-amqp-producers">2.1.2. Blocking AMQP Producers</a></h4>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis ships with out of the box with 2 protocols that support flow control.
-Artemis CORE protocol and AMQP.
+<p>The broker supports flow control for two protocols - Core and AMQP.
 Both protocols implement flow control slightly differently and therefore address full BLOCK policy behaves slightly different for clients that use each protocol respectively.</p>
 </div>
 <div class="paragraph">
-<p>As explained earlier in this chapter the CORE protocol uses a producer window size flow control system.
+<p>As explained earlier in this chapter the Core protocol uses a producer window size flow control system.
 Where credits (representing bytes) are allocated to producers, if a producer wants to send a message it should wait until it has enough byte credits available for it to send.
 AMQP flow control credits are not representative of bytes but instead represent the number of messages a producer is permitted to send (regardless of the message size).</p>
 </div>
 <div class="paragraph">
 <p>BLOCK for AMQP works mostly in the same way as the producer window size mechanism above.
-Artemis will issue 100 credits to a client at a time and refresh them when the clients credits reaches 30.
+The broker will issue 100 credits to a client at a time and refresh them when the clients credits reaches 30.
 The broker will stop issuing credits once an address is full.
 However, since AMQP credits represent whole messages and not bytes, it would be possible in some scenarios for an AMQP client to significantly exceed an address upper bound should the broker continue accepting messages until the clients credits are exhausted.
 For this reason there is an additional parameter available on address settings that specifies an upper bound on an address size in bytes.
-Once this upper bound is reach Artemis will start rejecting AMQP messages.
+Once this upper bound is reached the broker will start rejecting AMQP messages.
 This limit is the max-size-bytes-reject-threshold and is by default set to -1 (or no limit).
-This is additional parameter allows a kind of soft and hard limit, in normal circumstances the broker will utilize the max-size-bytes parameter using flow control to put back pressure on the client, but will protect the broker by rejecting messages once the address size is reached.</p>
+This additional parameter allows a kind of soft and hard limit, in normal circumstances the broker will utilize the max-size-bytes parameter using flow control to put back pressure on the client, but will protect the broker by rejecting messages once the address size is reached.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="rate-limited-flow-control-2"><a class="anchor" href="#rate-limited-flow-control-2"></a><a class="link" href="#rate-limited-flow-control-2">2.2. Rate limited flow control</a></h3>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis also allows the rate a producer can emit message to be limited, in units of messages per second.
-By specifying such a rate, Apache ActiveMQ Artemis will ensure that producer never produces messages at a rate higher than that specified.
+<p>The broker can also limit the rate at which a producer can send messages (measured in messages per second).
+Specifying such a rate will ensure that a producer never produces messages at a rate higher than that specified.
 This is controlled by the <code>producerMaxRate</code> URL parameter.</p>
 </div>
 <div class="paragraph">

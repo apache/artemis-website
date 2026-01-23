@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Protocols and Interoperability</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#supported-protocols">1. Supported Protocols</a>
 <ul class="sectlevel2">
@@ -53,7 +53,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis has a powerful &amp; flexible core which provides a foundation upon which other protocols can be implemented.
+<p>Apache Artemis has a powerful &amp; flexible core which provides a foundation upon which other protocols can be implemented.
 Each protocol implementation translates the ideas of its specific protocol onto this core.</p>
 </div>
 <div class="paragraph">
@@ -79,8 +79,7 @@ It also defines a wire format, so any AMQP client can work with any messaging sy
 AMQP clients are available in many different programming languages.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis implements the <a href="https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=amqp">AMQP 1.0</a> specification.
-Any client that supports the 1.0 specification will be able to interact with Apache ActiveMQ Artemis.</p>
+<p>Any client that supports the <a href="https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=amqp">AMQP 1.0</a> specification will be able to interact with Apache Artemis.</p>
 </div>
 <div class="paragraph">
 <p>Please see <a href="amqp.html#amqp">AMQP</a> for more details.</p>
@@ -91,7 +90,7 @@ Any client that supports the 1.0 specification will be able to interact with Apa
 <div class="paragraph">
 <p><a href="https://mqtt.org/">MQTT</a> is a lightweight connectivity protocol.
 It is designed to run in environments where device and networks are constrained.
-Any client that supports the 3.1, 3.1.1, or 5 specification will be able to interact with Apache ActiveMQ Artemis.</p>
+Any client that supports the 3.1, 3.1.1, or 5 specification will be able to interact with Apache Artemis.</p>
 </div>
 <div class="paragraph">
 <p>Please see <a href="mqtt.html#mqtt">MQTT</a> for more details.</p>
@@ -103,7 +102,7 @@ Any client that supports the 3.1, 3.1.1, or 5 specification will be able to inte
 <p><a href="https://stomp.github.io/">Stomp</a> is a very simple text protocol for interoperating with messaging systems.
 It defines a wire format, so theoretically any Stomp client can work with any messaging system that supports Stomp.
 Stomp clients are available in many different programming languages.
-Any client that supports the 1.0, 1.1, or 1.2 specification will be able to interact with Apache ActiveMQ Artemis.</p>
+Any client that supports the 1.0, 1.1, or 1.2 specification will be able to interact with Apache Artemis.</p>
 </div>
 <div class="paragraph">
 <p>Please see <a href="stomp.html#stomp">Stomp</a> for more details.</p>
@@ -112,9 +111,8 @@ Any client that supports the 1.0, 1.1, or 1.2 specification will be able to inte
 <div class="sect2">
 <h3 id="openwire"><a class="anchor" href="#openwire"></a><a class="link" href="#openwire">1.4. OpenWire</a></h3>
 <div class="paragraph">
-<p>ActiveMQ Classic defines its own wire protocol: OpenWire.
-In order to support ActiveMQ Classic clients, Apache ActiveMQ Artemis supports OpenWire.
-Any application using the OpenWire JMS client library shipped with ActiveMQ 5.12.x or higher can be used with Apache ActiveMQ Artemis.</p>
+<p>ActiveMQ defines its own wire protocol: OpenWire.
+Any application using the OpenWire JMS client library shipped with ActiveMQ 5.12.x or higher can be used with Apache Artemis.</p>
 </div>
 <div class="paragraph">
 <p>Please see <a href="openwire.html#openwire">OpenWire</a> for more details.</p>
@@ -123,7 +121,7 @@ Any application using the OpenWire JMS client library shipped with ActiveMQ 5.12
 <div class="sect2">
 <h3 id="core"><a class="anchor" href="#core"></a><a class="link" href="#core">1.5. Core</a></h3>
 <div class="paragraph">
-<p>ActiveMQ Artemis defines its own wire protocol: Core.</p>
+<p>Artemis defines its own wire protocol: Core.</p>
 </div>
 <div class="paragraph">
 <p>Please see <a href="core.html#using-core">Core</a> for more details.</p>
@@ -132,7 +130,7 @@ Any application using the OpenWire JMS client library shipped with ActiveMQ 5.12
 <h4 id="apis-and-other-interfaces"><a class="anchor" href="#apis-and-other-interfaces"></a><a class="link" href="#apis-and-other-interfaces">1.5.1. APIs and Other Interfaces</a></h4>
 <div class="paragraph">
 <p>Although JMS and Jakarta Messaging are standardized APIs, they do not define a network protocol.
-The ActiveMQ Artemis <a href="using-jms.html#using-jms-or-jakarta-messaging">JMS &amp; Jakarta Messaging clients</a> are implemented on top of the core protocol.
+The Artemis <a href="using-jms.html#using-jms-or-jakarta-messaging">JMS &amp; Jakarta Messaging clients</a> are implemented on top of the core protocol.
 We also provide a <a href="using-jms.html#jndi">client-side JNDI implementation</a>.</p>
 </div>
 </div>
@@ -147,7 +145,7 @@ We also provide a <a href="using-jms.html#jndi">client-side JNDI implementation<
 There is a whole section on configuring transports that can be found <a href="configuring-transports.html#configuring-the-transport">here</a>.</p>
 </div>
 <div class="paragraph">
-<p>The default configuration shipped with the ActiveMQ Artemis distribution comes with a number of acceptors already defined, one for each of the above protocols plus a generic acceptor that supports all protocols.
+<p>The default configuration shipped with the distribution comes with a number of acceptors already defined, one for each of the above protocols plus a generic acceptor that supports all protocols.
 To enable  protocols on a particular acceptor simply add the <code>protocols</code> url parameter to the acceptor url where the value is one or more protocols (separated by commas).
 If the <code>protocols</code> parameter is omitted from the url <strong>all</strong> protocols are  enabled.</p>
 </div>
@@ -201,11 +199,11 @@ If the <code>protocols</code> parameter is omitted from the url <strong>all</str
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Core (Artemis &amp; HornetQ native)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CORE</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OpenWire (Classic native)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OpenWire</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>OPENWIRE</code></p></td>
 </tr>
 <tr>

@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Management</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#the-management-api">1. The Management API</a>
 <ul class="sectlevel2">
@@ -81,11 +81,11 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis has an extensive <em>management API</em> that allows a user to modify a server configuration, create new resources (e.g. addresses and queues), inspect these resources (e.g. how many messages are currently held in a queue) and interact with it (e.g. to remove messages from a queue).
-Apache ActiveMQ Artemis also allows clients to subscribe to management notifications.</p>
+<p>Apache Artemis has an extensive <em>management API</em> that allows a user to modify a server&#8217;s configuration, create new resources (e.g. addresses and queues), inspect these resources (e.g. how many messages are currently held in a queue), and interact with them (e.g. to remove messages from a queue).
+Management <em>notifications</em> are also sent for various events.</p>
 </div>
 <div class="paragraph">
-<p>There are numerous ways to access Apache ActiveMQ Artemis management API:</p>
+<p>There are numerous ways to access the management API:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -96,10 +96,10 @@ Apache ActiveMQ Artemis also allows clients to subscribe to management notificat
 <p>Using Jolokia&#8201;&#8212;&#8201;Jolokia exposes the JMX API of an application through an <em>HTTP interface</em></p>
 </li>
 <li>
-<p>Using the Core Client&#8201;&#8212;&#8201;management operations are sent to Apache ActiveMQ Artemis server using <em>Core Client messages</em></p>
+<p>Using the Core Client&#8201;&#8212;&#8201;management operations are sent to the broker using <em>Core Client messages</em></p>
 </li>
 <li>
-<p>Using any JMS Client&#8201;&#8212;&#8201;management operations are sent to Apache ActiveMQ  Artemis server using <em>JMS Client messages</em></p>
+<p>Using any JMS Client&#8201;&#8212;&#8201;management operations are sent to Apache Artemis server using <em>JMS Client messages</em></p>
 </li>
 <li>
 <p>Web Console&#8201;&#8212;&#8201;a web application which provides a graphical interface to the management API.</p>
@@ -107,11 +107,11 @@ Apache ActiveMQ Artemis also allows clients to subscribe to management notificat
 </ul>
 </div>
 <div class="paragraph">
-<p>Although there are four different ways to manage Apache ActiveMQ Artemis, each API supports the same functionality.
+<p>Although there are four different ways to manage the broker, each API supports the same functionality.
 If it is possible to manage a resource using JMX it is also possible to achieve the same result using Core messages.</p>
 </div>
 <div class="paragraph">
-<p>Besides these four management interfaces, a <a href="management-console.html#management-console">Web Console</a>  and a Command Line <em>management utility</em> are also available to administrators of  ActiveMQ Artemis.</p>
+<p>Besides these four management interfaces, a <a href="management-console.html#management-console">Web Console</a> and a Command Line <em>management utility</em> are also available to administrators.</p>
 </div>
 <div class="paragraph">
 <p>The choice depends on your requirements, your application settings, and your environment to decide which way suits you best.</p>
@@ -139,7 +139,7 @@ They are located in the <code>org.apache.activemq.artemis.api.core.management</c
 <div class="ulist">
 <ul>
 <li>
-<p>Listing, creating, deploying and destroying queues</p>
+<p>Listing, creating, deploying, and destroying queues</p>
 <div class="paragraph">
 <p>A list of deployed queues can be retrieved using the <code>getQueueNames()</code> method.</p>
 </div>
@@ -178,7 +178,7 @@ To reset message counters, it is possible to invoke <code>resetAllMessageCounter
 <li>
 <p>Retrieving the server configuration and attributes</p>
 <div class="paragraph">
-<p>The <code>ActiveMQServerControl</code> exposes Apache ActiveMQ Artemis server configuration through all its attributes (e.g. <code>getVersion()</code> method to retrieve the server&#8217;s version, etc.)</p>
+<p>The <code>ActiveMQServerControl</code> exposes broker configuration through all its attributes (e.g. <code>getVersion()</code> method to retrieve the server&#8217;s version, etc.)</p>
 </div>
 </li>
 <li>
@@ -243,7 +243,7 @@ diverts) can be created or destroyed using the management operations <code>creat
 <div class="ulist">
 <ul>
 <li>
-<p>The status of the broker, a json string, can be obtained through the <code>getStatus()</code> operation. The status includes identity, uptime, activation state and information about broker properties configuration and reload.</p>
+<p>The status of the broker, a json string, can be obtained through the <code>getStatus()</code> operation. The status includes identity, uptime, activation state, and information about broker properties configuration and reload.</p>
 </li>
 </ul>
 </div>
@@ -386,7 +386,7 @@ When it&#8217;s enabled, it&#8217;ll begin having messages routed to it again.</
 <div class="sect2">
 <h3 id="other-resources-management"><a class="anchor" href="#other-resources-management"></a><a class="link" href="#other-resources-management">1.4. Other Resources Management</a></h3>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis allows to start and stop its remote resources (acceptors, diverts, bridges, etc.) so that a server can be taken off line for a given period of time without stopping it completely (e.g. if other management operations must be performed such as resolving heuristic transactions).
+<p>The management API allows an administrator to start and stop various broker resources (acceptors, diverts, bridges, etc.) so that a broker can be taken partially off-line for a given period of time without stopping it completely (e.g. if other management operations must be performed such as resolving heuristic transactions).
 These resources are:</p>
 </div>
 <div class="ulist">
@@ -437,11 +437,11 @@ Cluster connections parameters can be retrieved using the <code>ClusterConnectio
 <h2 id="management-via-jmx"><a class="anchor" href="#management-via-jmx"></a><a class="link" href="#management-via-jmx">2. Management Via JMX</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis can be managed using <a href="http://www.oracle.com/technetwork/java/javase/tech/javamanagement-140525.html">JMX</a>.</p>
+<p>The broker can be managed using <a href="http://www.oracle.com/technetwork/java/javase/tech/javamanagement-140525.html">JMX</a>.</p>
 </div>
 <div class="paragraph">
-<p>The management API is exposed by Apache ActiveMQ Artemis using MBeans.
-By  default, Apache ActiveMQ Artemis registers its resources with the domain  <code>org.apache.activemq.artemis</code>.
+<p>The management API is exposed using MBeans.
+By  default, these MBeans are registered with the domain  <code>org.apache.activemq.artemis</code>.
 For example, the <code>ObjectName</code> to manage the anycast queue <code>exampleQueue</code> on the address <code>exampleAddress</code> is:</p>
 </div>
 <div class="listingblock">
@@ -469,13 +469,13 @@ Example usage of the <code>ObjectNameBuilder</code> to obtain <code>ActiveMQServ
 </div>
 </div>
 <div class="paragraph">
-<p>Managing Apache ActiveMQ Artemis using JMX is identical to management of any Java Applications using JMX.
+<p>Managing a broker using JMX is identical to the management of any Java Applications using JMX.
 It can be done by reflection or by creating proxies of the MBeans.</p>
 </div>
 <div class="sect2">
 <h3 id="configuring-jmx"><a class="anchor" href="#configuring-jmx"></a><a class="link" href="#configuring-jmx">2.1. Configuring JMX</a></h3>
 <div class="paragraph">
-<p>By default, JMX is enabled to manage Apache ActiveMQ Artemis.
+<p>By default, JMX is enabled for broker management.
 It can be disabled by setting <code>jmx-management-enabled</code> to <code>false</code> in <code>broker.xml</code>:</p>
 </div>
 <div class="listingblock">
@@ -716,9 +716,9 @@ for the broker domain, the domain is omitted.
 <div class="sect3">
 <h4 id="local-jmx-access-with-jconsole"><a class="anchor" href="#local-jmx-access-with-jconsole"></a><a class="link" href="#local-jmx-access-with-jconsole">2.1.3. Local JMX Access with JConsole</a></h4>
 <div class="paragraph">
-<p>Due to the authorisation which is enabled by default Apache ActiveMQ Artemis  can <em>not</em> be managed locally using JConsole when connecting as a <em>local  process</em>.
-This is because JConsole does not pass any authentication information when connecting this way which means the user cannot therefore be authorised  for any management operations.
-In order to use JConsole the user will either have to disable authorisation by completely removing the <code>authorisation</code> element from <code>management.xml</code> or by enabling remote access and providing the proper username and password credentials (discussed next).</p>
+<p>Due to the authorisation which is enabled by default, the broker can <em>not</em> be managed locally using JConsole when connecting as a <em>local  process</em>.
+This is because JConsole does not pass any authentication information when connecting this way, which means the user cannot, therefore, be authorised  for any management operations.
+To use JConsole, the user will either have to disable authorisation by completely removing the <code>authorisation</code> element from <code>management.xml</code> or by enabling remote access and providing the proper username and password credentials (discussed next).</p>
 </div>
 </div>
 <div class="sect3">
@@ -729,7 +729,7 @@ In order to use JConsole the user will either have to disable authorisation by c
 <div class="paragraph">
 <p>Artemis has a JMX agent which allows access to JMX MBeans remotely.
 This is configured via the <code>connector</code> element in the <code>management.xml</code> configuration file.
-To enable this you simply add the following xml:</p>
+To enable this, you add the following XML:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -847,12 +847,12 @@ Please refer to <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/
 </table>
 </div>
 <div class="paragraph">
-<p>By default, Apache ActiveMQ Artemis server uses the JMX domain "org.apache.activemq.artemis".
-To manage several Apache ActiveMQ Artemis servers from the <em>same</em> MBeanServer, the JMX domain can be configured for each individual Apache ActiveMQ Artemis server by setting <code>jmx-domain</code> in <code>broker.xml</code>:</p>
+<p>By default, the broker uses the JMX domain <code>&#8220;`org.apache.activemq.artemis`&#8221;</code>.
+To manage several brokers from the <em>same</em> MBeanServer, the JMX domain can be configured for each individual broker by setting <code>jmx-domain</code> in <code>broker.xml</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="c">&lt;!-- use a specific JMX domain for ActiveMQ Artemis MBeans --&gt;</span>
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="c">&lt;!-- use a specific JMX domain for Apache Artemis MBeans --&gt;</span>
 <span class="nt">&lt;jmx-domain&gt;</span>my.org.apache.activemq<span class="nt">&lt;/jmx-domain&gt;</span></code></pre>
 </div>
 </div>
@@ -861,7 +861,7 @@ To manage several Apache ActiveMQ Artemis servers from the <em>same</em> MBeanSe
 <div class="sect2">
 <h3 id="example"><a class="anchor" href="#example"></a><a class="link" href="#example">2.2. Example</a></h3>
 <div class="paragraph">
-<p>See the <a href="examples.html#jmx-management">JMX Management Example</a> which shows how to use a remote connection to JMX and MBean proxies to manage Apache ActiveMQ Artemis.</p>
+<p>See the <a href="examples.html#jmx-management">JMX Management Example</a> which shows how to use a remote connection to JMX and MBean proxies to manage a broker.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1576,7 +1576,7 @@ The ArtemisRbacInvocationHandler intercepts all operations on the MBeanServer an
 <h2 id="using-management-message-api"><a class="anchor" href="#using-management-message-api"></a><a class="link" href="#using-management-message-api">3. Using Management Message API</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The management message API in ActiveMQ Artemis is accessed by sending Core Client messages to a special address, the <em>management address</em>.</p>
+<p>The management message API is accessed by sending Core Client messages to a special address, the <em>management address</em>.</p>
 </div>
 <div class="paragraph">
 <p><em>Management messages</em> are regular Core Client messages with well-known properties that the server needs to understand to interact with the management API:</p>
@@ -1595,7 +1595,7 @@ The ArtemisRbacInvocationHandler intercepts all operations on the MBeanServer an
 </ul>
 </div>
 <div class="paragraph">
-<p>When such a management message is sent to the management address, Apache ActiveMQ Artemis server will handle it, extract the information, invoke the operation on the managed resources and send a <em>management reply</em> to the management message&#8217;s reply-to address (specified by <code>ClientMessageImpl.REPLYTO_HEADER_NAME</code>).</p>
+<p>When such a management message is sent to the management address the broker will handle it, extract the information, invoke the operation on the managed resources, and send a <em>management reply</em> to the management message&#8217;s reply-to address (specified by <code>ClientMessageImpl.REPLYTO_HEADER_NAME</code>).</p>
 </div>
 <div class="paragraph">
 <p>A <code>ClientConsumer</code> can be used to consume the management reply and retrieve the result of the operation (if any) stored in the reply&#8217;s body.
@@ -1678,8 +1678,7 @@ This is also configured in broker.xml:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="c">&lt;!-- users with the admin role will be allowed to manage --&gt;</span>
-<span class="c">&lt;!-- Apache ActiveMQ Artemis using management messages    --&gt;</span>
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="c">&lt;!-- users with the admin role will be allowed to manage the broker using management messages --&gt;</span>
 <span class="nt">&lt;security-setting</span> <span class="na">match=</span><span class="s">"activemq.management"</span><span class="nt">&gt;</span>
    <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">"manage"</span> <span class="na">roles=</span><span class="s">"admin"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/security-setting&gt;</span></code></pre>
@@ -1745,7 +1744,7 @@ The <code>manage</code> permission is required to execute management operations 
 <div class="sect2">
 <h3 id="management-example"><a class="anchor" href="#management-example"></a><a class="link" href="#management-example">3.3. Management Example</a></h3>
 <div class="paragraph">
-<p>See the <a href="examples.html#management">Management Example</a> which shows how to use JMS messages to manage the Apache ActiveMQ Artemis server.</p>
+<p>See the <a href="examples.html#management">Management Example</a> which shows how to use JMS messages to manage the broker.</p>
 </div>
 </div>
 </div>
@@ -1754,10 +1753,10 @@ The <code>manage</code> permission is required to execute management operations 
 <h2 id="management-notifications"><a class="anchor" href="#management-notifications"></a><a class="link" href="#management-notifications">4. Management Notifications</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis emits <em>notifications</em> to inform listeners of potentially interesting events (creation of new resources, security violation, etc.).</p>
+<p>The broker emits <em>notifications</em> to inform listeners of potentially interesting events (creation of new resources, security violation, etc.).</p>
 </div>
 <div class="paragraph">
-<p>These notifications can be received by two different ways:</p>
+<p>These notifications can be received in two different ways:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1778,7 +1777,7 @@ The <code>manage</code> permission is required to execute management operations 
 <div class="sect2">
 <h3 id="notification-messages"><a class="anchor" href="#notification-messages"></a><a class="link" href="#notification-messages">4.2. Notification Messages</a></h3>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis defines a special <em>management notification address</em>.
+<p>A special address is defined for <em>management notification</em>.
 Queues can be bound to this address so that clients will receive management notifications as messages.</p>
 </div>
 <div class="paragraph">
@@ -1786,10 +1785,10 @@ Queues can be bound to this address so that clients will receive management noti
 It can then receive the notifications from its queue.</p>
 </div>
 <div class="paragraph">
-<p>Notifications messages are regular messages with additional properties corresponding to the notification (its type, when it occurred, the resources which were concerned, etc.).</p>
+<p>Notification messages are regular messages with additional properties corresponding to the notification (its type, when it occurred, the resources which were concerned, etc.).</p>
 </div>
 <div class="paragraph">
-<p>Since notifications are regular messages, it is possible to use message selectors to filter out notifications and receives only a subset of all the notifications emitted by the server.</p>
+<p>Since notifications are regular messages, it is possible to use message selectors to filter out notifications and receive only a subset of all the notifications emitted by the server.</p>
 </div>
 <div class="sect3">
 <h4 id="configuring-the-management-notification-address"><a class="anchor" href="#configuring-the-management-notification-address"></a><a class="link" href="#configuring-the-management-notification-address">4.2.1. Configuring The Management Notification Address</a></h4>
@@ -1825,7 +1824,7 @@ Default value is <code>false</code></p>
 <div class="sect3">
 <h4 id="receiving-notification-messages"><a class="anchor" href="#receiving-notification-messages"></a><a class="link" href="#receiving-notification-messages">4.2.3. Receiving Notification Messages</a></h4>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis&#8217;s Core JMS Client can be used to receive notifications:</p>
+<p>A Core JMS Client can be used to receive notifications:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1855,7 +1854,7 @@ Default value is <code>false</code></p>
 <div class="sect2">
 <h3 id="example-2"><a class="anchor" href="#example-2"></a><a class="link" href="#example-2">4.3. Example</a></h3>
 <div class="paragraph">
-<p>See the <a href="examples.html#management-notification">Management Notification Example</a> which shows how to use a JMS <code>MessageListener</code> to receive management notifications from ActiveMQ Artemis server.</p>
+<p>See the <a href="examples.html#management-notification">Management Notification Example</a> which shows how to use a JMS <code>MessageListener</code> to receive management notifications.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1984,7 +1983,7 @@ The timestamp is the un-formatted result of a call to <code>java.lang.System.cur
 <h2 id="message-counters"><a class="anchor" href="#message-counters"></a><a class="link" href="#message-counters">5. Message Counters</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Message counters can be used to obtain information on queues <em>over time</em> as Apache ActiveMQ Artemis keeps a history on queue metrics.</p>
+<p>Message counters can be used to obtain information on queues <em>over time</em> as the broker keeps a history on queue metrics.</p>
 </div>
 <div class="paragraph">
 <p>They can be used to show <em>trends</em> on queues.
@@ -2063,7 +2062,7 @@ For example, to retrieve message counters on a queue using JMX:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="java"><span class="c1">// retrieve a connection to Apache ActiveMQ Artemis's MBeanServer</span>
+<pre class="rouge highlight nowrap"><code data-lang="java"><span class="c1">// retrieve a connection to the broker's MBeanServer</span>
 <span class="nc">MBeanServerConnection</span> <span class="n">mbsc</span> <span class="o">=</span> <span class="o">...</span>
 <span class="nc">QueueControlMBean</span> <span class="n">queueControl</span> <span class="o">=</span> <span class="o">(</span><span class="nc">QueueControl</span><span class="o">)</span><span class="nc">MBeanServerInvocationHandler</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">mbsc</span><span class="o">,</span>
    <span class="n">on</span><span class="o">,</span>

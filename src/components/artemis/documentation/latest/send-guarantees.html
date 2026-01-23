@@ -33,11 +33,11 @@
 <div id="header">
 <h1>Guarantees of Sends and Commits</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#transaction-completion">1. Transaction Completion</a></li>
-<li><a href="#non-transactional-message-sends">2. Non Transactional Message Sends</a></li>
-<li><a href="#non-transactional-acknowledgements">3. Non Transactional Acknowledgements</a></li>
+<li><a href="#non-transactional-message-sends">2. Non-Transactional Message Sends</a></li>
+<li><a href="#non-transactional-acknowledgements">3. Non-Transactional Acknowledgements</a></li>
 <li><a href="#asynchronous-send-acknowledgements">4. Asynchronous Send Acknowledgements</a></li>
 </ul>
 </div>
@@ -47,7 +47,7 @@
 <h2 id="transaction-completion"><a class="anchor" href="#transaction-completion"></a><a class="link" href="#transaction-completion">1. Transaction Completion</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When committing or rolling back a transaction with Apache ActiveMQ Artemis, the request to commit or rollback is sent to the server, and the call will block on the client side until a response has been received from the server that the commit or rollback was executed.</p>
+<p>When committing or rolling back a transaction, the request to commit or rollback is sent to the server, and the call will block on the client side until a response has been received from the server that the commit or rollback was executed.</p>
 </div>
 <div class="paragraph">
 <p>When the commit or rollback is received on the server, it will be committed to the journal, and depending on the value of the parameter <code>journal-sync-transactional</code> the server will ensure that the commit or rollback is durably persisted to storage before sending the response back to the client.
@@ -64,45 +64,45 @@ The default value of this parameter is <code>true</code> so the client can be su
 </div>
 </div>
 <div class="sect1">
-<h2 id="non-transactional-message-sends"><a class="anchor" href="#non-transactional-message-sends"></a><a class="link" href="#non-transactional-message-sends">2. Non Transactional Message Sends</a></h2>
+<h2 id="non-transactional-message-sends"><a class="anchor" href="#non-transactional-message-sends"></a><a class="link" href="#non-transactional-message-sends">2. Non-Transactional Message Sends</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you are sending messages to a server using a non transacted session, Apache ActiveMQ Artemis can be configured to block the call to send until the message has definitely reached the server, and a response has been sent back to the client.
-This can be configured individually for durable and non-durable messages, and is determined by the following two URL parameters:</p>
+<p>If you are sending messages to a server using a non-transacted session, the Core client can be configured to block the call to <code>send</code> until the message has definitely reached the server and a response has been sent back to the client.
+This can be configured individually for durable and non-durable messages and is determined by the following two URL parameters:</p>
 </div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">blockOnDurableSend</dt>
 <dd>
-<p>If this is set to <code>true</code> then all calls to send for durable messages on non transacted sessions will block until the message has reached the server, and a response has been sent back.
+<p>If this is set to <code>true</code> then all calls to send for durable messages on non-transacted sessions will block until the message has reached the server, and a response has been sent back.
 The default value is <code>true</code>.</p>
 </dd>
 <dt class="hdlist1">blockOnNonDurableSend</dt>
 <dd>
-<p>If this is set to <code>true</code> then all calls to send for non-durable messages on non transacted sessions will block until the message has reached the server, and a response has been sent back.
+<p>If this is set to <code>true</code> then all calls to send for non-durable messages on non-transacted sessions will block until the message has reached the server, and a response has been sent back.
 The default value is <code>false</code>.</p>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>Setting block on sends to <code>true</code> can reduce performance since each send requires a network round trip before the next send can be performed.
+<p>Blocking a send operation can reduce performance since each send requires a network round trip before the next send can be performed.
 This means the performance of sending messages will be limited by the network round trip time (RTT) of your network, rather than the bandwidth of your network.
-For better performance we recommend either batching many messages sends together in a transaction since with a transactional session, only the commit / rollback blocks not every send, or, using Apache ActiveMQ Artemis&#8217;s advanced <em>asynchronous send acknowledgements feature</em> described in Asynchronous Send Acknowledgements.</p>
+For better performance we recommend either batching many sends together in a transaction (since only the commit &amp; rollback blocks with a transactional session), or using the advanced <a href="#asynchronous-send-acknowledgements">asynchronous send acknowledgements feature</a>.</p>
 </div>
 <div class="paragraph">
-<p>When the server receives a message sent from a non transactional session, and that message is durable and the message is routed to at least one durable queue, then the server will persist the message in permanent storage.
+<p>When the server receives a message sent from a non-transactional session, and that message is durable and the message is routed to at least one durable queue, then the server will persist the message in permanent storage.
 If the journal parameter <code>journal-sync-non-transactional</code> is set to <code>true</code> the server will not send a response back to the client until the message has been persisted and the server has a guarantee that the data has been persisted to disk.
 The default value for this parameter is <code>true</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="non-transactional-acknowledgements"><a class="anchor" href="#non-transactional-acknowledgements"></a><a class="link" href="#non-transactional-acknowledgements">3. Non Transactional Acknowledgements</a></h2>
+<h2 id="non-transactional-acknowledgements"><a class="anchor" href="#non-transactional-acknowledgements"></a><a class="link" href="#non-transactional-acknowledgements">3. Non-Transactional Acknowledgements</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you are acknowledging the delivery of a message at the client side using a non transacted session, Apache ActiveMQ Artemis can be configured to block the call to acknowledge until the acknowledge has definitely reached the server, and a response has been sent back to the client.
+<p>If you are acknowledging the delivery of a message at the client side using a non-transacted session, the Core client can be configured to block the call to acknowledge until the acknowledge has definitely reached the server, and a response has been sent back to the client.
 This is configured with the parameter <code>BlockOnAcknowledge</code>.
-If this is set to <code>true</code> then all calls to acknowledge on non transacted sessions will block until the acknowledge has reached the server, and a response has been sent back.
+If this is set to <code>true</code> then all calls to acknowledge on non-transacted sessions will block until the acknowledge has reached the server, and a response has been sent back.
 You might want to set this to <code>true</code> if you want to implement a strict <em>at most once</em> delivery policy.
 The default value is <code>false</code></p>
 </div>
@@ -112,7 +112,7 @@ The default value is <code>false</code></p>
 <h2 id="asynchronous-send-acknowledgements"><a class="anchor" href="#asynchronous-send-acknowledgements"></a><a class="link" href="#asynchronous-send-acknowledgements">4. Asynchronous Send Acknowledgements</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you are using a non transacted session but want a guarantee that every message sent to the server has reached it, then, as discussed in Guarantees of Non Transactional Message Sends, you can configure Apache ActiveMQ Artemis to block the call to send until the server has received the message, persisted it and sent back a response.
+<p>If you are using a non-transacted session but want a guarantee that every message sent to the server has reached it, then, as discussed in <a href="#non-transactional-message-sends">here</a>, you can configure the Core client to block the <code>send</code> operation until the server has received the message, persisted it, and sent back a response.
 This works well but has a severe performance penalty - each call to send needs to block for at least the time of a network round trip (RTT) - the performance of sending is thus limited by the latency of the network, <em>not</em> limited by the network bandwidth.</p>
 </div>
 <div class="paragraph">
@@ -127,8 +127,8 @@ We&#8217;ll consider a standard 1Gib ethernet network with a network round trip 
 These figures aren&#8217;t an exact science but you can clearly see that being limited by network RTT can have serious effect on performance.</p>
 </div>
 <div class="paragraph">
-<p>To remedy this, Apache ActiveMQ Artemis provides an advanced new feature called <em>asynchronous send acknowledgements</em>.
-With this feature, Apache ActiveMQ Artemis can be configured to send messages without blocking in one direction and asynchronously getting acknowledgement from the server that the messages were received in a separate stream.
+<p>To remedy this, the Core client provides an advanced new feature called <em>asynchronous send acknowledgements</em>.
+With this feature, the Core client can be configured to send messages without blocking in one direction and asynchronously getting acknowledgement from the server that the messages were received in a separate stream.
 By de-coupling the send from the acknowledgement of the send, the system is not limited by the network RTT, but is limited by the network bandwidth.
 Consequently better throughput can be achieved than is possible using a blocking approach, while at the same time having absolute guarantees that messages have successfully reached the server.</p>
 </div>
@@ -137,10 +137,10 @@ Consequently better throughput can be achieved than is possible using a blocking
 Please see <a href="client-failover.html#core-client-failover">Client Failover</a> for more info on this.</p>
 </div>
 <div class="paragraph">
-<p>To use the feature using the core API, you implement the interface <code>org.apache.activemq.artemis.api.core.client.SendAcknowledgementHandler</code> and set a handler instance on your <code>ClientSession</code>.</p>
+<p>To use the feature using the Core API, you implement the interface <code>org.apache.activemq.artemis.api.core.client.SendAcknowledgementHandler</code> and set a handler instance on your <code>ClientSession</code>.</p>
 </div>
 <div class="paragraph">
-<p>Then, you just send messages as normal using your <code>ClientSession</code>, and as messages reach the server, the server will send back an acknowledgement of the send asynchronously, and some time later you are informed at the client side by Apache ActiveMQ Artemis calling your handler&#8217;s <code>sendAcknowledged(ClientMessage message)</code> method, passing in a reference to the message that was sent.</p>
+<p>Then, you just send messages as normal using your <code>ClientSession</code>, and as messages reach the server, the server will send back an acknowledgement of the send asynchronously, and some time later you are informed at the client side by the invocation of your handler&#8217;s <code>sendAcknowledged(ClientMessage message)</code> method, passing in a reference to the message that was sent.</p>
 </div>
 <div class="paragraph">
 <p>To enable asynchronous send acknowledgements you must make sure <code>confirmationWindowSize</code> is set to a positive integer value, e.g. 10MiB</p>

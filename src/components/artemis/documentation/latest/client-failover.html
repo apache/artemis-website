@@ -33,7 +33,7 @@
 <div id="header">
 <h1>Core Client Failover</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#reconnect-to-the-same-server">1. Reconnect to the same server</a></li>
 <li><a href="#reconnect-to-the-backup-server">2. Reconnect to the backup server</a></li>
@@ -49,7 +49,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis clients can be configured to automatically <a href="#reconnect-to-the-same-server">reconnect to the same server</a>, <a href="#reconnect-to-the-backup-server">reconnect to the backup server</a> or <a href="#reconnect-to-other-active-servers">reconnect to other active servers</a> in the event that a failure is detected in the connection between the client and the server.
+<p>Clients using the Core protocol can be configured to automatically <a href="#reconnect-to-the-same-server">reconnect to the same server</a>, <a href="#reconnect-to-the-backup-server">reconnect to the backup server</a> or <a href="#reconnect-to-other-active-servers">reconnect to other active servers</a> in the event that a failure is detected in the connection between the client and the server.
 The clients detect connection failure when they have not received any packets from the server within the time given by <code>client-failure-check-period</code> as explained in section <a href="connection-ttl.html#detecting-dead-connections">Detecting Dead Connections</a>.</p>
 </div>
 </div>
@@ -71,7 +71,7 @@ This is done 100% transparently and the client can continue exactly as if nothin
 <p>The way this works is as follows:</p>
 </div>
 <div class="paragraph">
-<p>As Apache ActiveMQ Artemis clients send commands to their servers they store each sent command in an in-memory buffer.
+<p>As Core clients send commands to their servers they store each sent command in an in-memory buffer.
 In the case that connection failure occurs and the client subsequently reattaches to the same server, as part of the reattachment protocol the server informs the client during reattachment with the id of the last command it successfully received from that client.</p>
 </div>
 <div class="paragraph">
@@ -215,7 +215,7 @@ The default value is <code>0</code>.</p>
 <h2 id="exceptionlisteners-and-sessionfailurelisteners"><a class="anchor" href="#exceptionlisteners-and-sessionfailurelisteners"></a><a class="link" href="#exceptionlisteners-and-sessionfailurelisteners">7. ExceptionListeners and SessionFailureListeners</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Please note, that when a client reconnects or re-attaches, any registered JMS <code>ExceptionListener</code> or core API <code>SessionFailureListener</code> will be called.</p>
+<p>Please note, that when a client reconnects or re-attaches, any registered JMS <code>ExceptionListener</code> or Core API <code>SessionFailureListener</code> will be called.</p>
 </div>
 </div>
 </div>

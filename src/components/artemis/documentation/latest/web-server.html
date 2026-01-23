@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Embedded Web Server</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#configuration">1. Configuration</a>
 <ul class="sectlevel2">
@@ -57,7 +57,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis embeds the <a href="https://www.eclipse.org/jetty/">Jetty web server</a>.
+<p>Apache Artemis embeds the <a href="https://www.eclipse.org/jetty/">Jetty web server</a>.
 Its main purpose is to host the <a href="management-console.html#management-console">Management Console</a>.
 However, it can also host other web applications.</p>
 </div>
@@ -102,6 +102,19 @@ This is a subdirectory of the broker&#8217;s home or instance directory.</p>
 <dd>
 <p>Whether or not the content included in the web folder of the home and the instance directories is accessible.
 Default is <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">compressionEnabled</dt>
+<dd>
+<p>Whether to compress HTTP responses.
+Uses <code>gzip</code> encoding for maximum compatibility.
+This will impact any client communicating with the embedded web server including the web console and consumers of <a href="metrics.html#metrics">metrics</a> (e.g. Prometheus) assuming they set the <code>Accept-Encoding</code> header to <code>gzip</code> in their HTTP requests.
+Default is <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">compressionLevel</dt>
+<dd>
+<p>The level of compression for HTTP responses.
+Only valid if <code>compressionEnabled</code> is <code>true</code>.
+Default is <code>6</code>. Must be between <code>0</code> and <code>9</code> inclusive.</p>
 </dd>
 <dt class="hdlist1">maxThreads</dt>
 <dd>

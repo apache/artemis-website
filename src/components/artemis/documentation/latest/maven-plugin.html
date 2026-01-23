@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Maven Plugins</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#when-to-use-it">1. When to use it</a></li>
 <li><a href="#goals">2. Goals</a></li>
@@ -53,7 +53,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Since Artemis 1.1.0 Artemis provides the possibility of using Maven Plugins to manage the life cycle of servers.</p>
+<p>A Maven Plugin is available to manage the life cycle of brokers.</p>
 </div>
 </div>
 </div>
@@ -61,11 +61,11 @@
 <h2 id="when-to-use-it"><a class="anchor" href="#when-to-use-it"></a><a class="link" href="#when-to-use-it">1. When to use it</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>These Maven plugins were initially created to manage server instances across our examples.
-They can create a server, start, and do any CLI operation over servers.</p>
+<p>These Maven plugins were initially created to manage broker instances across our examples.
+They can create a server, start, and do any CLI operation on these brokers.</p>
 </div>
 <div class="paragraph">
-<p>You could for example use these maven plugins on your testsuite or deployment automation.</p>
+<p>You could, for example, use these Maven plugins on your testsuite or deployment automation.</p>
 </div>
 </div>
 </div>
@@ -79,8 +79,8 @@ They can create a server, start, and do any CLI operation over servers.</p>
 <dl>
 <dt class="hdlist1">create</dt>
 <dd>
-<p>This will create a server accordingly to your arguments.
-You can do some extra tricks here such as installing extra libraries for external modules.</p>
+<p>This will create a server according to your arguments.
+You can do some extra tricks here, such as installing extra libraries for external modules.</p>
 </dd>
 <dt class="hdlist1">cli</dt>
 <dd>
@@ -107,7 +107,7 @@ Notice that this won&#8217;t spawn a new VM or new Thread.</p>
 <pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;build&gt;</span>
    <span class="nt">&lt;plugins&gt;</span>
       <span class="nt">&lt;plugin&gt;</span>
-         <span class="nt">&lt;groupId&gt;</span>org.apache.activemq<span class="nt">&lt;/groupId&gt;</span>
+         <span class="nt">&lt;groupId&gt;</span>org.apache.artemis<span class="nt">&lt;/groupId&gt;</span>
          <span class="nt">&lt;artifactId&gt;</span>artemis-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
       <span class="nt">&lt;/plugin&gt;</span>
    <span class="nt">&lt;/plugins&gt;</span>
@@ -137,13 +137,13 @@ Notice that this won&#8217;t spawn a new VM or new Thread.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">configuration</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A place that will hold any file to replace on the configuration.
-For instance if you are providing your own broker.xml.
-Default is "${basedir}/target/classes/activemq/server0"</p></td>
+For instance, if you are providing your own <code>broker.xml</code>.
+Default is <code>${basedir}/target/classes/activemq/server0</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">home</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The location where you downloaded and installed artemis.
-Default is "${activemq.basedir}"</p></td>
+Default is <code>${activemq.basedir}</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">alternateHome</p></td>
@@ -152,12 +152,11 @@ Default is "${activemq.basedir}"</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">instance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Where the server is going to be installed.
-Default is "${basedir}/target/server0"</p></td>
+Default is <code>${basedir}/target/server0</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">liblist[]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A list of libraries to be installed under ./lib.
-ex: "org.jgroups:jgroups:3.6.0.Final"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A list of libraries to be installed under <code>./lib</code> (e.g. <code>org.jgroups:jgroups:3.6.0.Final</code>)</p></td>
 </tr>
 </tbody>
 </table>
@@ -301,7 +300,7 @@ You may refer to it directly under the examples directory tree.</p>
    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
 
    <span class="nt">&lt;parent&gt;</span>
-      <span class="nt">&lt;groupId&gt;</span>org.apache.activemq.examples.broker<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.apache.artemis.examples.broker<span class="nt">&lt;/groupId&gt;</span>
       <span class="nt">&lt;artifactId&gt;</span>jms-examples<span class="nt">&lt;/artifactId&gt;</span>
       <span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
    <span class="nt">&lt;/parent&gt;</span>
@@ -316,7 +315,7 @@ You may refer to it directly under the examples directory tree.</p>
 
    <span class="nt">&lt;dependencies&gt;</span>
       <span class="nt">&lt;dependency&gt;</span>
-         <span class="nt">&lt;groupId&gt;</span>org.apache.activemq<span class="nt">&lt;/groupId&gt;</span>
+         <span class="nt">&lt;groupId&gt;</span>org.apache.artemis<span class="nt">&lt;/groupId&gt;</span>
          <span class="nt">&lt;artifactId&gt;</span>artemis-jms-client<span class="nt">&lt;/artifactId&gt;</span>
          <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
       <span class="nt">&lt;/dependency&gt;</span>
@@ -325,7 +324,7 @@ You may refer to it directly under the examples directory tree.</p>
    <span class="nt">&lt;build&gt;</span>
       <span class="nt">&lt;plugins&gt;</span>
          <span class="nt">&lt;plugin&gt;</span>
-            <span class="nt">&lt;groupId&gt;</span>org.apache.activemq<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.artemis<span class="nt">&lt;/groupId&gt;</span>
             <span class="nt">&lt;artifactId&gt;</span>artemis-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
             <span class="nt">&lt;executions&gt;</span>
                <span class="nt">&lt;execution&gt;</span>
@@ -372,7 +371,7 @@ You may refer to it directly under the examples directory tree.</p>
             <span class="nt">&lt;/executions&gt;</span>
             <span class="nt">&lt;dependencies&gt;</span>
                <span class="nt">&lt;dependency&gt;</span>
-                  <span class="nt">&lt;groupId&gt;</span>org.apache.activemq.examples.broker<span class="nt">&lt;/groupId&gt;</span>
+                  <span class="nt">&lt;groupId&gt;</span>org.apache.artemis.examples.broker<span class="nt">&lt;/groupId&gt;</span>
                   <span class="nt">&lt;artifactId&gt;</span>queue<span class="nt">&lt;/artifactId&gt;</span>
                   <span class="nt">&lt;version&gt;</span>${project.version}<span class="nt">&lt;/version&gt;</span>
                <span class="nt">&lt;/dependency&gt;</span>

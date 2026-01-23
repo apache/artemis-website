@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Large Messages</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#configuring-the-server">1. Configuring the server</a></li>
 <li><a href="#configuring-the-core-client">2. Configuring the Core Client</a></li>
@@ -55,7 +55,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis can be configured to give special treatment to messages which are beyond a configured size.
+<p>Messages which are beyond a configured size can receive special treatment.
 Instead of keeping the entire contents of these messages <em>in memory</em> the broker will hold just a thin object on the queues with a reference to the content (e.g. in a file or a database table).</p>
 </div>
 <div class="paragraph">
@@ -157,7 +157,7 @@ This is determined by the URL parameter <code>minLargeMessageSize</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis messages are encoded using 2 bytes per character so if the message data is filled with ASCII characters (which are 1 byte) the size of the resulting Apache ActiveMQ Artemis message would roughly double.
+<p>Messages are encoded using 2 bytes per character, so if the message data is filled with ASCII characters (which are 1 byte) the size of the resulting message would roughly double.
 This is important when calculating the size of a "large" message as it may appear to be less than the <code>minLargeMessageSize</code> before it is sent, but it then turns into a "large" message once it is encoded.</p>
 </div>
 </td>
@@ -211,15 +211,15 @@ Make sure to tune this value according to its specific use-case.
 <h2 id="streaming-large-messages-from-core-protocol"><a class="anchor" href="#streaming-large-messages-from-core-protocol"></a><a class="link" href="#streaming-large-messages-from-core-protocol">4. Streaming large messages from Core Protocol</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis supports setting the body of messages using input and output streams (<code>java.lang.io</code>)</p>
+<p>The body of messages can be set using input and output streams (<code>java.lang.io</code>)</p>
 </div>
 <div class="paragraph">
 <p>These streams are then used directly for sending (input streams) and receiving (output streams) messages.</p>
 </div>
 <div class="paragraph">
-<p>When receiving messages there are 2 ways to deal with the output stream;
+<p>When receiving messages, there are 2 ways to deal with the output stream;
 you may choose to block while the output stream is recovered using the method <code>ClientMessage.saveOutputStream</code> or alternatively using the method <code>ClientMessage.setOutputstream</code> which will asynchronously write the message to the stream.
-If you choose the latter the consumer must be kept alive until the message has been fully received.</p>
+If you choose the latter, the consumer must be kept alive until the message has been fully received.</p>
 </div>
 <div class="paragraph">
 <p>You can use any kind of stream you like.
@@ -297,10 +297,10 @@ On those cases you can use the message property _AMQ_LARGE_SIZE.</p>
 <div class="sect2">
 <h3 id="streaming-over-jms"><a class="anchor" href="#streaming-over-jms"></a><a class="link" href="#streaming-over-jms">4.2. Streaming over JMS</a></h3>
 <div class="paragraph">
-<p>When using JMS, Apache ActiveMQ Artemis maps the streaming methods on the core API (see ClientMessage API table above) by setting object properties . You can use the method <code>Message.setObjectProperty</code> to set the input and output streams.</p>
+<p>When using JMS, the streaming methods on the Core API (see the <code>ClientMessage</code> API table above) are mapped by setting object properties. You can use the method <code>Message.setObjectProperty</code> to set the input and output streams.</p>
 </div>
 <div class="paragraph">
-<p>The <code>InputStream</code> can be defined through the JMS Object Property JMS_AMQ_InputStream on messages being sent:</p>
+<p>The <code>InputStream</code> can be defined through the JMS object property <code>JMS_AMQ_InputStream</code> on messages being sent:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -316,7 +316,7 @@ On those cases you can use the message property _AMQ_LARGE_SIZE.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>OutputStream</code> can be set through the JMS Object Property JMS_AMQ_SaveStream on messages being received in a blocking way.</p>
+<p>The <code>OutputStream</code> can be set through the JMS object property <code>JMS_AMQ_SaveStream</code> on messages being received in a blocking way.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -333,7 +333,7 @@ On those cases you can use the message property _AMQ_LARGE_SIZE.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Setting the <code>OutputStream</code> could also be done in a non blocking way using the property JMS_AMQ_OutputStream.</p>
+<p>Setting the <code>OutputStream</code> could also be done in a non-blocking way using the property <code>JMS_AMQ_OutputStream</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -359,10 +359,10 @@ On those cases you can use the message property _AMQ_LARGE_SIZE.</p>
 <div class="sect2">
 <h3 id="streaming-alternative-on-core-protocol"><a class="anchor" href="#streaming-alternative-on-core-protocol"></a><a class="link" href="#streaming-alternative-on-core-protocol">4.3. Streaming Alternative on Core Protocol</a></h3>
 <div class="paragraph">
-<p>If you choose not to use the <code>InputStream</code> or <code>OutputStream</code> capability of Apache ActiveMQ Artemis You could still access the data directly in an alternative fashion.</p>
+<p>If you choose not to use the <code>InputStream</code> or <code>OutputStream</code> capability you could still access the data directly in an alternative fashion.</p>
 </div>
 <div class="paragraph">
-<p>On the Core API just get the bytes of the body as you normally would.</p>
+<p>On the Core API get the bytes of the body as you normally would.</p>
 </div>
 <div class="listingblock">
 <div class="content">

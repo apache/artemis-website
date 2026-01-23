@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Upgrading the Broker</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#general-upgrade-procedure">1. General Upgrade Procedure</a></li>
 <li><a href="#upgrading-tool">2. Upgrading tool</a></li>
@@ -45,16 +45,15 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Classic (and previous versions) is runnable out of the box by executing the command: <code>./bin/activemq run</code>.
-The ActiveMQ Artemis broker follows a different paradigm where the project distribution serves as the broker "home" and one or more broker "instances" are created which reference the "home" for resources (e.g. jar files) which can be safely shared between broker instances.
+<p>The Artemis broker follows a paradigm where the project distribution serves as the broker "home" and then one or more broker "instances" are created which reference the "home" for resources (e.g. jar files) which can be safely shared between broker instances.
 Therefore, an instance of the broker must be created before it can be run.
-This may seems like an overhead at first glance, but it becomes very practical when updating to a new Artemis version for example.</p>
+This may seem like an overhead at first glance, but it becomes very practical when updating to a new version, for example.</p>
 </div>
 <div class="paragraph">
-<p>To create an Artemis broker instance navigate into the Artemis home folder and run: <code>./bin/artemis create /path/to/myBrokerInstance</code> on the command line.</p>
+<p>To create a broker instance, navigate into the home folder and run: <code>./bin/artemis create /path/to/myBrokerInstance</code> on the command line.</p>
 </div>
 <div class="paragraph">
-<p>Because of this separation it&#8217;s very easy to upgrade Artemis in most cases.</p>
+<p>Because of this separation, it&#8217;s very easy to upgrade in most cases.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -63,9 +62,9 @@ This may seems like an overhead at first glance, but it becomes very practical w
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-It&#8217;s recommended to choose a folder different from where Apache Artemis was downloaded.
-This separation allows you run multiple broker instances with the same Artemis "home" for example.
-It also simplifies updating to newer versions of Artemis.
+It&#8217;s recommended to choose a folder different from where the broker was downloaded.
+This separation allows you to run multiple broker instances with the same "home," for example.
+It also simplifies updating to newer versions.
 </td>
 </tr>
 </table>
@@ -95,7 +94,7 @@ It contains a property which is relevant for the upgrade:</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>If you run Artemis as a service on windows you have to do the following additional steps:</p>
+<p>If you run the broker as a service on windows you have to do the following additional steps:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -119,7 +118,7 @@ It contains a property which is relevant for the upgrade:</p>
 Please refer to the aforementioned <a href="versions.html#versions">versions</a> document for additional upgrade steps (if required).</p>
 </div>
 <div class="paragraph">
-<p>It is also possible to do many of these update steps automatically as can be seen in the next section.</p>
+<p>It is also possible to do many of these update steps automatically, as can be seen in the next section.</p>
 </div>
 </div>
 </div>
@@ -127,7 +126,8 @@ Please refer to the aforementioned <a href="versions.html#versions">versions</a>
 <h2 id="upgrading-tool"><a class="anchor" href="#upgrading-tool"></a><a class="link" href="#upgrading-tool">2. Upgrading tool</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An upgrade helper tool from the new broker download can be used to refresh various configuration files and scripts from an existing broker instance from a prior version, and thus automate much of work to upgrade the instance to use the new version.</p>
+<p>An upgrade helper tool from the new broker download can be used to refresh various configuration files and scripts from an existing broker instance from a prior version.
+This automates much of the work to upgrade the instance to the new version.</p>
 </div>
 <div class="admonitionblock warning">
 <table>

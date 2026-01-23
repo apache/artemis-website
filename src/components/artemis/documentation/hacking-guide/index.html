@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
 <link rel="icon" type="image/png" href="images/favicon.png">
-<title>Apache ActiveMQ Artemis Hacking Guide</title>
+<title>Apache Artemis Hacking Guide</title>
 <link rel="stylesheet" href="css/asciidoctor.css">
 <link rel="stylesheet" href="css/font-awesome.css">
 <link rel="stylesheet" href="css/rouge-github.css">
@@ -48,13 +48,12 @@
 <ul class="sectlevel2">
 <li><a href="#getting-jacoco-exec-files">4.1. Getting JaCoCo exec files</a></li>
 <li><a href="#generate-jacoco-reports">4.2. Generate JaCoCo reports</a></li>
-<li><a href="#merge-jacoco-exec-files-to-one">4.3. Merge JaCoCo exec files to one</a></li>
+<li><a href="#merge-jacoco-exec-files-into-one">4.3. Merge JaCoCo exec files into one</a></li>
 </ul>
 </li>
 <li><a href="#validating-releases">5. Validating releases</a>
 <ul class="sectlevel2">
 <li><a href="#setting-up-the-maven-repository">5.1. Setting up the maven repository</a></li>
-<li><a href="#using-the-examples">5.2. Using the examples</a></li>
 </ul>
 </li>
 <li><a href="#notes-for-maintainers">6. Notes for Maintainers</a>
@@ -89,7 +88,7 @@
 <h2 id="working-with-the-code"><a class="anchor" href="#working-with-the-code"></a><a class="link" href="#working-with-the-code">1. Working with the Code</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>While the canonical Apache Artemis git repository is hosted on Apache hardware at <a href="https://gitbox.apache.org/repos/asf/artemis.git" class="bare">https://gitbox.apache.org/repos/asf/artemis.git</a> contributors are encouraged (but not required) to use a mirror on GitHub for collaboration and pull-request review functionality.
+<p>While the canonical git repository is hosted on Apache hardware at <a href="https://gitbox.apache.org/repos/asf/artemis.git" class="bare">https://gitbox.apache.org/repos/asf/artemis.git</a> contributors are encouraged (but not required) to use a mirror on GitHub for collaboration and pull-request review functionality.
 Follow the steps below to get set up with GitHub, etc.</p>
 </div>
 <div class="paragraph">
@@ -144,22 +143,18 @@ For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="sh"><span class="nv">$ </span>mvn <span class="nt">-Pdev</span> <span class="nb">install</span>
+<pre class="rouge highlight nowrap"><code data-lang="sh"><span class="nv">$ </span>mvn <span class="nt">-Pdev</span> <span class="nb">install</span> <span class="nt">-DskipTests</span>
 ...
 <span class="o">[</span>INFO] <span class="nt">------------------------------------------------------------------------</span>
-<span class="o">[</span>INFO] Reactor Summary:
+<span class="o">[</span>INFO] Reactor Summary <span class="k">for </span>Apache Artemis &lt;VERSION&gt;-SNAPSHOT:
 <span class="o">[</span>INFO]
-<span class="o">[</span>INFO] ActiveMQ Artemis Parent ........................... SUCCESS <span class="o">[</span>2.298s]
-<span class="o">[</span>INFO] ActiveMQ Artemis Commons .......................... SUCCESS <span class="o">[</span>1.821s]
-<span class="o">[</span>INFO] ActiveMQ Artemis Selector Implementation .......... SUCCESS <span class="o">[</span>0.767s]
-<span class="o">[</span>INFO] ActiveMQ Artemis Native POM ....................... SUCCESS <span class="o">[</span>0.189s]
-<span class="o">[</span>INFO] ActiveMQ Artemis Journal .......................... SUCCESS <span class="o">[</span>0.646s]
-<span class="o">[</span>INFO] ActiveMQ Artemis Core Client ...................... SUCCESS <span class="o">[</span>5.969s]
-<span class="o">[</span>INFO] ActiveMQ Artemis JMS Client ....................... SUCCESS <span class="o">[</span>2.110s]
-<span class="o">[</span>INFO] ActiveMQ Artemis Server ........................... SUCCESS <span class="o">[</span>11.540s]
-...
-<span class="o">[</span>INFO] ActiveMQ Artemis stress Tests ..................... SUCCESS <span class="o">[</span>0.332s]
-<span class="o">[</span>INFO] ActiveMQ Artemis performance Tests ................ SUCCESS <span class="o">[</span>0.174s]
+<span class="o">[</span>INFO] Apache Artemis ..................................... SUCCESS <span class="o">[</span>  2.435 s]
+<span class="o">[</span>INFO] Apache Artemis Bill of Materials ................... SUCCESS <span class="o">[</span>  0.094 s]
+...etc...
+<span class="o">[</span>INFO] Apache Artemis Server .............................. SUCCESS <span class="o">[</span> 11.866 s]
+...etc...
+<span class="o">[</span>INFO] Apache Artemis JMS Client .......................... SUCCESS <span class="o">[</span>  1.036 s]
+...etc...
 <span class="o">[</span>INFO] <span class="nt">------------------------------------------------------------------------</span>
 <span class="o">[</span>INFO] BUILD SUCCESS
 <span class="o">[</span>INFO] <span class="nt">------------------------------------------------------------------------</span></code></pre>
@@ -197,7 +192,7 @@ For example:</p>
 <div id="commitMessageDetails" class="paragraph">
 <p>When you commit your changes you will need to supply a commit message.
 We follow the  50/72 git commit message format as recommended in the <a href="https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project">official Git book</a>.
-An ActiveMQ Artemis commit message should be formatted in the following manner:</p>
+The commit message should be formatted in the following manner:</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -277,7 +272,7 @@ Therefore you&#8217;ll want to make sure that you  either work in a branch that 
 <p>Send a GitHub pull request, by clicking the pull request link while in your repo&#8217;s fork.</p>
 </li>
 <li>
-<p>An email will automatically be sent to the ActiveMQ developer list.</p>
+<p>An email will automatically be sent to the Artemis issues mailing list.</p>
 </li>
 <li>
 <p>As part of the review you may see an automated test run comment on your request.</p>
@@ -345,11 +340,11 @@ Total 100 (delta 47), reused 100 (delta 47)
 The Apache Software Foundation 3rd party licensing  policy has more information here: <a href="https://www.apache.org/legal/3party.html" class="bare">https://www.apache.org/legal/3party.html</a></p>
 </div>
 <div class="paragraph">
-<p>To keep track of all licenses in ActiveMQ Artemis, new dependencies must be added in either the top level <code>pom.xml</code> or in <code>test/pom.xml</code> (depending on whether this is a test only dependency or if it is used in the main code base).
-The dependency should be added under the dependency management section with version and labelled with a comment highlighting the license for the dependency version.
+<p>To keep track of all licenses, new dependencies must be added in either the top level <code>pom.xml</code> or in <code>test/pom.xml</code> (depending on whether this is a test-only dependency or if it is used in the main code base).
+The dependency should be added under the dependency management section with version and labeled with a comment highlighting the license for the dependency version.
 See existing dependencies in the main <code>pom.xml</code> for examples.
-The dependency can then be added to individual ActiveMQ Artemis modules <em>without</em> the version specified (the version is implied from the dependency management section of the top level pom).
-This allows ActiveMQ Artemis developers to keep track of all dependencies and licenses.</p>
+The dependency can then be added to individual modules <em>without</em> the version specified (the version is implied from the dependency management section of the top level pom).
+This allows developers to keep track of all dependencies and licenses.</p>
 </div>
 </div>
 </div>
@@ -448,13 +443,17 @@ Output will be placed in the <code>target/classes/user-manual</code>, <code>targ
 <div class="sect2">
 <h3 id="building-the-async-io-library"><a class="anchor" href="#building-the-async-io-library"></a><a class="link" href="#building-the-async-io-library">2.5. Building the ASYNC IO library</a></h3>
 <div class="paragraph">
-<p>ActiveMQ Artemis provides the <code>ASYNCIO</code> <code>journal-type</code> which interacts with the Linux kernel libaio library. The ASYNCIO journal type should be used where possible as it is far superior in terms of performance.</p>
+<p>The <code>ASYNCIO</code> <code>journal-type</code> which interacts with the Linux kernel libaio library.
+The ASYNCIO journal type should be used where possible as it is far superior in terms of performance.</p>
 </div>
 <div class="paragraph">
-<p>ActiveMQ Artemis does not ship with the Artemis Native ASYNCIO library in the <em>source</em> distribution. This need to be built prior to running <code>mvn install</code>, to ensure that the ASYNCIO journal type is available in the resulting build. Don&#8217;t worry if you don&#8217;t want to use ASYNCIO or your system does not support libaio, ActiveMQ Artemis will check at runtime to see if the required libraries and system dependencies are available, if not it will default to using NIO.</p>
+<p>The ASYNCIO native library is not included in the broker <em>source</em> distribution.
+It needs to be built prior to running <code>mvn install</code> to ensure that the ASYNCIO journal type is available in the resulting build.
+Don&#8217;t worry if you don&#8217;t want to use ASYNCIO or your system does not support libaio.
+The broker will check at runtime to see if the required libraries and system dependencies are available and, if not, it will default to using NIO.</p>
 </div>
 <div class="paragraph">
-<p>To build the ActiveMQ Artemis ASYNCIO native libraries, please follow <a href="https://github.com/apache/artemis-native">these instructions</a>.</p>
+<p>To build the ASYNCIO native libraries, please follow <a href="https://github.com/apache/artemis-native">these instructions</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -474,10 +473,10 @@ Output will be placed in the <code>target/classes/user-manual</code>, <code>targ
 <div class="sect2">
 <h3 id="snapshot-builds"><a class="anchor" href="#snapshot-builds"></a><a class="link" href="#snapshot-builds">2.7. Snapshot Builds</a></h3>
 <div class="paragraph">
-<p>Snapshot builds are available at <a href="https://repository.apache.org/content/repositories/snapshots/org/apache/activemq/apache-artemis/" class="bare">https://repository.apache.org/content/repositories/snapshots/org/apache/activemq/apache-artemis/</a>.</p>
+<p>Snapshot builds are available at <a href="https://repository.apache.org/content/repositories/snapshots/org/apache/artemis/apache-artemis/" class="bare">https://repository.apache.org/content/repositories/snapshots/org/apache/artemis/apache-artemis/</a>.</p>
 </div>
 <div class="paragraph">
-<p>These are built by <a href="https://ci-builds.apache.org/job/ActiveMQ/job/ActiveMQ-Artemis-SNAPSHOT-Deploy/">this Apache CI job</a>.</p>
+<p>These are built by <a href="https://ci-builds.apache.org/job/Artemis/job/Artemis-SNAPSHOT-Deploy/">this Apache CI job</a>.</p>
 </div>
 </div>
 </div>
@@ -662,9 +661,9 @@ After the command was executed, in directory <code>target/jacoco-report</code> y
 </div>
 </div>
 <div class="sect2">
-<h3 id="merge-jacoco-exec-files-to-one"><a class="anchor" href="#merge-jacoco-exec-files-to-one"></a><a class="link" href="#merge-jacoco-exec-files-to-one">4.3. Merge JaCoCo exec files to one</a></h3>
+<h3 id="merge-jacoco-exec-files-into-one"><a class="anchor" href="#merge-jacoco-exec-files-into-one"></a><a class="link" href="#merge-jacoco-exec-files-into-one">4.3. Merge JaCoCo exec files into one</a></h3>
 <div class="paragraph">
-<p>Since ActiveMQ Artemis is divided into several modules, exec files are generated for each module separately.
+<p>JaCoCo exec files are generated for each module separately.
 If you need to merge them together to have all data in one place, you can do it by command below.</p>
 </div>
 <div class="listingblock">
@@ -687,11 +686,11 @@ If you need to merge them together to have all data in one place, you can do it 
 <p>This information was extracted from <a href="https://maven.apache.org/guides/development/guide-testing-releases.html">Guide to Testing Staged Releases</a></p>
 </div>
 <div class="paragraph">
-<p>For examples, the 1.1.0 release had the Maven Repository staged as <a href="https://repository.apache.org/content/repositories/orgapacheactivemq-1066" class="bare">https://repository.apache.org/content/repositories/orgapacheactivemq-1066</a>.</p>
+<p>An example staging repository created during the release process would be: <a href="https://repository.apache.org/content/repositories/orgapacheartemis-1002" class="bare">https://repository.apache.org/content/repositories/orgapacheartemis-1002</a>.</p>
 </div>
 <div class="paragraph">
-<p>The first thing you need to do is to be able to use this release.
-The easiest way we have found is to change your maven settings at <code>~/.m2/settings.xml</code>, setting up the staged repo.</p>
+<p>The first thing you need to do is to be able to access this staging repository.
+The easiest way we have found is to change your maven settings at <code>~/.m2/settings.xml</code>, setting up the staging repo.</p>
 </div>
 <div class="listingblock">
 <div class="title">~/.m2/settings.xml</div>
@@ -700,32 +699,32 @@ The easiest way we have found is to change your maven settings at <code>~/.m2/se
 <span class="nt">&lt;settings&gt;</span>
    <span class="nt">&lt;profiles&gt;</span>
       <span class="nt">&lt;profile&gt;</span>
-         <span class="nt">&lt;id&gt;</span>activemq-artemis-test<span class="nt">&lt;/id&gt;</span>
+         <span class="nt">&lt;id&gt;</span>apache-artemis-staging<span class="nt">&lt;/id&gt;</span>
          <span class="nt">&lt;repositories&gt;</span>
             <span class="nt">&lt;repository&gt;</span>
-               <span class="nt">&lt;id&gt;</span>artemis-test<span class="nt">&lt;/id&gt;</span>
-               <span class="nt">&lt;name&gt;</span>ActiveMQ Artemis Test<span class="nt">&lt;/name&gt;</span>
-               <span class="nt">&lt;url&gt;</span>https://repository.apache.org/content/repositories/orgapacheactivemq-1066<span class="nt">&lt;/url&gt;</span>
+               <span class="nt">&lt;id&gt;</span>artemis-staging<span class="nt">&lt;/id&gt;</span>
+               <span class="nt">&lt;name&gt;</span>Apache Artemis Staging<span class="nt">&lt;/name&gt;</span>
+               <span class="nt">&lt;url&gt;</span>https://repository.apache.org/content/repositories/orgapacheartemis-1002<span class="nt">&lt;/url&gt;</span>
                <span class="nt">&lt;layout&gt;</span>default<span class="nt">&lt;/layout&gt;</span>
                <span class="nt">&lt;releases&gt;</span>
                   <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
                <span class="nt">&lt;/releases&gt;</span>
                <span class="nt">&lt;snapshots&gt;</span>
-                  <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+                  <span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
                <span class="nt">&lt;/snapshots&gt;</span>
             <span class="nt">&lt;/repository&gt;</span>
          <span class="nt">&lt;/repositories&gt;</span>
 
          <span class="nt">&lt;pluginRepositories&gt;</span>
             <span class="nt">&lt;pluginRepository&gt;</span>
-               <span class="nt">&lt;id&gt;</span>artemis-test2<span class="nt">&lt;/id&gt;</span>
-               <span class="nt">&lt;name&gt;</span>ActiveMQ Artemis Test<span class="nt">&lt;/name&gt;</span>
-               <span class="nt">&lt;url&gt;</span>https://repository.apache.org/content/repositories/orgapacheactivemq-1066<span class="nt">&lt;/url&gt;</span>
+               <span class="nt">&lt;id&gt;</span>artemis-staging<span class="nt">&lt;/id&gt;</span>
+               <span class="nt">&lt;name&gt;</span>Apache Artemis Staging<span class="nt">&lt;/name&gt;</span>
+               <span class="nt">&lt;url&gt;</span>https://repository.apache.org/content/repositories/orgapacheartemis-1002<span class="nt">&lt;/url&gt;</span>
                <span class="nt">&lt;releases&gt;</span>
                   <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
                <span class="nt">&lt;/releases&gt;</span>
                <span class="nt">&lt;snapshots&gt;</span>
-                  <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+                  <span class="nt">&lt;enabled&gt;</span>false<span class="nt">&lt;/enabled&gt;</span>
                <span class="nt">&lt;/snapshots&gt;</span>
             <span class="nt">&lt;/pluginRepository&gt;</span>
          <span class="nt">&lt;/pluginRepositories&gt;</span>
@@ -733,23 +732,13 @@ The easiest way we have found is to change your maven settings at <code>~/.m2/se
    <span class="nt">&lt;/profiles&gt;</span>
 
    <span class="nt">&lt;activeProfiles&gt;</span>
-      <span class="nt">&lt;activeProfile&gt;</span>activemq-artemis-test<span class="nt">&lt;/activeProfile&gt;</span>
+      <span class="nt">&lt;activeProfile&gt;</span>apache-artemis-staging<span class="nt">&lt;/activeProfile&gt;</span>
    <span class="nt">&lt;/activeProfiles&gt;</span>
 <span class="nt">&lt;/settings&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>After you configure this, all the maven objects will be available to your builds.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="using-the-examples"><a class="anchor" href="#using-the-examples"></a><a class="link" href="#using-the-examples">5.2. Using the examples</a></h3>
-<div class="paragraph">
-<p>The Apache ActiveMQ Artemis examples will create servers and use most of the maven components as real application were supposed to do.
-You can do this by running these examples after the <code>.m2</code> profile installations for the staged repository.</p>
-</div>
-<div class="paragraph">
-<p>Of course you can use your own applications after you have staged the maven repository.</p>
+<p>After you configure this, the maven artifacts for the release candidate will be available to your builds.</p>
 </div>
 </div>
 </div>
@@ -758,20 +747,20 @@ You can do this by running these examples after the <code>.m2</code> profile ins
 <h2 id="notes-for-maintainers"><a class="anchor" href="#notes-for-maintainers"></a><a class="link" href="#notes-for-maintainers">6. Notes for Maintainers</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>ActiveMQ Artemis committers have write access to the Apache ActiveMQ Artemis repositories and will be responsible for acknowledging and pushing commits contributed via pull requests on GitHub.</p>
+<p>Committers have write access to all project repositories and will be responsible for acknowledging and pushing commits contributed via pull requests on GitHub.</p>
 </div>
 <div class="paragraph">
-<p>Core ActiveMQ Artemis members are also able to push their own commits directly to the canonical Apache repository.
+<p>Core members are also able to push their own commits directly to the canonical Apache repository.
 However, the expectation here is that the developer has made a good effort to test their changes and is reasonably confident that the changes that are being committed will not break the build.</p>
 </div>
 <div class="paragraph">
 <p>What does it mean to be reasonably confident?
 If the developer has run the same maven commands that the pull-request builds are running they can be reasonably confident.
-Currently the <a href="https://builds.apache.org/job/ActiveMQ-Artemis-PR-Build/">PR build</a> runs this command:</p>
+Currently the <a href="https://github.com/apache/artemis/blob/main/.github/workflows/build.yml">PR build</a> runs this command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>mvn <span class="nt">-Pfast-tests</span> <span class="nb">install</span></code></pre>
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>mvn <span class="nt">-Pfast-tests</span> <span class="nt">-Pcompatibility-tests</span> <span class="nb">install</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1025,9 +1014,8 @@ You can wait for the mirror to update before performing the steps above or you c
 <h2 id="history"><a class="anchor" href="#history"></a><a class="link" href="#history">7. History</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Apache ActiveMQ Artemis project was started in October 2014.
-The Artemis code base was seeded with a code donation granted by Red Hat, of the HornetQ project.
-The code donation process consisted of taking a snapshot of the latest HornetQ code base and contributing this snapshot as an <a href="https://issues.apache.org/jira/browse/ARTEMIS-1">initial git commit</a> into the Artemis git repository.</p>
+<p>In October 2014 the Apache Artemis code-base was seeded with a donation of the HornetQ project from Red Hat.
+The code donation process consisted of taking a snapshot of the latest HornetQ code base and contributing it as the <a href="https://issues.apache.org/jira/browse/ARTEMIS-1">initial commit</a> into the corresponding Git repository.</p>
 </div>
 <div class="paragraph">
 <p>The HornetQ commit history is preserved and can be accessed here: <a href="https://github.com/hornetq/hornetq/tree/apache-donation" class="bare">https://github.com/hornetq/hornetq/tree/apache-donation</a></p>

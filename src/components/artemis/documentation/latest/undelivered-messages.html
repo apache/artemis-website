@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Message Redelivery and Undelivered Messages</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#delayed-redelivery">1. Delayed Redelivery</a>
 <ul class="sectlevel2">
@@ -126,7 +126,7 @@ One for the number of deliveries that happened, and one in case a scheduled rede
 </div>
 </div>
 <div class="paragraph">
-<p>If a <code>redelivery-delay</code> is specified, Apache ActiveMQ Artemis will wait this delay before redelivering the messages.</p>
+<p>If a <code>redelivery-delay</code> is specified, the broker will wait this delay before redelivering the messages.</p>
 </div>
 <div class="paragraph">
 <p>By default, there is no redelivery delay (<code>redelivery-delay</code>is set to 0).</p>
@@ -247,7 +247,7 @@ By randomly padding the redelivery-delay by a small, configurable amount these r
 <p>Any such messages can then be diverted to queue(s) where they can later be perused by the system administrator for action to be taken.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis&#8217;s addresses can be assigned a dead letter address.
+<p>Addresses can be assigned a dead letter address.
 Once the messages have been unsuccessfully delivered for a given number of attempts, they are removed from their queue and sent to the relevant dead letter address.
 These <em>dead letter</em> messages can later be consumed from the dead letter address for further inspection.</p>
 </div>
@@ -342,7 +342,7 @@ See the relevant settings in the  table below:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The queue holding the undeliverable messages can be accessed directly either by using the queue&#8217;s name by itself (e.g. when using the core client) or by using the fully qualified queue name (e.g. when using a JMS client) just like any other queue.
+<p>The queue holding the undeliverable messages can be accessed directly either by using the queue&#8217;s name by itself (e.g. when using the Core client) or by using the fully qualified queue name (e.g. when using a JMS client) just like any other queue.
 Also, note that the queue is auto-created which means it will be auto-deleted as per the relevant <code>address-settings</code>.</p>
 </div>
 </div>
@@ -358,7 +358,7 @@ Also, note that the queue is auto-created which means it will be auto-deleted as
 <h2 id="delivery-count-persistence"><a class="anchor" href="#delivery-count-persistence"></a><a class="link" href="#delivery-count-persistence">3. Delivery Count Persistence</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In normal use, Apache ActiveMQ Artemis does not update delivery count <em>persistently</em> until a message is rolled back (i.e. the delivery count is not updated <em>before</em> the message is delivered to the consumer).
+<p>In normal use, the broker does not update delivery count <em>persistently</em> until a message is rolled back (i.e. the delivery count is not updated <em>before</em> the message is delivered to the consumer).
 In most messaging use cases, the messages are consumed, acknowledged and forgotten as soon as they are consumed.
 In these cases, updating the delivery count persistently before delivering the message would add an extra persistent step <em>for each message delivered</em>, implying a significant performance penalty.</p>
 </div>
@@ -367,7 +367,7 @@ In these cases, updating the delivery count persistently before delivering the m
 During the recovery phase, the server will not have knowledge of that and will deliver the message with <code>redelivered</code> set to <code>false</code> while it should be <code>true</code>.</p>
 </div>
 <div class="paragraph">
-<p>As this behavior breaks strict JMS semantics, Apache ActiveMQ Artemis allows to persist delivery count before message delivery but this feature is disabled by default due to performance implications.</p>
+<p>As this behavior breaks strict JMS semantics, the broker can persist the delivery count before message delivery, but this feature is disabled by default due to performance implications.</p>
 </div>
 <div class="paragraph">
 <p>To enable it, set <code>persist-delivery-count-before-delivery</code> to <code>true</code> in <code>broker.xml</code>:</p>

@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Performance Tools</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#case-1-single-producer-single-consumer-over-a-queue">1. Case 1: Single producer Single consumer over a queue</a>
 <ul class="sectlevel2">
@@ -56,7 +56,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Artemis provides some built-in performance test tools based on the <a href="https://javaee.github.io/jms-spec/pages/JMS20FinalRelease">JMS 2 API</a> to help users (and developers) to stress test a configured Artemis broker instance in different scenarios.</p>
+<p>Performance test tools based on the <a href="https://javaee.github.io/jms-spec/pages/JMS20FinalRelease">JMS 2 API</a> are available to help users (and developers) stress test a broker instance in different scenarios.</p>
 </div>
 <div class="paragraph">
 <p>These command-line tools won&#8217;t represent a full-fat benchmark (such as <a href="https://openmessaging.cloud/docs/benchmarks/">Open Messaging</a>), but can be used as building blocks to produce one.
@@ -155,8 +155,7 @@ Before looking what the metrics mean, there&#8217;s an initial <code>WARN</code>
 <p>the load generator uses <a href="https://jakarta.ee/specifications/messaging/2.0/apidocs/javax/jms/messageproducer#send-javax.jms.Destination-javax.jms.Message-javax.jms.CompletionListener-">async message producers</a></p>
 </li>
 <li>
-<p><code>confirmationWindowSize</code> is an Artemis CORE protocol specific setting;
-the <code>perf</code> commands uses CORE as the default JMS provider</p>
+<p><code>confirmationWindowSize</code> is specific to the Core protocol; the <code>perf</code> commands uses Core as the default JMS provider</p>
 </li>
 </ol>
 </div>
@@ -229,7 +228,7 @@ the <code>perf</code> commands uses CORE as the default JMS provider</p>
 </div>
 <div class="paragraph">
 <p>The <code>perf</code> commands uses <a href="https://jakarta.ee/specifications/messaging/2.0/apidocs/javax/jms/messageproducer#send-javax.jms.Destination-javax.jms.Message-javax.jms.CompletionListener-">JMS 2 async message producers</a> that allow the load generator to accumulate in-flight sent messages and depending on the protocol implementation, may block its producer thread due to producer flow control.
-e.g: the Artemis CORE protocol can block producers threads to refill producers credits, while the <a href="https://qpid.apache.org/components/jms/index.html">QPID-JMS</a> won&#8217;t.</p>
+e.g: the Core client can block producer threads to refill credits while <a href="https://qpid.apache.org/components/jms/index.html">Qpid JMS</a> won&#8217;t.</p>
 </div>
 <div class="paragraph">
 <p>The <code>perf</code> tool is implementing its own in-flight sent requests tracking and can be configured to limit the amount of pending sent messages,  while reporting the rate by which producers are "blocked" awaiting completions</p>

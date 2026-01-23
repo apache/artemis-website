@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Using JMS or Jakarta Messaging</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#a-simple-ordering-system">1. A simple ordering system</a></li>
 <li><a href="#jndi">2. JNDI</a>
@@ -56,20 +56,20 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Although Apache ActiveMQ Artemis provides a JMS agnostic messaging API, many users will be more comfortable using JMS.</p>
+<p>Although Apache Artemis provides a JMS agnostic messaging API, many users will be more comfortable using JMS.</p>
 </div>
 <div class="paragraph">
 <p>JMS is a very popular API standard for messaging, and most messaging systems provide a JMS API.
 If you are completely new to JMS we suggest you follow the <a href="https://docs.oracle.com/javaee/7/tutorial/partmessaging.htm">Oracle JMS tutorial</a> - a full JMS tutorial is out of scope for this guide.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis also ships with a wide range of examples, many of which demonstrate JMS API usage.
+<p>There are a wide range of examples, many of which demonstrate JMS API usage.
 A good place to start would be to play around with the simple JMS Queue and Topic example, but we also provide examples for many other parts of the JMS API.
 A full description of the examples is available in <a href="examples.html#examples">Examples</a>.</p>
 </div>
 <div class="paragraph">
 <p>In this section we&#8217;ll go through the main steps in configuring the server for JMS and creating a simple JMS program.
-We&#8217;ll also show how to configure and use JNDI, and also how to use JMS with Apache ActiveMQ Artemis without using any JNDI.</p>
+We&#8217;ll also show how to configure and use JNDI, and also how to use JMS without using any JNDI.</p>
 </div>
 </div>
 </div>
@@ -94,10 +94,10 @@ We also want to pre-deploy the queue, i.e. specify the queue in the server confi
 <div class="sectionbody">
 <div class="paragraph">
 <p>The JMS specification establishes the convention that <em>administered objects</em> (i.e. JMS queue, topic and connection factory instances) are made available via the JNDI API.
-Brokers are free to implement JNDI as they see fit assuming the implementation fits the API.
-Apache ActiveMQ Artemis does not have a JNDI server.
+Brokers are free to implement JNDI as they see fit, assuming the implementation fits the API.
+Apache Artemis does not have a JNDI server.
 Rather, it uses a client-side JNDI implementation that relies on special properties set in the environment to construct the appropriate JMS objects.
-In other words, no objects are stored in JNDI on the Apache ActiveMQ Artemis server, instead they are simply instantiated on the client based on the provided configuration.
+In other words, no objects are stored in JNDI on the broker; instead, they are simply instantiated on the client based on the provided configuration.
 Let&#8217;s look at the different kinds of administered objects and how to configure them.</p>
 </div>
 <div class="admonitionblock note">
@@ -108,8 +108,8 @@ Let&#8217;s look at the different kinds of administered objects and how to confi
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The following configuration properties <em>are strictly required when Apache ActiveMQ Artemis is running in stand-alone mode</em>.
-When Apache ActiveMQ Artemis is integrated to an application server (e.g. Wildfly) the application server itself will almost certainly provide a JNDI client with its own properties.</p>
+<p>The following configuration properties <em>are strictly required when the broker is running in stand-alone mode</em>.
+When integrated into an application server (e.g. Wildfly) the application server itself will almost certainly provide a JNDI client with its own properties.</p>
 </div>
 </td>
 </tr>
@@ -122,7 +122,7 @@ When Apache ActiveMQ Artemis is integrated to an application server (e.g. Wildfl
 It knows the location of the server it is connecting to, as well as many other configuration parameters.</p>
 </div>
 <div class="paragraph">
-<p>Here&#8217;s a simple example of the JNDI context environment for a client looking up a connection factory to access an <em>embedded</em> instance of Apache ActiveMQ Artemis:</p>
+<p>Here&#8217;s a simple example of the JNDI context environment for a client looking up a connection factory to access an <em>embedded</em> broker:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -182,7 +182,7 @@ A client may also specify multiple comma-delimited host:port combinations in the
 Whether there is one or many host:port combinations in the URL they are treated as the <em>initial connector(s)</em> for the underlying connection.</p>
 </div>
 <div class="paragraph">
-<p>The <code>udp</code> scheme is also supported which should use a host:port combination that matches the <code>group-address</code> and <code>group-port</code> from the corresponding <code>broadcast-group</code> configured on the ActiveMQ Artemis server(s).</p>
+<p>The <code>udp</code> scheme is also supported which should use a host:port combination that matches the <code>group-address</code> and <code>group-port</code> from the corresponding <code>broadcast-group</code> configured on the broker(s).</p>
 </div>
 <div class="paragraph">
 <p>Each scheme has a specific set of properties which can be set using the traditional URL query string format (e.g. <code>scheme://host:port?key1=value1&amp;key2=value2</code>) to customize the underlying transport mechanism.
@@ -307,8 +307,8 @@ This can be changed by setting the type like so</p>
 <p>JMS destinations are also typically looked up via JNDI.
 As with connection factories, destinations can be configured using special properties in the JNDI context environment.
 The property <em>name</em> should follow the pattern: <code>queue.&lt;jndi-binding&gt;</code> or <code>topic.&lt;jndi-binding&gt;</code>.
-The property <em>value</em> should be the name of the queue hosted by the Apache ActiveMQ Artemis server.
-For example, if the server had a JMS queue configured like so:</p>
+The property <em>value</em> should be the name of the queue hosted by the broker.
+For example, if the broker had a JMS queue configured like so:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -360,7 +360,7 @@ If the above properties are set in <code>jndi.properties</code> and it is on the
 
 <span class="nc">Connection</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="na">createConnection</span><span class="o">();</span>
 
-<span class="c1">//And we create a non transacted JMS Session, with AUTO\_ACKNOWLe.g. //acknowledge mode:</span>
+<span class="c1">//And we create a non-transacted JMS Session, with AUTO\_ACKNOWLe.g. //acknowledge mode:</span>
 
 <span class="nc">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">createSession</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="nc">Session</span><span class="o">.</span><span class="na">AUTO_ACKNOWLEDGE</span><span class="o">);</span>
 
@@ -414,17 +414,17 @@ This is discussed further in the section on performance tuning <a href="perf-tun
 <h2 id="directly-instantiating-jms-resources-without-using-jndi"><a class="anchor" href="#directly-instantiating-jms-resources-without-using-jndi"></a><a class="link" href="#directly-instantiating-jms-resources-without-using-jndi">3. Directly instantiating JMS Resources without using JNDI</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Although it is a very common JMS usage pattern to lookup JMS <em>Administered Objects</em> (that&#8217;s JMS Queue, Topic and ConnectionFactory instances) from JNDI, in some cases you just think "Why do I need JNDI?
+<p>Although it is a widespread JMS usage pattern to look up JMS <em>Administered Objects</em> (i.e. JMS Queue, Topic and ConnectionFactory instances) from JNDI, in some cases you just think "Why do I need JNDI?
 Why can&#8217;t I just instantiate these objects directly?"</p>
 </div>
 <div class="paragraph">
-<p>With Apache ActiveMQ Artemis you can do exactly that.
-Apache ActiveMQ Artemis supports the direct instantiation of JMS Queue, Topic and ConnectionFactory instances, so you don&#8217;t have to use JNDI at all.</p>
+<p>With Apache Artemis you can do exactly that.
+It supports the direct instantiation of JMS Queue, Topic and ConnectionFactory instances, so you don&#8217;t have to use JNDI at all.</p>
 </div>
 <div class="quoteblock">
 <blockquote>
 <div class="paragraph">
-<p>For a full working example of direct instantiation please look at the <a href="examples.html#instantiate-jms-objects-directly">Instantiate JMS Objects  Directly</a> example under the JMS  section of the examples.</p>
+<p>For a full working example of direct instantiation, please look at the <a href="examples.html#instantiate-jms-objects-directly">Instantiate JMS Objects  Directly</a> example under the JMS  section of the examples.</p>
 </div>
 </blockquote>
 </div>
@@ -449,7 +449,7 @@ Apache ActiveMQ Artemis supports the direct instantiation of JMS Queue, Topic an
 
 <span class="nc">Connection</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="na">createConnection</span><span class="o">();</span>
 
-<span class="c1">//And we create a non transacted JMS Session, with AUTO\_ACKNOWLe.g. //acknowledge mode:</span>
+<span class="c1">//And we create a non-transacted JMS Session, with AUTO\_ACKNOWLe.g. //acknowledge mode:</span>
 
 <span class="nc">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">createSession</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="nc">Session</span><span class="o">.</span><span class="na">AUTO_ACKNOWLEDGE</span><span class="o">);</span>
 

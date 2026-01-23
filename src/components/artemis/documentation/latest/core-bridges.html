@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Core Bridges</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#configuring-core-bridges">1. Configuring Core Bridges</a></li>
 </ul>
@@ -44,21 +44,21 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The function of a bridge is to consume messages from a source queue, and forward them to a target address, typically on a different Apache ActiveMQ Artemis server.</p>
+<p>The function of a bridge is to consume messages from a source queue, and forward them to a target address, typically on a different broker.</p>
 </div>
 <div class="paragraph">
-<p>The source and target servers do not have to be in the same cluster which makes bridging suitable for reliably sending messages from one cluster to another, for instance across a WAN, or internet and where the connection may be unreliable.</p>
+<p>The source and target brokers do not have to be in the same cluster which makes bridging suitable for reliably sending messages from one cluster to another, for instance across a WAN, or internet and where the connection may be unreliable.</p>
 </div>
 <div class="paragraph">
 <p>The bridge has built in resilience to failure so if the target server connection is lost, e.g. due to network failure, the bridge will retry connecting to the target until it comes back online.
 When it comes back online it will resume operation as normal.</p>
 </div>
 <div class="paragraph">
-<p>In summary, bridges are a way to reliably connect two separate Apache ActiveMQ Artemis servers together.
-With a core bridge both source and target servers must be Apache ActiveMQ Artemis servers.</p>
+<p>In summary, bridges are a way to reliably connect two separate brokers together.
+With a core bridge both source and target servers must be brokers.</p>
 </div>
 <div class="paragraph">
-<p>Bridges can be configured to provide <em>once and only once</em> delivery guarantees even in the event of the failure of the source or the target server.
+<p>Bridges can be configured to provide <em>once and only once</em> delivery guarantees even in the event of the failure of the source or the target broker.
 They do this by using duplicate detection (described in <a href="duplicate-detection.html#duplicate-message-detection">Duplicate Detection</a>).</p>
 </div>
 <div class="admonitionblock note">
@@ -72,9 +72,9 @@ They do this by using duplicate detection (described in <a href="duplicate-detec
 <p>Although they have similar function, don&#8217;t confuse core bridges with JMS bridges!</p>
 </div>
 <div class="paragraph">
-<p>Core bridges are for linking an Apache ActiveMQ Artemis node with another Apache ActiveMQ Artemis node and do not use the JMS API.
+<p>Core bridges are for linking one broker with another broker and do not use the JMS API.
 A JMS Bridge is used for linking any two JMS 1.1 compliant JMS providers.
-So, a JMS Bridge could be used for bridging to or from different JMS compliant messaging system.
+So, a JMS Bridge could be used for bridging to or from a different JMS-compliant messaging system.
 It&#8217;s always preferable to use a core bridge if you can.
 Core bridges use duplicate detection to provide <em>once and only once</em> guarantees.
 To provide the same guarantee using a JMS bridge you would have to use XA which has a higher overhead and is more complex to configure.</p>
@@ -163,7 +163,7 @@ The default value is <code>false</code>.</p>
 <dd>
 <p>An optional filter string can be supplied.
 If specified then only messages which match the filter expression specified in the filter string will be forwarded.
-The filter string follows the ActiveMQ Artemis filter expression syntax described in <a href="filter-expressions.html#filter-expressions">Filter Expressions</a>.</p>
+The filter string follows the expression syntax described in <a href="filter-expressions.html#filter-expressions">Filter Expressions</a>.</p>
 </dd>
 <dt class="hdlist1">transformer-class-name</dt>
 <dd>

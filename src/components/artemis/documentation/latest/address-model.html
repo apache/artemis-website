@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Address Model</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#address">1. Address</a></li>
 <li><a href="#queue">2. Queue</a></li>
@@ -73,7 +73,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Every messaging protocol and API that Apache ActiveMQ Artemis supports defines a different set of messaging resources.</p>
+<p>Every supported messaging protocol and API defines a different set of messaging resources.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -181,7 +181,7 @@ It is possible to define queues with a different routing type for the same addre
 <h2 id="automatic-configuration"><a class="anchor" href="#automatic-configuration"></a><a class="link" href="#automatic-configuration">4. Automatic Configuration</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By default Apache ActiveMQ Artemis will automatically create addresses and queues to support the semantics of whatever protocol you&#8217;re using.
+<p>By default, the broker will automatically create addresses and queues to support the semantics of whatever protocol you&#8217;re using.
 The broker understands how to support each protocol&#8217;s functionality with the core resources so that in most cases no manual configuration is required.
 This saves you from having to preconfigure each address and queue before a client can connect to it.</p>
 </div>
@@ -654,7 +654,7 @@ It only changes the name used to <em>lookup</em> address-settings or security-se
 <h2 id="how-to-filter-messages"><a class="anchor" href="#how-to-filter-messages"></a><a class="link" href="#how-to-filter-messages">7. How to filter messages</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis supports the ability to filter messages using <a href="filter-expressions.html#filter-expressions">Filter Expressions</a>.</p>
+<p>Messages can be filtered using <a href="filter-expressions.html#filter-expressions">Filter Expressions</a>.</p>
 </div>
 <div class="paragraph">
 <p>Filters can be applied in two places - on a queue and on a consumer.</p>

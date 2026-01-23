@@ -34,7 +34,7 @@
 <div id="header">
 <h1>JCA Resource Adapter</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#versions">1. Versions</a></li>
 <li><a href="#building-the-ra">2. Building the RA</a></li>
@@ -53,7 +53,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>For using Apache ActiveMQ Artemis in a Java EE or Jakarta EE environment, you can use the JCA Resource Adapter.</p>
+<p>For using Apache Artemis in a Java EE or Jakarta EE environment, you can use the JCA Resource Adapter.</p>
 </div>
 <div class="paragraph">
 <p>A JCA-based JMS connection factory has 2 big advantages over a plain JMS connection factory:</p>
@@ -231,7 +231,7 @@ With the configuration of the ConnectionFactory or the ActivationSpec, you can o
 <p>Config options <a href="https://github.com/apache/artemis/blob/{{" class="bare">https://github.com/apache/artemis/blob/{{</a> config.version }}/artemis-ra/src/main/java/org/apache/activemq/artemis/ra/inflow/ActiveMQActivationSpec.java[ActiveMQActivationSpec]</p>
 </div>
 <div class="paragraph">
-<p>In the activation spec you can configure all the things you need to get messages consumed from ActiveMQ Artemis.</p>
+<p>In the activation spec you can configure all the things you need to get messages consumed.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -277,7 +277,7 @@ key value pairs, like <code>a=b;c=d;e=f</code></p>
 </dd>
 <dt class="hdlist1">subscriptionName</dt>
 <dd>
-<p>Artemis holds all messages for this name if you use durable subscriptions</p>
+<p>the broker holds all messages for this name if you use durable subscriptions</p>
 </dd>
 </dl>
 </div>

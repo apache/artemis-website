@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Extra Acknowledge Modes</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#using-pre_acknowledge">1. Using PRE_ACKNOWLEDGE</a></li>
 <li><a href="#individual-acknowledge">2. Individual Acknowledge</a></li>
@@ -62,13 +62,13 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis supports two additional modes: <code>PRE_ACKNOWLEDGE</code> and <code>INDIVIDUAL_ACKNOWLEDGE</code></p>
+<p>Apache Artemis supports two additional modes: <code>PRE_ACKNOWLEDGE</code> and <code>INDIVIDUAL_ACKNOWLEDGE</code></p>
 </div>
 <div class="paragraph">
-<p>In some cases you can afford to lose messages in event of failure, so it would make sense to acknowledge the message on the server <em>before</em> delivering it to the client.</p>
+<p>In some cases you can afford to lose messages in the event of a failure, so it would make sense to acknowledge the message on the server <em>before</em> delivering it to the client.</p>
 </div>
 <div class="paragraph">
-<p>This extra mode is supported by Apache ActiveMQ Artemis and will call it <em>pre-acknowledge</em> mode.</p>
+<p>This extra mode is called <em>pre-acknowledge</em> mode.</p>
 </div>
 <div class="paragraph">
 <p>The disadvantage of acknowledging on the server before delivery is that the message will be lost if the system crashes <em>after</em> acknowledging the message on the server but <em>before</em> it is delivered to the client.

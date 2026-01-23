@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Message Expiry</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#core-api">1. Core API</a></li>
 <li><a href="#jms-api">2. JMS API</a></li>
@@ -62,11 +62,11 @@
 <p>Messages can be set with an optional <em>time to live</em> when sending them.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis will not deliver a message to a consumer after it&#8217;s time-to-live has been exceeded.
-If the message hasn&#8217;t been delivered by the time that time-to-live is reached the server can discard it.</p>
+<p>Apache Artemis will not deliver a message to a consumer after it&#8217;s time-to-live has been exceeded.
+If the message hasn&#8217;t been delivered by the time that time-to-live is reached, the server can discard it.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis&#8217;s addresses can be assigned an expiry address so that, when messages are expired, they are removed from the queue and sent to the expiry address.
+<p>Addresses can be assigned an expiry address so that, when messages are expired, they are removed from the queue and sent to the expiry address.
 Many different queues can be bound to an expiry address.
 These <em>expired</em> messages can later be consumed for further inspection.</p>
 </div>
@@ -76,7 +76,7 @@ These <em>expired</em> messages can later be consumed for further inspection.</p
 <h2 id="core-api"><a class="anchor" href="#core-api"></a><a class="link" href="#core-api">1. Core API</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Using the Apache ActiveMQ Artemis Core API you can set an expiration time directly on the message:</p>
+<p>Using the Core API you can set an expiration time directly on the message:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -377,7 +377,7 @@ See the relevant settings in the table below:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The queue holding the expired messages can be accessed directly either by using the queue&#8217;s name by itself (e.g. when using the core client) or by using the fully qualified queue name (e.g. when using a JMS client) just like any other queue.
+<p>The queue holding the expired messages can be accessed directly either by using the queue&#8217;s name by itself (e.g. when using the Core client) or by using the fully qualified queue name (e.g. when using a JMS client) just like any other queue.
 Also, note that the queue is auto-created which means it will be auto-deleted as per the relevant <code>address-settings</code>.</p>
 </div>
 </div>

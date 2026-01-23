@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Using the Server</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#installation">1. Installation</a></li>
 <li><a href="#creating-a-broker-instance">2. Creating a Broker Instance</a>
@@ -65,7 +65,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter will familiarise you with how to use the Apache ActiveMQ Artemis server.</p>
+<p>This chapter will familiarise you with how to use the Apache Artemis server.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll show where it is, how to start and stop it, and we&#8217;ll describe the directory layout and what all the files are and what they do.</p>
@@ -99,15 +99,15 @@
 <dl>
 <dt class="hdlist1">bin</dt>
 <dd>
-<p>binaries and scripts needed to run ActiveMQ Artemis.</p>
+<p>binaries and scripts needed to run the broker.</p>
 </dd>
 <dt class="hdlist1">lib</dt>
 <dd>
-<p>jars and libraries needed to run ActiveMQ Artemis</p>
+<p>jars and libraries needed to run the broker</p>
 </dd>
 <dt class="hdlist1">schema</dt>
 <dd>
-<p>XML Schemas used to validate ActiveMQ Artemis configuration files</p>
+<p>XML Schemas used to validate the broker configuration files</p>
 </dd>
 <dt class="hdlist1">web</dt>
 <dd>
@@ -123,7 +123,7 @@
 <div class="paragraph">
 <p>A broker <em>instance</em> is the directory containing all the configuration and runtime data, such as logs and message journal, associated with a broker process.
 It is recommended that you do <em>not</em> create the instance directory under <code>${ARTEMIS_HOME}</code>.
-This separation is encouraged so that you can more easily upgrade when the next version of ActiveMQ Artemis is released.</p>
+This separation is encouraged so that you can more easily upgrade when the next version of the broker is released.</p>
 </div>
 <div class="paragraph">
 <p>On Unix systems, it is a common convention to store this kind of runtime data under the <code>/var/lib</code> directory.
@@ -437,7 +437,7 @@ Or you can run the broker in the background using:
 </div>
 </div>
 <div class="paragraph">
-<p>To stop the Apache ActiveMQ Artemis instance you will use the same <code>artemis</code> script, but with the <code>stop</code> argument.
+<p>To stop the instance you will use the same <code>artemis</code> script, but with the <code>stop</code> argument.
 Example:</p>
 </div>
 <div class="listingblock">
@@ -446,10 +446,10 @@ Example:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Please note that Apache ActiveMQ Artemis requires a Java 11 or later.</p>
+<p>Please note that Apache Artemis requires a Java 17 or later.</p>
 </div>
 <div class="paragraph">
-<p>By default the <code>etc/bootstrap.xml</code> configuration is used.
+<p>By default, the <code>etc/bootstrap.xml</code> configuration is used.
 The configuration can be changed e.g. by running <code>./artemis run -- xml:path/to/bootstrap.xml</code> or another config of your choosing.</p>
 </div>
 <div class="paragraph">
@@ -550,12 +550,12 @@ This is the main broker POJO necessary to do all the real messaging work.</p>
 <div class="sect2">
 <h3 id="broker-configuration-file"><a class="anchor" href="#broker-configuration-file"></a><a class="link" href="#broker-configuration-file">4.2. Broker configuration file</a></h3>
 <div class="paragraph">
-<p>The configuration for the Apache ActiveMQ Artemis core broker is contained in <code>broker.xml</code>.</p>
+<p>The configuration for the broker is contained in <code>broker.xml</code>.</p>
 </div>
 <div class="paragraph">
-<p>There are many attributes which you can configure for Apache ActiveMQ Artemis.
+<p>There are many attributes that you can configure.
 In most cases the defaults will do fine, in fact every attribute can be defaulted which means a file with a single empty <code>configuration</code> element is a valid configuration file.
-The different configuration will be explained throughout the manual or you can refer to the configuration reference <a href="configuration-index.html#configuration-reference">here</a>.</p>
+The different configurations will be explained throughout the manual, or you can refer to the configuration reference <a href="configuration-index.html#configuration-reference">here</a>.</p>
 </div>
 </div>
 </div>
@@ -583,7 +583,7 @@ It is also possible to not supply a default (i.e. <code>${activemq.remoting.nett
 <div class="sect2">
 <h3 id="windows-server"><a class="anchor" href="#windows-server"></a><a class="link" href="#windows-server">5.2. Windows Server</a></h3>
 <div class="paragraph">
-<p>On windows you will have the option to run ActiveMQ Artemis as a service.
+<p>On Windows you will have the option to run the broker as a service.
 Just use the following command to install it:</p>
 </div>
 <div class="listingblock">

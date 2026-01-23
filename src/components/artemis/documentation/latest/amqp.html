@@ -34,7 +34,7 @@
 <div id="header">
 <h1>AMQP</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#examples">1. Examples</a></li>
 <li><a href="#message-conversions">2. Message Conversions</a></li>
@@ -51,7 +51,7 @@
 <li><a href="#disabling-keep-alive-checks">11.1. Disabling Keep alive checks</a></li>
 </ul>
 </li>
-<li><a href="#web-sockets">12. Web Sockets</a></li>
+<li><a href="#websockets">12. WebSockets</a></li>
 </ul>
 </div>
 </div>
@@ -59,8 +59,8 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis supports the <a href="https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=amqp">AMQP 1.0</a> specification.
-By default there are <code>acceptor</code> elements configured to accept AMQP connections on ports <code>61616</code> and <code>5672</code>.</p>
+<p>The <a href="https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=amqp">AMQP 1.0</a> specification is supported.
+By default, there are <code>acceptor</code> elements configured to accept AMQP connections on ports <code>61616</code> and <code>5672</code>.</p>
 </div>
 <div class="paragraph">
 <p>See the general <a href="protocols-interoperability.html#protocols-and-interoperability">Protocols and Interoperability</a> chapter for details on configuring an <code>acceptor</code> for AMQP.</p>
@@ -97,7 +97,7 @@ and many others.</p>
 <h2 id="examples"><a class="anchor" href="#examples"></a><a class="link" href="#examples">1. Examples</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We have a few examples as part of the <a href="examples.html">Artemis examples</a>:</p>
+<p>We have a project with <a href="examples.html">a few examples</a>:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -229,7 +229,7 @@ We try not to re-encode (or even decode) messages.</p>
 <h2 id="amqp-and-security"><a class="anchor" href="#amqp-and-security"></a><a class="link" href="#amqp-and-security">4. AMQP and security</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Apache ActiveMQ Artemis Server accepts the PLAIN, ANONYMOUS, and GSSAPI SASL mechanism.
+<p>The PLAIN, ANONYMOUS, and GSSAPI SASL mechanisms are accepted.
 These are implemented on the broker&#8217;s <a href="security.html#authentication-authorization">security</a> infrastructure.</p>
 </div>
 </div>
@@ -271,7 +271,7 @@ If a coordinator is used then the underlying server session will be transacted a
 </td>
 <td class="content">
 <div class="paragraph">
-<p>AMQP allows the use of multiple transactions per session, <code>amqp:multi-txns-per-ssn</code>, however in this version of Apache ActiveMQ Artemis will only support single transactions per session.</p>
+<p>AMQP allows the use of multiple transactions per session, <code>amqp:multi-txns-per-ssn</code>, however, only a single transaction per session is supported by the broker.</p>
 </div>
 </td>
 </tr>
@@ -429,14 +429,14 @@ On this case you will rely on TCP to determine when the socket needs to be close
 </div>
 </div>
 <div class="sect1">
-<h2 id="web-sockets"><a class="anchor" href="#web-sockets"></a><a class="link" href="#web-sockets">12. Web Sockets</a></h2>
+<h2 id="websockets"><a class="anchor" href="#websockets"></a><a class="link" href="#websockets">12. WebSockets</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis also supports AMQP over <a href="https://html.spec.whatwg.org/multipage/web-sockets.html">Web Sockets</a>.
-Modern web browsers which support Web Sockets can send and receive AMQP messages.</p>
+<p>AMQP over <a href="https://html.spec.whatwg.org/multipage/web-sockets.html">WebSockets</a> is also supported.
+Modern web browsers which support WebSockets can send and receive AMQP messages.</p>
 </div>
 <div class="paragraph">
-<p>AMQP over Web Sockets is supported via a normal AMQP acceptor:</p>
+<p>AMQP over WebSockets is supported via a normal AMQP acceptor:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -444,7 +444,7 @@ Modern web browsers which support Web Sockets can send and receive AMQP messages
 </div>
 </div>
 <div class="paragraph">
-<p>With this configuration, Apache ActiveMQ Artemis will accept AMQP connections over Web Sockets on the port <code>5672</code>.
+<p>With this configuration, the broker will accept AMQP connections over WebSockets on the port <code>5672</code>.
 Web browsers can then connect to <code>ws://&lt;server&gt;:5672</code> using a Web Socket to send and receive AMQP messages.</p>
 </div>
 </div>

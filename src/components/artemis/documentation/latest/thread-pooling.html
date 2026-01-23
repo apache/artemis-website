@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Thread management</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#server-side-thread-management">1. Server-Side Thread Management</a>
 <ul class="sectlevel2">
@@ -46,7 +46,13 @@
 <li><a href="#other-server-side-threads">1.6. Other Server-Side Threads</a></li>
 </ul>
 </li>
-<li><a href="#client-side-thread-management">2. Client-Side Thread Management</a></li>
+<li><a href="#client-side-thread-management">2. Client-Side Thread Management</a>
+<ul class="sectlevel2">
+<li><a href="#scheduled-thread-pool-2">2.1. Scheduled Thread Pool</a></li>
+<li><a href="#general-purpose-thread-pool-2">2.2. General Purpose Thread Pool</a></li>
+<li><a href="#netty-connectors">2.3. Netty Connectors</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -54,7 +60,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter describes how Apache ActiveMQ Artemis uses and pools threads and how you can manage them.</p>
+<p>This chapter describes how Apache Artemis uses and pools threads and how you can manage them.</p>
 </div>
 <div class="paragraph">
 <p>First we&#8217;ll discuss how threads are managed and used on the server side then we&#8217;ll look at the client side.</p>
@@ -194,7 +200,7 @@ A value of <code>0</code> is not allowed.</p>
 <div class="sect2">
 <h3 id="netty-acceptors"><a class="anchor" href="#netty-acceptors"></a><a class="link" href="#netty-acceptors">1.5. Netty Acceptors</a></h3>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis will, by default, cap Netty threads on a per-acceptor basis at three times the number of cores (or hyper-threads) as reported by <code>Runtime.getRuntime().availableProcessors()</code> for processing network traffic.
+<p>Netty threads for processing network traffic, by default, are capped on a per-acceptor basis at three times the number of cores (or hyper-threads) as reported by <code>Runtime.getRuntime().availableProcessors()</code>.
 To override this value, you can set the number of threads by specifying the parameter <code>remotingThreads</code> in the transport configuration.
 See the <a href="configuring-transports.html#configuring-the-transport">configuring transports</a> for more information on this.</p>
 </div>
@@ -207,7 +213,7 @@ For example, for the acceptor named <code>amqp</code> the corresponding thread n
 <h3 id="other-server-side-threads"><a class="anchor" href="#other-server-side-threads"></a><a class="link" href="#other-server-side-threads">1.6. Other Server-Side Threads</a></h3>
 <div class="paragraph">
 <p>A thread dump from the server&#8217;s JVM will have other threads as well.
-Here&#8217;s other names you might find in a thread dump and the function they perform.</p>
+Here are other names you might find in a thread dump and the function they perform.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -252,20 +258,105 @@ Here&#8217;s other names you might find in a thread dump and the function they p
 <h2 id="client-side-thread-management"><a class="anchor" href="#client-side-thread-management"></a><a class="link" href="#client-side-thread-management">2. Client-Side Thread Management</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>On the client side, Apache ActiveMQ Artemis maintains a single, "global" static scheduled thread pool and a single, "global" static general thread pool for use by all clients using the same classloader in that JVM instance.</p>
+<p>On the Core client thread pools exist for each of the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>scheduled tasks</p>
+</li>
+<li>
+<p>general use</p>
+</li>
+<li>
+<p>flow control</p>
+</li>
+<li>
+<p>remoting (managed by Netty on a per-connector basis)</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The static scheduled thread pool has a maximum size of <code>5</code> threads by default.
-This can be changed using the <code>scheduledThreadPoolMaxSize</code> URI parameter.</p>
+<p>These are used by all clients using the same classloader in a JVM.</p>
 </div>
 <div class="paragraph">
-<p>The general purpose thread pool has an unbounded maximum size.
-This is changed using the <code>threadPoolMaxSize</code> URL parameter.</p>
-</div>
-<div class="paragraph">
-<p>If required Apache ActiveMQ Artemis can also be configured so that each <code>ClientSessionFactory</code> instance does not use these "global" static pools but instead maintains its own scheduled and general purpose pool.
+<p>If required each <code>ClientSessionFactory</code> instance can be configured so that it does not use these global static pools but instead maintains individual pools.
 Any sessions created from that <code>ClientSessionFactory</code> will use those pools instead.
-This is configured using the <code>useGlobalPools</code> boolean URL parameter.</p>
+This is configured using the <code>useGlobalPools</code> boolean URL parameter.
+The default is <code>true</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="scheduled-thread-pool-2"><a class="anchor" href="#scheduled-thread-pool-2"></a><a class="link" href="#scheduled-thread-pool-2">2.1. Scheduled Thread Pool</a></h3>
+<div class="paragraph">
+<p>The scheduled thread pool is used for activities that require running periodically or with delays.
+This includes tasks like:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>sending <code>PING</code> packets to the broker</p>
+</li>
+<li>
+<p>flushing network data to the wire if <code>batchDelay</code> &gt; <code>0</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The maximum number of threads used by this pool can be configured using the <code>scheduledThreadPoolMaxSize</code> URI parameter, e.g.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">tcp://host:61616?scheduledThreadPoolMaxSize=10</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Java system property <code>activemq.artemis.client.global.scheduled.thread.pool.core.size</code> can also be used.</p>
+</div>
+<div class="paragraph">
+<p>The default <code>scheduledThreadPoolMaxSize</code> is <code>5</code>.
+A value of <code>0</code> is not allowed.</p>
+</div>
+<div class="paragraph">
+<p>If using a global pool the name for threads will contain <code>activemq-client-global-scheduled</code>.
+If using a non-global pool the name for threads will contain <code>activemq-client-factory-scheduled</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="general-purpose-thread-pool-2"><a class="anchor" href="#general-purpose-thread-pool-2"></a><a class="link" href="#general-purpose-thread-pool-2">2.2. General Purpose Thread Pool</a></h3>
+<div class="paragraph">
+<p>This general purpose thread pool is used for most asynchronous actions.
+The maximum number of threads used by this pool is configured using the <code>threadPoolMaxSize</code> URI parameter, e.g.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">tcp://host:61616?threadPoolMaxSize=10</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, a global pool will be used and the default <code>threadPoolMaxSize</code> will be <code>Runtime.getRuntime().availableProcessors()</code> * 8.
+If using a non-global pool the default <code>threadPoolMaxSize</code> is <code>-1</code>.
+A value of <code>-1</code> signifies that the thread pool has <em>no upper bound</em> and new threads will be created on demand if there are not enough threads already available to satisfy demand.
+A value of <code>0</code> is not allowed.
+The minimum valid value is <code>2</code>.</p>
+</div>
+<div class="paragraph">
+<p>Any threads in this pool which are idle for <code>60</code> seconds will be terminated.</p>
+</div>
+<div class="paragraph">
+<p>The name for threads from this pool will contain <code>activemq-client-factory</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="netty-connectors"><a class="anchor" href="#netty-connectors"></a><a class="link" href="#netty-connectors">2.3. Netty Connectors</a></h3>
+<div class="paragraph">
+<p>Netty threads for processing network traffic, by default, are capped on a per-connector basis at three times the number of cores (or hyper-threads) as reported by <code>Runtime.getRuntime().availableProcessors()</code>.
+To override this value, you can set the number of threads by specifying the URI parameter <code>remotingThreads</code>.
+See the <a href="configuring-transports.html#configuring-the-transport">configuring transports</a> for more information on this.</p>
+</div>
+<div class="paragraph">
+<p>Threads names will include the name of their corresponding acceptor with the prefix <code>activemq-remoting-</code>.
+For example, for the acceptor named <code>amqp</code> the corresponding thread names will contain <code>activemq-remoting-amqp-&lt;brokerName&gt;</code>.</p>
+</div>
 </div>
 </div>
 </div>
