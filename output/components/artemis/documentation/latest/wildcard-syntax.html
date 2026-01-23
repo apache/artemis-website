@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Wildcard Syntax</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#matching-any-word">1. Matching Any Word</a></li>
 <li><a href="#matching-a-single-word">2. Matching a Single Word</a></li>
@@ -46,13 +46,13 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis uses a specific syntax for representing wildcards in security settings, address settings and when creating consumers.</p>
+<p>Apache Artemis uses a specific syntax for representing wildcards in security settings, address settings, and when creating consumers.</p>
 </div>
 <div class="paragraph">
 <p>The syntax is similar to that used by <a href="https://www.amqp.org">AMQP</a>.</p>
 </div>
 <div class="paragraph">
-<p>An Apache ActiveMQ Artemis wildcard expression contains <strong>words separated by a delimiter</strong>.
+<p>An wildcard expression contains <strong>words separated by a delimiter</strong>.
 The default delimiter is <code>.</code> (full stop).</p>
 </div>
 <div class="paragraph">
@@ -186,6 +186,36 @@ For that, the <code>&lt;wildcard-addresses&gt;</code> configuration tag is used.
 </div>
 <div class="paragraph">
 <p>The example above shows the default configuration.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is technically <em>possible</em> to use <code>$</code> as a custom wildcard character, but it is <strong>not recommended</strong> for three main reasons:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The default value of <code>internal-naming-prefix</code> is <code>$.activemq.internal.</code> which includes a <code>$</code> character.
+While this value can be changed, doing so may cause problems if, for example, you have already created a cluster while the default value was in use.
+In this case the broker will have already created store-and-forward resources that will have to be renamed manually.
+Similar problems exist with retroactive addresses.</p>
+</li>
+<li>
+<p>AMQP federation and mirroring use <code>$</code> in the names of their internal resources.</p>
+</li>
+<li>
+<p>The MQTT protocol uses <code>$</code> for certain bits of functionality (e.g. shared subscriptions) and this cannot be changed so MQTT functionality would need to be completely avoided.</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>

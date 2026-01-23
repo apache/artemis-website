@@ -33,7 +33,7 @@
 <div id="header">
 <h1>Messaging Concepts</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#general-concepts">1. General Concepts</a></li>
 <li><a href="#messaging-styles">2. Messaging styles</a>
@@ -61,7 +61,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis is an asynchronous messaging system, an example of <a href="https://en.wikipedia.org/wiki/Message-oriented_middleware">Message Oriented Middleware</a>, we&#8217;ll just call them messaging systems in the remainder of this book.</p>
+<p>Apache Artemis is an asynchronous messaging system, an example of <a href="https://en.wikipedia.org/wiki/Message-oriented_middleware">Message Oriented Middleware</a>, we&#8217;ll just call them messaging systems in the remainder of this book.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll first present a brief overview of what kind of things messaging systems do, where they&#8217;re useful and the kind of concepts you&#8217;ll hear about in the messaging world.</p>
@@ -75,15 +75,15 @@
 <h2 id="general-concepts"><a class="anchor" href="#general-concepts"></a><a class="link" href="#general-concepts">1. General Concepts</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Messaging systems allow you to loosely couple heterogeneous systems together, whilst typically providing reliability, transactions and many other features.</p>
+<p>Messaging systems allow you to loosely couple heterogeneous systems together, whilst typically providing reliability, transactions, and many other features.</p>
 </div>
 <div class="paragraph">
 <p>Unlike systems based on a <a href="https://en.wikipedia.org/wiki/Remote_procedure_call">Remote Procedure Call</a> (RPC) pattern, messaging systems primarily use an asynchronous message passing pattern with no tight relationship between requests and responses.
-Most messaging systems also support a request-response mode but this is not a primary feature of messaging systems.</p>
+Most messaging systems also support a request-response mode, but this is not a primary feature of messaging systems.</p>
 </div>
 <div class="paragraph">
-<p>Designing systems to be asynchronous from end-to-end allows you to really take advantage of your hardware resources, minimizing the amount of threads blocking on IO operations, and to use your network bandwidth to its full capacity.
-With an RPC approach you have to wait for a response for each request you make so are limited by the network round trip time, or <em>latency</em> of your network.
+<p>Designing systems to be asynchronous from end-to-end allows you to really take advantage of your hardware resources, minimizing the number of threads blocking on IO operations, and to use your network bandwidth to its full capacity.
+With an RPC approach you have to wait for a response for each request you make so are limited by the network round trip time or <em>latency</em> of your network.
 With an asynchronous system you can pipeline flows of messages in different directions, so are limited by the network <em>bandwidth</em> not the latency.
 This typically allows you to create much higher performance applications.</p>
 </div>
@@ -130,7 +130,7 @@ The messaging system delivers each message to one and only one of the ordering p
 Different messages can be processed by different order processors, but a single order is only processed by one order processor - this ensures orders aren&#8217;t processed twice.</p>
 </div>
 <div class="paragraph">
-<p>As an order processor receives a message, it fulfills the order, sends order information to the warehouse system and then updates the order database with the order details.
+<p>As an order processor receives a message, it fulfills the order, sends order information to the warehouse system, and then updates the order database with the order details.
 Once it&#8217;s done that it acknowledges the message to tell the server that the order has been processed and can be forgotten about.
 Often the send to the warehouse system, update in database and acknowledgement will be completed in a single transaction to ensure <a href="https://en.wikipedia.org/wiki/ACID">ACID</a> properties.</p>
 </div>
@@ -176,7 +176,7 @@ The messaging system allows you to configure which delivery guarantees you requi
 <div class="sectionbody">
 <div class="paragraph">
 <p>Messaging systems typically support the sending and acknowledgement of multiple messages in a single local transaction.
-Apache ActiveMQ Artemis also supports the sending and acknowledgement of message as part of a large global transaction - using the Java mapping of XA: JTA.</p>
+Apache Artemis also supports the sending and acknowledgement of message as part of a large global transaction - using the Java mapping of XA: JTA.</p>
 </div>
 </div>
 </div>
@@ -222,7 +222,7 @@ It is only available to clients running Java.</p>
 <p>It does not define a standard wire format - it only defines a programmatic API so clients and servers from different vendors cannot directly interoperate since each will use the vendor&#8217;s own internal wire protocol.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis provides client implementations which are a fully compliant with <a href="using-jms.html#using-jms-or-jakarta-messaging">JMS 1.1 &amp; 2.0 as well as Jakarta Messaging 2.0 &amp; 3.0</a>.</p>
+<p>Apache Artemis provides client implementations which are a fully compliant with <a href="using-jms.html#using-jms-or-jakarta-messaging">JMS 1.1 &amp; 2.0 as well as Jakarta Messaging 2.0, 3.0, &amp; 3.1</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -233,10 +233,10 @@ The advantage of this it allows the full set of system functionality to be expos
 API&#8217;s like JMS are not normally rich enough to expose all the extra features that most messaging systems provide.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis provides its own core client API for clients to use if they wish to have access to functionality over and above that accessible via the JMS API.</p>
+<p>The Core API is available for clients to use if they wish to have access to functionality over and above that accessible via the JMS API.</p>
 </div>
 <div class="paragraph">
-<p>Please see <a href="core.html#core-api">Core</a> for using the Core API with Apache ActiveMQ Artemis.</p>
+<p>Please see <a href="core.html#core-api">Core</a> for using the Core API.</p>
 </div>
 </div>
 </div>
@@ -249,7 +249,7 @@ API&#8217;s like JMS are not normally rich enough to expose all the extra featur
 The degree of support for HA varies between various messaging systems.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis provides automatic failover where your sessions are automatically reconnected to a backup server on event of a server failure.</p>
+<p>Apache Artemis provides automatic failover where your sessions are automatically reconnected to a backup server on event of a server failure.</p>
 </div>
 <div class="paragraph">
 <p>For more information on HA, please see <a href="ha.html#high-availability-and-failover">High Availability and Failover</a>.</p>
@@ -265,13 +265,10 @@ Clusters allow the load of sending and consuming messages to be spread over many
 This allows your system to scale horizontally by adding new servers to the cluster.</p>
 </div>
 <div class="paragraph">
-<p>Degrees of support for clusters varies between messaging systems, with some systems having fairly basic clusters with the cluster members being hardly aware of each other.</p>
+<p>Degrees of support for clusters vary between messaging systems, with some systems having fairly basic clusters with the cluster members being hardly aware of each other.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis provides very configurable state-of-the-art clustering model where messages can be intelligently load balanced between the servers in the cluster, according to the number of consumers on each node, and whether they are ready for messages.</p>
-</div>
-<div class="paragraph">
-<p>Apache ActiveMQ Artemis also has the ability to automatically redistribute messages between nodes of a cluster to prevent starvation on any particular node.</p>
+<p>Apache Artemis provides a very configurable state-of-the-art clustering model where messages can be intelligently load balanced between the servers in the cluster, according to the number of consumers on each node, and whether they are ready for messages. It also has the ability to automatically redistribute messages between nodes of a cluster to prevent starvation on any particular node.</p>
 </div>
 <div class="paragraph">
 <p>For full details on clustering, please see <a href="clusters.html#clusters">Clusters</a>.</p>
@@ -289,10 +286,10 @@ This allows your system to scale horizontally by adding new servers to the clust
 Bridges cope with unreliable connections, automatically reconnecting when the connections becomes available again.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis bridges can be configured with filter expressions to only forward certain messages, and transformation can also be hooked in.</p>
+<p>Bridges can be configured with filter expressions to only forward certain messages, and transformation can also be hooked in.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis also allows routing between queues to be configured in server side configuration.
+<p>Routing between queues can also be configured.
 This allows complex routing networks to be set up forwarding or copying messages from one destination to another, forming a global network of interconnected brokers.</p>
 </div>
 <div class="paragraph">

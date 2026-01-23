@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Management Console</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#login">1. Login</a></li>
 <li><a href="#security">2. Security</a></li>
@@ -69,11 +69,11 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis ships by default with a management console.
+<p>Apache Artemis ships by default with a management console.
 It is powered by <a href="http://hawt.io">Hawt.io</a>.</p>
 </div>
 <div class="paragraph">
-<p>Its purpose is to expose the <a href="management.html#management">Management API</a> via a user friendly web ui.</p>
+<p>Its purpose is to expose the <a href="management.html#management">Management API</a> via a user-friendly web ui.</p>
 </div>
 </div>
 </div>
@@ -81,14 +81,14 @@ It is powered by <a href="http://hawt.io">Hawt.io</a>.</p>
 <h2 id="login"><a class="anchor" href="#login"></a><a class="link" href="#login">1. Login</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To access the management console use a browser and go to the URL <a href=""><a href="http://localhost:8161/console" class="bare">http://localhost:8161/console</a></a>.</p>
+<p>To access the management console, use a browser and go to the URL <a href=""><a href="http://localhost:8161/console" class="bare">http://localhost:8161/console</a></a>.</p>
 </div>
 <div class="paragraph">
 <p>A login screen will be presented, if your broker is secure, you will need to use a user with admin role, if it is unsecure simply enter any user/password.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/console-login.png" alt="ActiveMQ Artemis Console Login">
+<img src="images/console-login.png" alt="Apache Artemis Console Login">
 </div>
 </div>
 </div>
@@ -144,13 +144,13 @@ If that isn’t feasible then you can accept the risk by specifying following el
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/console-artemis-plugin.png" alt="ActiveMQ Artemis Console Artemis Plugin">
+<img src="images/console-artemis-plugin.png" alt="Apache Artemis Console Artemis Plugin">
 </div>
 </div>
 <div class="sect2">
 <h3 id="navigation-menu"><a class="anchor" href="#navigation-menu"></a><a class="link" href="#navigation-menu">3.1. Navigation Menu</a></h3>
 <div class="paragraph">
-<p>On the top right is small menu area you will see some icons.</p>
+<p>On the top right is a small menu area where you will see some icons.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -170,11 +170,11 @@ This will open a menu with the following items</p>
 </li>
 <li>
 <p><code>person</code>
-will provide a drop down menu with</p>
+will provide a drop-down menu with</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Preferences</code> this will open the preferences page</p>
+<p><code>Preferences</code> this will open the preference page</p>
 </li>
 <li>
 <p><code>Log out</code> self descriptive.</p>
@@ -188,22 +188,23 @@ will provide a drop down menu with</p>
 <div class="sect2">
 <h3 id="navigation-tabs"><a class="anchor" href="#navigation-tabs"></a><a class="link" href="#navigation-tabs">3.2. Navigation Tabs</a></h3>
 <div class="paragraph">
-<p>Running below the Navigation Menu you will see several default feature tabs. The 1st 2 are specific to Artemis. The rest of
-this document will feature on these 2 tabs.</p>
+<p>Running below the navigation menu, you will see several default feature tabs.
+The first two are specific to the broker.
+The rest of this document will feature on these two tabs.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Artemis</code> This shows detailed information of Apache ActiveMQ Artemis specific functionality in a tabular format.</p>
+<p><code>Artemis</code> This shows detailed information of Apache Artemis specific functionality in a tabular format.</p>
 </li>
 <li>
-<p><code>Artemis JMX</code> This is a JMX view of Apache ActiveMQ Artemis specific functionality.</p>
+<p><code>Artemis JMX</code> This is a JMX view of Apache Artemis specific functionality.</p>
 </li>
 <li>
 <p><code>JMX</code> This exposes the raw Jolokia JMX so you can browse/access all the JMX endpoints exposed by the JVM.</p>
 </li>
 <li>
-<p><code>Runtime</code> This allows you to monitor the thread usage and their state as well as view metrics etc..</p>
+<p><code>Runtime</code> This allows you to monitor the thread usage and their state as well as view metrics, etc.</p>
 </li>
 </ul>
 </div>
@@ -221,14 +222,14 @@ This was disabled by default for security purposes, but it can be enabled again 
 <h2 id="artemis-tab"><a class="anchor" href="#artemis-tab"></a><a class="link" href="#artemis-tab">4. Artemis Tab</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Click <code>Artemis</code> in the left navigation bar to see the Artemis specific plugin. The Artemis tab shows view of information
-in a tabular format.
+<p>Click <code>Artemis</code> in the left navigation bar to see the broker-specific plugin.
+The <code>Artemis</code> tab shows information in a tabular format.
 (The Artemis tab won&#8217;t appear if there is no broker in this JVM).</p>
 </div>
 <div class="sect2">
 <h3 id="status-tab"><a class="anchor" href="#status-tab"></a><a class="link" href="#status-tab">4.1. Status Tab</a></h3>
 <div class="paragraph">
-<p>The Status tan shows the basic health of the broker.</p>
+<p>The <code>Status</code> tab shows the basic health of the broker.</p>
 </div>
 <div class="sect3">
 <h4 id="acceptors"><a class="anchor" href="#acceptors"></a><a class="link" href="#acceptors">4.1.1. Acceptors</a></h4>
@@ -239,32 +240,32 @@ in a tabular format.
 <div class="sect3">
 <h4 id="broker-network"><a class="anchor" href="#broker-network"></a><a class="link" href="#broker-network">4.1.2. Broker Network</a></h4>
 <div class="paragraph">
-<p>This expands to show and expose details of the current Cluster of Brokers.</p>
+<p>This expands to show and expose details of the current cluster of brokers.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="connections-tab"><a class="anchor" href="#connections-tab"></a><a class="link" href="#connections-tab">4.2. Connections Tab</a></h3>
 <div class="paragraph">
-<p>This shows a table of all the brokers connections from clients and other Brokers.</p>
+<p>This shows a table of all the connections from clients and other brokers.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="sessions-tab"><a class="anchor" href="#sessions-tab"></a><a class="link" href="#sessions-tab">4.3. Sessions Tab</a></h3>
 <div class="paragraph">
-<p>This shows a table of all sessions that belong ti connected clients.</p>
+<p>This shows a table of all sessions that belong to connected clients.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="producers-tab"><a class="anchor" href="#producers-tab"></a><a class="link" href="#producers-tab">4.4. Producers Tab</a></h3>
 <div class="paragraph">
-<p>This shows a table of all client producers including message sent information.</p>
+<p>This shows a table of all client producers, including messages sent information.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="consumers-tab"><a class="anchor" href="#consumers-tab"></a><a class="link" href="#consumers-tab">4.5. Consumers Tab</a></h3>
 <div class="paragraph">
-<p>This shows a table of all client consumers including message delivered information.</p>
+<p>This shows a table of all client consumers, including messages delivered information.</p>
 </div>
 </div>
 <div class="sect2">
@@ -277,7 +278,7 @@ in a tabular format.
 <div class="sect4">
 <h5 id="creating-a-new-address"><a class="anchor" href="#creating-a-new-address"></a><a class="link" href="#creating-a-new-address">Creating a new Address</a></h5>
 <div class="paragraph">
-<p>To create a new address simply click on the 'Create Address' button and filling in the form presented</p>
+<p>To create a new address simply click on the "Create Address" button and fill in the form presented.</p>
 </div>
 <div class="paragraph">
 <p>You can also perform operations on an address by clicking on the 3 dots and choosing the appropriate operation.</p>

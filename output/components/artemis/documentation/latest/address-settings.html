@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Address Settings</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#literal-matches">1. Literal Matches</a>
 <ul class="sectlevel2">
@@ -96,6 +96,7 @@ In this way settings can be "layered" so that configuration details don&#8217;t 
       <span class="nt">&lt;max-size-bytes-reject-threshold&gt;</span>-1<span class="nt">&lt;/max-size-bytes-reject-threshold&gt;</span>
       <span class="nt">&lt;page-size-bytes&gt;</span>10MB<span class="nt">&lt;/page-size-bytes&gt;</span>
       <span class="nt">&lt;address-full-policy&gt;</span>PAGE<span class="nt">&lt;/address-full-policy&gt;</span>
+      <span class="nt">&lt;disk-full-policy&gt;</span>BLOCK<span class="nt">&lt;/disk-full-policy&gt;</span>
       <span class="nt">&lt;message-counter-history-day-limit&gt;&lt;/message-counter-history-day-limit&gt;</span>
       <span class="nt">&lt;last-value-queue&gt;</span>false<span class="nt">&lt;/last-value-queue&gt;</span> <span class="c">&lt;!-- deprecated! see default-last-value-queue --&gt;</span>
       <span class="nt">&lt;default-last-value-queue&gt;</span>false<span class="nt">&lt;/default-last-value-queue&gt;</span>
@@ -258,6 +259,15 @@ If the value is <code>FAIL</code> then further messages will be dropped and an e
 If the value is <code>BLOCK</code> then client message producers will block when they try and send further messages.
 See the <a href="flow-control.html#flow-control">Flow Control</a> and <a href="paging.html#paging">Paging</a> chapters for more info.</p>
 </dd>
+<dt class="hdlist1">disk-full-policy</dt>
+<dd>
+<p>This attribute can have one of the following values: <code>DROP</code>, <code>FAIL</code> or <code>BLOCK</code> and determines what happens when a disk becomes full.
+The default value is <code>BLOCK</code>.
+If the value is <code>DROP</code> then further messages will be silently dropped.
+If the value is <code>FAIL</code> then further messages will be dropped and an exception will be thrown on the client-side.
+If the value is <code>BLOCK</code> then client message producers will block when they try and send further messages.
+See the <a href="flow-control.html#flow-control">Flow Control</a>, <a href="paging.html#paging">Paging</a> and <a href="paging.html#monitoring-disk">Monitoring Disk</a> chapters for more info.</p>
+</dd>
 <dt class="hdlist1">message-counter-history-day-limit</dt>
 <dd>
 <p>is the number of days to keep message counter history for this address assuming that <code>message-counter-enabled</code> is <code>true</code>.
@@ -373,8 +383,8 @@ Default is <code>true</code>.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Automatic queue creation does <em>not</em> work for the core client.
-The core API is a low-level API and is not meant to have such automation.
+Automatic queue creation does <em>not</em> work for the Core client.
+The Core API is a low-level API and is not meant to have such automation.
 </td>
 </tr>
 </table>
@@ -470,8 +480,8 @@ Default is <code>true</code>.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-automatic address creation does <em>not</em> work for the core client.
-The core API is a low-level API and is not meant to have such automation.
+automatic address creation does <em>not</em> work for the Core client.
+The Core API is a low-level API and is not meant to have such automation.
 </td>
 </tr>
 </table>

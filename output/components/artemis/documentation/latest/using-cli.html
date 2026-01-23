@@ -34,12 +34,12 @@
 <div id="header">
 <h1>Command Line Interface</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#getting-help">1. Getting Help</a></li>
 <li><a href="#bash-and-zsh-auto-complete">2. Bash and Zsh auto complete</a></li>
 <li><a href="#input-required">3. Input required</a></li>
-<li><a href="#artemis-shell">4. Artemis Shell</a>
+<li><a href="#shell">4. Shell</a>
 <ul class="sectlevel2">
 <li><a href="#connecting-interactively">4.1. Connecting Interactively</a></li>
 <li><a href="#connecting-statically">4.2. Connecting Statically</a></li>
@@ -52,7 +52,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>ActiveMQ Artemis has a Command Line Interface (CLI) that can used to manage a few aspects of the broker like instance creation, basic user management, queue &amp; address management, etc.
+<p>A Command Line Interface (CLI) can used to manage a few aspects of the broker like instance creation, basic user management, queue &amp; address management, etc.
 This interface is designed for simple use-cases with <em>humans</em> in mind.
 It is not an exhaustive set of commands for complete broker management.
 There is a comprehensive <a href="management.html">management API</a> available with many operations that return JSON formatted output which is better suited for use in scripts and other automated processes.</p>
@@ -90,7 +90,7 @@ Of course, the shell also allows you to avoid retyping <code>./artemis</code> fo
 <div class="content">
 <pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>./artemis <span class="nb">help</span>
 <span class="go">Usage: artemis [COMMAND]
-ActiveMQ Artemis Command Line
+Apache Artemis Command Line
 Commands:
 </span><span class="gp">  help        use 'help &lt;command&gt;</span><span class="s1">' for more information
 </span><span class="go">  pwd         Information on current folder and instance.
@@ -215,7 +215,7 @@ For example, <code>./artemis help create</code>:</p>
 </span><span class="gp">      --cluster-user=&lt;clusterUser&gt;</span><span class="w">
 </span><span class="go">                             The user to use for clustering. Default: input.
       --clustered            Enable clustering.
-</span><span class="gp">      --data=&lt;data&gt;</span><span class="w">          </span>Directory where ActiveMQ data are stored. Paths
+</span><span class="gp">      --data=&lt;data&gt;</span><span class="w">          </span>Directory where Apache Artemis data is stored. Paths
 <span class="go">                               can be absolute or relative to artemis.instance
                                directory. Default: data.
 </span><span class="gp">      --default-port=&lt;defaultPort&gt;</span><span class="w">
@@ -224,7 +224,7 @@ For example, <code>./artemis help create</code>:</p>
       --disable-persistence  Disable message persistence to the journal
 </span><span class="gp">      --encoding=&lt;encoding&gt;</span><span class="w">  </span>The encoding that text files should use. Default:
 <span class="go">                               UTF-8.
-</span><span class="gp">      --etc=&lt;etc&gt;</span><span class="w">            </span>Directory where ActiveMQ configuration is located.
+</span><span class="gp">      --etc=&lt;etc&gt;</span><span class="w">            </span>Directory where Apache Artemis configuration is located.
 <span class="go">                               Paths can be absolute or relative to artemis.
                                instance directory. Default: etc.
       --failover-on-shutdown Whether broker shutdown will trigger failover for
@@ -238,7 +238,7 @@ For example, <code>./artemis help create</code>:</p>
 </span><span class="gp">      --global-max-size=&lt;globalMaxSize&gt;</span><span class="w">
 </span><span class="go">                             Maximum amount of memory which message data may
                                consume. Default: half of the JVM's max memory.
-</span><span class="gp">      --home=&lt;home&gt;</span><span class="w">          </span>Directory where ActiveMQ Artemis is installed.
+</span><span class="gp">      --home=&lt;home&gt;</span><span class="w">          </span>Directory where Apache Artemis is installed.
 <span class="gp">      --host=&lt;host&gt;</span><span class="w">          </span>Broker<span class="s1">'s host name. Default: 0.0.0.0 or input if
 </span><span class="go">                               clustered).
 </span><span class="gp">      --http-host=&lt;httpHost&gt;</span><span class="w"> </span>Embedded web server<span class="s1">'s host name. Default:
@@ -418,7 +418,7 @@ Type the password for a retry</span></code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="artemis-shell"><a class="anchor" href="#artemis-shell"></a><a class="link" href="#artemis-shell">4. Artemis Shell</a></h2>
+<h2 id="shell"><a class="anchor" href="#shell"></a><a class="link" href="#shell">4. Shell</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To initialize the shell session, type <code>./artemis shell</code> (or just <code>./artemis</code> if you prefer):</p>
@@ -429,7 +429,7 @@ Type the password for a retry</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The ActiveMQ Artemis shell provides an interface that can be used to execute commands directly without leaving the Java Virtual Machine.</p>
+<p>The shell provides an interface that can be used to execute commands directly without leaving the Java Virtual Machine.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -438,12 +438,12 @@ Type the password for a retry</span></code></pre>
    / _ \|  _ \ __|/ _ \  \/  | |/  __/
   / ___ \ | \/ |_/  __/ |\/| | |\___ \
  /_/   \_\|   \__\____|_|  |_|_|/___ /
- Apache ActiveMQ Artemis
+ Apache Artemis
 
 
 </span><span class="gp">For a list of commands, type help or press &lt;TAB&gt;</span>:
 <span class="gp">Type exit or press &lt;CTRL-D&gt;</span><span class="w"> </span>to leave the session:
-<span class="gp">Apache ActiveMQ Artemis &gt;</span></code></pre>
+<span class="gp">Apache Artemis &gt;</span></code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -453,7 +453,7 @@ Type the password for a retry</span></code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">Apache ActiveMQ Artemis &gt;</span><span class="w"> </span>connect <span class="nt">--user</span><span class="o">=</span>myUser <span class="nt">--password</span><span class="o">=</span>myPass <span class="nt">--url</span> tcp://localhost:61616
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">Apache Artemis &gt;</span><span class="w"> </span>connect <span class="nt">--user</span><span class="o">=</span>myUser <span class="nt">--password</span><span class="o">=</span>myPass <span class="nt">--url</span> tcp://localhost:61616
 <span class="go">Connection brokerURL = tcp://localhost:61616
 Connection Successful!</span></code></pre>
 </div>
@@ -466,7 +466,7 @@ Connection Successful!</span></code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">Apache ActiveMQ Artemis &gt;</span><span class="w"> </span>queue <span class="nb">stat</span>
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">Apache Artemis &gt;</span><span class="w"> </span>queue <span class="nb">stat</span>
 <span class="go">Connection brokerURL = tcp://localhost:61616
 |NAME                     |ADDRESS                  |CONSUMER_COUNT|MESSAGE_COUNT|MESSAGES_ADDED|DELIVERING_COUNT|MESSAGES_ACKED|SCHEDULED_COUNT|ROUTING_TYPE|
 |DLQ                      |DLQ                      |0             |0            |0             |0               |0             |0              |ANYCAST     |
@@ -495,7 +495,7 @@ Connection Successful!</span></code></pre>
 <span class="c">...
 </span><span class="go">
 
-</span><span class="gp">Apache ActiveMQ Artemis &gt;</span><span class="w"> </span>queue <span class="nb">stat</span>
+</span><span class="gp">Apache Artemis &gt;</span><span class="w"> </span>queue <span class="nb">stat</span>
 <span class="go">Connection brokerURL = tcp://localhost:61616
 |NAME                     |ADDRESS                  |CONSUMER_COUNT|MESSAGE_COUNT|MESSAGES_ADDED|DELIVERING_COUNT|MESSAGES_ACKED|SCHEDULED_COUNT|ROUTING_TYPE|
 |DLQ                      |DLQ                      |0             |0            |0             |0               |0             |0              |ANYCAST     |

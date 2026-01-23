@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Using Core</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#core-messaging-concepts">1. Core Messaging Concepts</a>
 <ul class="sectlevel2">
@@ -58,12 +58,12 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis core is a messaging system with its own API.
-We call this the <em>core API</em>.</p>
+<p>Core is a messaging system with its own API.
+We call this the <em>Core API</em>.</p>
 </div>
 <div class="paragraph">
-<p>If you don&#8217;t want to use the JMS API or any of the other supported protocols you can use the core API directly.
-The core API provides all the functionality of JMS but without much of the complexity.
+<p>If you don&#8217;t want to use the JMS API or any of the other supported protocols, you can use the Core API directly.
+The Core API provides all the functionality of JMS but without much of the complexity.
 It also provides features that are not available using JMS.</p>
 </div>
 </div>
@@ -72,9 +72,9 @@ It also provides features that are not available using JMS.</p>
 <h2 id="core-messaging-concepts"><a class="anchor" href="#core-messaging-concepts"></a><a class="link" href="#core-messaging-concepts">1. Core Messaging Concepts</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Some of the core messaging concepts are similar to JMS concepts, but core messaging concepts are also different in some ways as well.
-In general the core API is simpler than the JMS API, since we remove distinctions between queues, topics and subscriptions.
-We&#8217;ll discuss each of the major core messaging concepts in turn, but to see the API in detail please consult the Javadoc.</p>
+<p>Some of the Core messaging concepts are similar to JMS concepts, but Core messaging concepts are different in some ways as well.
+In general, the Core API is simpler than the JMS API since we remove distinctions between queues, topics, and subscriptions.
+We&#8217;ll discuss each of the major Core messaging concepts in turn, but to see the API in detail, please consult the Javadoc.</p>
 </div>
 <div class="paragraph">
 <p>Also refer to the <a href="address-model.html#address-model">address model</a> chapter for a high-level overview of these concepts as well as configuration details.</p>
@@ -91,7 +91,7 @@ We&#8217;ll discuss each of the major core messaging concepts in turn, but to se
 </li>
 <li>
 <p>A message has a set of properties which are key-value pairs.
-Each property key is a string and property values can be of type integer, long, short, byte, byte[], String, double, float or boolean.</p>
+Each property key is a string and property values can be of type integer, long, short, byte, byte[], String, double, float, or boolean.</p>
 </li>
 <li>
 <p>A message has an <em>address</em> it is being sent to.
@@ -119,7 +119,7 @@ The broker will not deliver messages after its expiry time has been exceeded.</p
 <p>Messages also have an optional timestamp which represents the time the message was sent.</p>
 </li>
 <li>
-<p>Apache ActiveMQ Artemis also supports the sending/consuming of very large messages much larger than can fit in available RAM at any one time.</p>
+<p>Very large messages (i.e. much larger than can fit in available RAM at any one time) can be sent &amp; consumed.</p>
 </li>
 </ul>
 </div>
@@ -159,7 +159,7 @@ The broker will not deliver messages after its expiry time has been exceeded.</p
 <h3 id="clientsession"><a class="anchor" href="#clientsession"></a><a class="link" href="#clientsession">2.3. ClientSession</a></h3>
 <div class="paragraph">
 <p>A client uses a <code>ClientSession</code>for consuming and producing messages and for grouping them in transactions.
-<code>ClientSession</code> instances can support both transactional and non transactional semantics and also provide an <code>XAResource</code> interface so messaging operations can be performed as part of a <a href="http://www.oracle.com/technetwork/java/javaee/tech/jta-138684.html">JTA</a> transaction.</p>
+<code>ClientSession</code> instances can support both transactional and non-transactional semantics and also provide an <code>XAResource</code> interface so messaging operations can be performed as part of a <a href="http://www.oracle.com/technetwork/java/javaee/tech/jta-138684.html">JTA</a> transaction.</p>
 </div>
 <div class="paragraph">
 <p><code>ClientSession</code> instances group <code>ClientConsumer</code> instances and <code>ClientProducer</code> instances.</p>
@@ -167,15 +167,15 @@ The broker will not deliver messages after its expiry time has been exceeded.</p
 <div class="paragraph">
 <p><code>ClientSession</code> instances can be registered with an optional <code>SendAcknowledgementHandler</code>.
 This allows your client code to be notified asynchronously when sent messages have successfully reached the server.
-This unique Apache ActiveMQ Artemis feature, allows you to have full guarantees that sent messages have reached the server without having to block on each message sent until a response is received.
-Blocking on each messages sent is costly since it requires a network round trip for each message sent.
-By not blocking and receiving send acknowledgements asynchronously you can create true end to end asynchronous systems which is not possible using the standard JMS API.
-For more information on this advanced feature please see the section <a href="send-guarantees.html#guarantees-of-sends-and-commits">Guarantees of sends and commits</a>.</p>
+This unique feature allows you to have full guarantees that sent messages have reached the server without having to block on each message sent until a response is received.
+Blocking on each message sent is costly since it requires a network round trip for each message sent.
+By not blocking and receiving send acknowledgements asynchronously, you can create true end-to-end asynchronous systems that are not possible using the standard JMS API.
+For more information on this advanced feature, please see the section <a href="send-guarantees.html#guarantees-of-sends-and-commits">Guarantees of sends and commits</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="identifying-your-client-application-for-management-and-debugging"><a class="anchor" href="#identifying-your-client-application-for-management-and-debugging"></a><a class="link" href="#identifying-your-client-application-for-management-and-debugging">2.3.1. Identifying your client application for management and debugging</a></h4>
 <div class="paragraph">
-<p>Assigning IDs to your core session can help you with monitoring and debugging using the <a href="management-console.html#management-console">management console</a>, e.g.:</p>
+<p>Assigning IDs to your Core session can help you with monitoring and debugging using the <a href="management-console.html#management-console">management console</a>, e.g.:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -232,7 +232,7 @@ This is  discussed further in the section on performance tuning <a href="perf-tu
 <h2 id="a-simple-example-of-using-core"><a class="anchor" href="#a-simple-example-of-using-core"></a><a class="link" href="#a-simple-example-of-using-core">3. A simple example of using Core</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Here&#8217;s a very simple program using the core messaging API to send and receive a message.
+<p>Here&#8217;s a very simple program using the Core messaging API to send and receive a message.
 Logically it&#8217;s comprised of two sections: firstly setting up the producer to write a message to an <em>address</em>, and secondly, creating a <em>queue</em> for the consumer using anycast routing, creating the consumer, and <em>starting</em> it.</p>
 </div>
 <div class="listingblock">

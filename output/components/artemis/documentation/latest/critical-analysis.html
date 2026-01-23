@@ -33,7 +33,7 @@
 <div id="header">
 <h1>Critical Analysis of the broker</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#what-to-expect">1. What to Expect</a></li>
 </ul>
@@ -118,8 +118,8 @@ We always try to correct them, but that&#8217;s the only constant in software de
 </tbody>
 </table>
 <div class="paragraph">
-<p>The default for critical-analyzer-policy is <code>LOG</code>, however the generated broker.xml will have it set to <code>HALT</code>.
-That is because we cannot halt the VM if you are embedding ActiveMQ Artemis into an application server or on a multi tenant environment.</p>
+<p>The default for critical-analyzer-policy is <code>LOG</code>, however the generated <code>broker.xml</code> will have it set to <code>HALT</code>.
+That is because we cannot halt the VM if you are embedding a broker or operating in a multi-tenant environment.</p>
 </div>
 <div class="paragraph">
 <p>The broker on the distribution will then have it set to <code>HALT</code>, but if you use it in any other way the default will be <code>LOG</code>.</p>

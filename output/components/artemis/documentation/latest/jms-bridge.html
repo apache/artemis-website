@@ -33,7 +33,7 @@
 <div id="header">
 <h1>The JMS Bridge</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#jms-bridge-parameters">1. JMS Bridge Parameters</a></li>
 <li><a href="#source-and-target-connection-factories">2. Source and Target Connection Factories</a></li>
@@ -54,7 +54,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis includes a fully functional JMS message bridge.</p>
+<p>A fully functional JMS message bridge is available.</p>
 </div>
 <div class="paragraph">
 <p>The function of the bridge is to consume messages from a source queue or topic, and send them to a target queue or topic, typically on a different server.</p>
@@ -68,7 +68,7 @@
 <td class="content">
 <div class="paragraph">
 <p>The JMS Bridge is not intended as a replacement for transformation and more expert systems such as Camel.
-The JMS Bridge may be useful for fast transfers as this chapter covers, but keep in mind that more complex scenarios requiring transformations will require you to use a more advanced transformation system that will play on use cases that will go beyond Apache ActiveMQ Artemis.</p>
+The JMS Bridge may be useful for fast transfers as this chapter covers, but keep in mind that more complex scenarios requiring transformations will require you to use a more advanced transformation system.</p>
 </div>
 </td>
 </tr>
@@ -78,11 +78,11 @@ The JMS Bridge may be useful for fast transfers as this chapter covers, but keep
 <p>The source and target servers do not have to be in the same cluster which makes bridging suitable for reliably sending messages from one cluster to another, for instance across a WAN, and where the connection may be unreliable.</p>
 </div>
 <div class="paragraph">
-<p>A bridge can be deployed as a standalone application or as a web application managed by the embedded Jetty instance bootstrapped with Apache ActiveMQ Artemis.
+<p>A bridge can be deployed as a standalone application or as a web application managed by the embedded Jetty instance bootstrapped with the broker.
 The source and the target can be located in the same virtual machine or another one.</p>
 </div>
 <div class="paragraph">
-<p>The bridge can also be used to bridge messages from other non Apache ActiveMQ Artemis JMS servers, as long as they are JMS 1.1 compliant.</p>
+<p>The bridge can also be used to bridge messages from other JMS servers as long as they are JMS 1.1 compliant.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -94,7 +94,7 @@ The source and the target can be located in the same virtual machine or another 
 <div class="paragraph">
 <p>Do not confuse a JMS bridge with a core bridge.
 A JMS bridge can be used to bridge any two JMS 1.1 compliant JMS providers and uses the JMS API.
-A <a href="core-bridges.html#core-bridges">core bridge</a>) is used to bridge any two Apache ActiveMQ Artemis instances and uses the core API.
+A <a href="core-bridges.html#core-bridges">core bridge</a>) is used to bridge any two broker instances and uses the Core API.
 Always use a core bridge if you can in preference to a JMS bridge.
 The core bridge will typically provide better performance than a JMS bridge.
 Also the core bridge can provide <em>once and only once</em> delivery guarantees without using XA.</p>
@@ -293,7 +293,7 @@ This enables a distributed request-response pattern to be used</p>
 </div>
 <div class="paragraph">
 <p>The "transactionManager" property points to a JTA transaction manager implementation and should be set if you need to use the 'ONCE_AND_ONCE_ONLY' Quality of Service.
-Apache ActiveMQ Artemis doesn&#8217;t ship with such an implementation, but if you are running within an Application Server you can inject the Transaction Manager that is shipped.</p>
+The broker doesn&#8217;t ship with such an implementation, but if you are running within an Application Server you can inject the Transaction Manager that is shipped.</p>
 </div>
 </div>
 </div>
@@ -304,7 +304,7 @@ Apache ActiveMQ Artemis doesn&#8217;t ship with such an implementation, but if y
 <p>The source and target connection factory factories are used to create the connection factory used to create the connection for the source or target server.</p>
 </div>
 <div class="paragraph">
-<p>The configuration example above uses the default implementation provided by Apache ActiveMQ Artemis that looks up the connection factory using JNDI.
+<p>The configuration example above uses the default implementation that looks up the connection factory using JNDI.
 For other Application Servers or JMS providers a new implementation may have to be provided.
 This can easily be done by implementing the interface <code>org.apache.activemq.artemis.jms.bridge.ConnectionFactoryFactory</code>.</p>
 </div>
@@ -317,7 +317,7 @@ This can easily be done by implementing the interface <code>org.apache.activemq.
 <p>Again, similarly, these are used to create or lookup up the destinations.</p>
 </div>
 <div class="paragraph">
-<p>In the configuration example above, we have used the default provided by Apache ActiveMQ Artemis that looks up the destination using JNDI.</p>
+<p>In the configuration example above, we have used the default that looks up the destination using JNDI.</p>
 </div>
 <div class="paragraph">
 <p>A new implementation can be provided by implementing <code>org.apache.activemq.artemis.jms.bridge.DestinationFactory</code> interface.</p>
@@ -335,8 +335,8 @@ This can easily be done by implementing the interface <code>org.apache.activemq.
 <div class="paragraph">
 <p>With this QoS mode messages will reach the destination from the source at most once.
 The messages are consumed from the source and acknowledged before sending to the destination.
-Therefore there is a possibility that if failure occurs between removing them from the source and them arriving at the destination they could be lost.
-Hence delivery will occur at most once.</p>
+Therefore, there is a possibility that if failure occurs between removing them from the source and them arriving at the destination, they could be lost.
+Hence, delivery will occur at most once.</p>
 </div>
 <div class="paragraph">
 <p>This mode is available for both durable and non-durable messages.</p>
@@ -358,9 +358,9 @@ i.e. the destination might receive duplicates after a failure.</p>
 <div class="paragraph">
 <p>This QoS mode ensures messages will reach the destination from the source once and only once.
 (Sometimes this mode is known as "exactly once").
-If both the source and the destination are on the same Apache ActiveMQ Artemis server instance then this can be achieved by sending and acknowledging the messages in the same local transaction.
+If both the source and the destination are on the same server instance, then this can be achieved by sending and acknowledging the messages in the same local transaction.
 If the source and destination are on different servers this is achieved by enlisting the sending and consuming sessions in a JTA transaction.
-The JTA transaction is controlled by a JTA Transaction Manager which will need to be set via the settransactionManager method on the Bridge.</p>
+The JTA transaction is controlled by a JTA Transaction Manager, which will need to be set via the settransactionManager method on the Bridge.</p>
 </div>
 <div class="paragraph">
 <p>This mode is only available for durable messages.</p>
@@ -396,7 +396,7 @@ If this occurs then the bridge will try <code>Max Retries</code> to reconnect ev
 <div class="sect2">
 <h3 id="examples"><a class="anchor" href="#examples"></a><a class="link" href="#examples">4.5. Examples</a></h3>
 <div class="paragraph">
-<p>Please see <a href="examples.html#jms-bridge">JMS Bridge Example</a> which shows how to programmatically instantiate and configure a JMS Bridge to send messages to the source destination and consume them from the target destination between two standalone Apache ActiveMQ Artemis brokers.</p>
+<p>Please see <a href="examples.html#jms-bridge">JMS Bridge Example</a> which shows how to programmatically instantiate and configure a JMS Bridge to send messages to the source destination and consume them from the target destination between two standalone brokers.</p>
 </div>
 </div>
 </div>

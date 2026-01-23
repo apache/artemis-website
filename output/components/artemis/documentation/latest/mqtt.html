@@ -34,7 +34,7 @@
 <div id="header">
 <h1>MQTT</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#mqtt-quality-of-service">1. MQTT Quality of Service</a></li>
 <li><a href="#mqtt-retain-messages">2. MQTT Retain Messages</a></li>
@@ -43,7 +43,7 @@
 <li><a href="#persistent-subscriptions">5. Persistent Subscriptions</a></li>
 <li><a href="#custom-client-id-handling">6. Custom Client ID Handling</a></li>
 <li><a href="#wildcard-subscriptions">7. Wildcard subscriptions</a></li>
-<li><a href="#web-sockets">8. Web Sockets</a></li>
+<li><a href="#websockets">8. WebSockets</a></li>
 <li><a href="#link-stealing">9. Link Stealing</a></li>
 <li><a href="#automatic-subscription-clean-up">10. Automatic Subscription Clean-up</a></li>
 <li><a href="#flow-control">11. Flow Control</a></li>
@@ -59,12 +59,12 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>MQTT is a light weight, client to server, publish / subscribe messaging protocol.
+<p>MQTT is a light weight, client-to-server, publish / subscribe messaging protocol.
 MQTT has been specifically designed to reduce transport overhead (and thus network traffic) and code footprint on client devices.
 For this reason MQTT is ideally suited to constrained devices such as sensors and actuators and is quickly becoming the defacto standard communication protocol for IoT.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis supports the following MQTT versions (with links to their respective specifications):</p>
+<p>Apache Artemis supports the following MQTT versions (with links to their respective specifications):</p>
 </div>
 <div class="ulist">
 <ul>
@@ -304,14 +304,14 @@ This conversion isn&#8217;t free so <strong>if you want the best MQTT performanc
 </div>
 </div>
 <div class="sect1">
-<h2 id="web-sockets"><a class="anchor" href="#web-sockets"></a><a class="link" href="#web-sockets">8. Web Sockets</a></h2>
+<h2 id="websockets"><a class="anchor" href="#websockets"></a><a class="link" href="#websockets">8. WebSockets</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis also supports MQTT over <a href="https://html.spec.whatwg.org/multipage/web-sockets.html">Web Sockets</a>.
-Modern web browsers which support Web Sockets can send and receive MQTT messages.</p>
+<p>MQTT over <a href="https://html.spec.whatwg.org/multipage/web-sockets.html">WebSockets</a> is also supported.
+Modern web browsers which support WebSockets can send and receive MQTT messages.</p>
 </div>
 <div class="paragraph">
-<p>MQTT over Web Sockets is supported via a normal MQTT acceptor:</p>
+<p>MQTT over WebSockets is supported via a normal MQTT acceptor:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -319,7 +319,7 @@ Modern web browsers which support Web Sockets can send and receive MQTT messages
 </div>
 </div>
 <div class="paragraph">
-<p>With this configuration, Apache ActiveMQ Artemis will accept MQTT connections over Web Sockets on the port <code>1883</code>.
+<p>With this configuration, the broker will accept MQTT connections over WebSockets on the port <code>1883</code>.
 Web browsers can then connect to <code>ws://&lt;server&gt;:1883</code> using a Web Socket to send and receive MQTT messages.</p>
 </div>
 <div class="paragraph">

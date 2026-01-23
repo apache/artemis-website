@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Data Retention</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel3">
 <li><a href="#paging-and-large-messages">1. Paging and Large Messages</a></li>
 <li><a href="#non-persistent-messages">2. Non Persistent Messages</a></li>
@@ -50,7 +50,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you enable <code>journal-retention-directory</code> on broker.xml, ActiveMQ Artemis will keep copy of every data that has passed through the broker on this folder.</p>
+<p>If you enable <code>journal-retention-directory</code> in <code>broker.xml</code> a copy of every journal file used by the broker will be kept in this folder.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -64,15 +64,15 @@
 </div>
 </div>
 <div class="paragraph">
-<p>ActiveMQ Artemis will keep a copy of each generated journal file, up to the configured retention period, at the unit chose.
-On the example above the system would keep all the journal files up to 365 days.</p>
+<p>The broker will keep a copy of each generated journal file, up to the configured retention period at the unit chosen.
+In the example above, the system would keep all the journal files up to 365 days.</p>
 </div>
 <div class="paragraph">
-<p>It is also possible to limit the number of files kept on the retention directory.
-You can keep a storage-limit, and the system will start removing older files when you have more files than the configured storage limit.</p>
+<p>It is also possible to limit the number of files kept in the retention directory.
+You can define <code>storage-limit</code> and older files will be removed when this limit is exceeded.</p>
 </div>
 <div class="paragraph">
-<p>Notice the storage limit is optional however you need to be careful to not run out of disk space at the retention folder or the broker might be shutdown because of a critical IO failure.</p>
+<p>Notice <code>storage-limit</code> is optional, but you need to be careful to not run out of disk space in the retention folder or the broker might be shutdown because of a critical IO failure.</p>
 </div>
 <div class="paragraph">
 <p>You can use the CLI tools to inspect and recover data from the history, by just passing the journal folder being the retention directory.</p>

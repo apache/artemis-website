@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Broker Connections</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#amqp-server-connections">1. AMQP Server Connections</a></li>
 <li><a href="#amqp-server-connection-operations">2. AMQP Server Connection Operations</a></li>
@@ -60,8 +60,8 @@
 <li><a href="#address-consideration">8. Address Consideration</a></li>
 <li><a href="#federation">9. Federation</a>
 <ul class="sectlevel2">
-<li><a href="#local-and-remote-address-federation">9.1. Local and remote address federation</a></li>
-<li><a href="#local-and-remote-queue-federation">9.2. Local and remote queue federation</a></li>
+<li><a href="#address-federation">9.1. Address federation</a></li>
+<li><a href="#queue-federation">9.2. Queue federation</a></li>
 </ul>
 </li>
 <li><a href="#bridges">10. Bridges</a>
@@ -96,8 +96,8 @@
 <h2 id="amqp-server-connections"><a class="anchor" href="#amqp-server-connections"></a><a class="link" href="#amqp-server-connections">1. AMQP Server Connections</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An ActiveMQ Artemis broker can initiate connections using the AMQP protocol.
-This means that the broker can connect to another AMQP server (not necessarily ActiveMQ Artemis) and create elements on that connection.</p>
+<p>The broker can initiate connections using the AMQP protocol.
+This means that the broker can connect to another AMQP server (not necessarily Artemis) and create elements on that connection.</p>
 </div>
 <div class="paragraph">
 <p>To define an AMQP broker connection, add an <code>&lt;amqp-connection&gt;</code> element within the <code>&lt;broker-connections&gt;</code> element in the <code>broker.xml</code> configuration file.
@@ -141,7 +141,8 @@ The default value is <code>5000</code>.</p>
 </dd>
 <dt class="hdlist1">auto-start</dt>
 <dd>
-<p>Should the broker connection start automatically with the broker. Default is <code>true</code>.
+<p>Should the broker connection start automatically with the broker.
+Default is <code>true</code>.
 If <code>false</code> it is necessary to call a management operation to start it.</p>
 </dd>
 </dl>
@@ -153,7 +154,7 @@ If <code>false</code> it is necessary to call a management operation to start it
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The connection URI options for transport settings, such as enabling and configuring TLS, are common with other Artemis connector URIs.
+The connection URI options for transport settings, such as enabling and configuring TLS, are common with other broker connector URIs.
 See <a href="configuring-transports.html#configuring-netty-ssl">the transport doc</a> for more.
 An example configuration for a TLS AMQP broker-connection can be found in the broker <a href="examples.html">examples</a> at <em>./examples/features/broker-connection/amqp-sending-overssl</em>.
 </td>
@@ -329,8 +330,7 @@ The system would try to connect to ServerA, BackupA, and BackupB until it succes
 </td>
 <td class="content">
 For failover on mirrored brokers, all nodes in the list must be high-available (HA) failover nodes.
-Specifying independents nodes in the mirror list can cause consistency issues between the message
-sent to the mirror and the acknowledgements received on the mirror.
+Specifying independents nodes in the mirror list can cause consistency issues between the message sent to the mirror and the acknowledgements received on the mirror.
 </td>
 </tr>
 </table>
@@ -527,7 +527,7 @@ Previously existing messages will not be forwarded to other brokers.</p>
 <h2 id="dual-mirror-disaster-recovery"><a class="anchor" href="#dual-mirror-disaster-recovery"></a><a class="link" href="#dual-mirror-disaster-recovery">5. Dual Mirror (Disaster Recovery)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>ActiveMQ Artemis supports automatic fallback mirroring.
+<p>Automatic fallback mirroring is supported.
 Every sent message and every acknowledgement is asynchronously replicated to the mirrored broker.</p>
 </div>
 <div class="paragraph">
@@ -599,7 +599,7 @@ Message acknowledgements received on DC2 will be automatically related back to D
 <h2 id="senders-and-receivers"><a class="anchor" href="#senders-and-receivers"></a><a class="link" href="#senders-and-receivers">6. Senders and Receivers</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>It is possible to connect an ActiveMQ Artemis broker to another AMQP endpoint simply by creating a sender or receiver broker connection element.</p>
+<p>It is possible to connect a broker to another AMQP endpoint simply by creating a <code>sender</code> or <code>receiver</code> element.</p>
 </div>
 <div class="paragraph">
 <p>For a <code>sender</code>, the broker creates a message consumer on a queue that sends messages to another AMQP endpoint.</p>
@@ -610,7 +610,7 @@ Message acknowledgements received on DC2 will be automatically related back to D
 <div class="paragraph">
 <p>Both elements function as a message bridge.
 However, there is no additional overhead required to process messages.
-Senders and receivers behave just like any other consumer or producer in ActiveMQ Artemis.</p>
+Senders and receivers behave just like any other consumer or producer.</p>
 </div>
 <div class="paragraph">
 <p>Specific queues can be configured by senders or receivers.
@@ -722,11 +722,11 @@ This creates an infinite loop of sends and receives.
 In this scenario, clients connect to a router to send and receive messages using a waypointed address, and the router routes these messages to or from the queue on the broker.</p>
 </div>
 <div class="paragraph">
-<p>The peer configuration causes ActiveMQ Artemis to create a sender and receiver pair for each destination matched in the broker-connection configuration, with these carrying special configuration to let Qpid Dispatch know to collaborate with the broker.
+<p>The <code>peer</code> configuration causes the broker to create a sender and receiver pair for each destination matched in the broker-connection configuration, with these carrying special configuration to let Qpid Dispatch know to collaborate with the broker.
 This replaces the traditional need of a router-initiated connection and auto-links.</p>
 </div>
 <div class="paragraph">
-<p>Qpid Dispatch Router offers a lot of advanced networking options that be used together with ActiveMQ Artemis.</p>
+<p>Qpid Dispatch Router offers a lot of advanced networking options that be used together with the broker.</p>
 </div>
 <div class="paragraph">
 <p>With a peer configuration, the same properties are present as when there are senders and receivers.
@@ -841,7 +841,7 @@ To avoid confusion it is recommended that <code>address</code> <code>name</code>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Broker federation allows the local broker to create remote receivers for addresses or queues that have local demand.
-Conversely, the broker connection can send federation configuration to the remote broker causing it to create receivers on the local broker based on remote demand on an address or queue over this same connection.</p>
+Conversely, the broker connection can send connection scoped federation configuration to the remote broker causing it to create receivers on the local broker based on remote demand on an address or queue over this same connection.</p>
 </div>
 <div class="paragraph">
 <p>Add a <code>&lt;federation&gt;</code> element within the <code>&lt;amqp-connection&gt;</code> element to configure federation to the broker instance.
@@ -876,133 +876,35 @@ See above sections to configure those values.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="local-and-remote-address-federation"><a class="anchor" href="#local-and-remote-address-federation"></a><a class="link" href="#local-and-remote-address-federation">9.1. Local and remote address federation</a></h3>
+<h3 id="address-federation"><a class="anchor" href="#address-federation"></a><a class="link" href="#address-federation">9.1. Address federation</a></h3>
 <div class="paragraph">
-<p>Local or Remote address federation configures the local or remote broker to watch for demand on addresses.
-When demand exists it will create a consumer on the matching address on the opposing broker.
-Because the consumers are created on addresses on the opposing broker, the authentication credentials supplied to the broker connection must have sufficient access to read from (local address federation) or write to the matching address (remote address federation) on the opposing broker.</p>
+<p>Address federation can be thought of as full multicast over a set of loosely coupled brokers.
+Every message sent to address on <code>Broker-1</code> will be delivered to every queue bound to that address on that broker, but also will be delivered to the matching address on <code>Broker-2</code>, <code>Broker-3</code> &#8230;&#8203; <code>Broker-N</code> and all the queues bound to that address.</p>
 </div>
-<div class="paragraph">
-<p>An example of address federation configuration is shown below.
-Local and remote address policies have identical configuration parameters, only the policy element names are different.</p>
-</div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
-  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;federation&gt;</span>
-       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy"</span>
-                             <span class="na">auto-delete=</span><span class="s">"false"</span>
-                             <span class="na">auto-delete-delay=</span><span class="s">"1"</span>
-                             <span class="na">auto-delete-message-count=</span><span class="s">"12"</span>
-                             <span class="na">max-hops=</span><span class="s">"1"</span>
-                             <span class="na">enable-divert-bindings=</span><span class="s">"true"</span><span class="nt">&gt;</span>
-         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"local-address.#"</span> <span class="nt">/&gt;</span>
-         <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"local-address.excluded"</span> <span class="nt">/&gt;</span>
-       <span class="nt">&lt;/local-address-policy&gt;</span>
-    <span class="nt">&lt;/federation&gt;</span>
-  <span class="nt">&lt;/amqp-connection&gt;</span>
-<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+<img src="images/amqp-federation-address-concept.png" alt="amqp federation address concept">
 </div>
+<div class="title">Figure 2. Address Federation</div>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">name</dt>
-<dd>
-<p>The name of the policy, these names should be unique within a broker connection&#8217;s federation policy elements.</p>
-</dd>
-<dt class="hdlist1">include</dt>
-<dd>
-<p>The address-match pattern to use to match included addresses, multiple of these can be set.
-If none are set all addresses are matched.</p>
-</dd>
-<dt class="hdlist1">exclude</dt>
-<dd>
-<p>The address-match pattern to use to match excluded addresses, multiple of these can be set, or it can be omitted if no excludes are needed.</p>
-</dd>
-<dt class="hdlist1">max-hops</dt>
-<dd>
-<p>The maximum number of hops that a message can perform to be federated.
-Default value is <code>0</code> and will work for most simple federation deployments.
-However, in certain topologies a higher value may be required to prevent looping.</p>
-</dd>
-<dt class="hdlist1">auto-delete</dt>
-<dd>
-<p>For address federation, a durable queue is created on the broker from which messages are being federated.
-Set this property to <code>true</code> to mark the queue for automatic deletion once the initiating broker disconnects and the delay and message count parameters are met.
-This is a useful option if you want to automate the cleanup of dynamically-created queues.
-The default value is <code>false</code>, which means that the queue is not automatically deleted.</p>
-</dd>
-<dt class="hdlist1">auto-delete-delay</dt>
-<dd>
-<p>The amount of time in milliseconds after the initiating broker has disconnected before the created queue can be eligible for <code>auto-delete</code>.
-The default value is <code>0</code> when option is omitted.</p>
-</dd>
-<dt class="hdlist1">auto-delete-message-count</dt>
-<dd>
-<p>After the initiating broker has disconnected, the maximum number of messages allowed in the remote queue for the queue to be eligible for automatic deletion.
-The default value is <code>0</code>.</p>
-</dd>
-<dt class="hdlist1">enable-divert-bindings</dt>
-<dd>
-<p>Setting to <code>true</code> enables divert bindings to be listened-to for demand.
-If a divert binding with an address matches the included addresses for the address policy, any queue bindings that match the forwarding address of the divert creates demand. The default value is <code>false</code>.</p>
-</dd>
-</dl>
+<div class="paragraph">
+<p>For further details please see the <a href="amqp-address-federation.html#address-federation">Address Federation</a> documentation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="local-and-remote-queue-federation"><a class="anchor" href="#local-and-remote-queue-federation"></a><a class="link" href="#local-and-remote-queue-federation">9.2. Local and remote queue federation</a></h3>
+<h3 id="queue-federation"><a class="anchor" href="#queue-federation"></a><a class="link" href="#queue-federation">9.2. Queue federation</a></h3>
 <div class="paragraph">
-<p>Local or Remote queue federation configures the local or remote broker to watch for demand on queues and when demand exists it will create a consumer on the matching queue on the opposing broker.
-Because the consumers are created on queues on the opposing broker, the authentication credentials supplied to the broker connection must have sufficient access to read from (local queue federation) or write to the matching queue (remote queue federation) on the opposing broker.</p>
+<p>Queue federation offers a means of load balancing message queues across multiple broker instances.
+Messages sent to a queue on <code>Broker-1</code> will be consumed and sent to the matching queue on <code>Broker-2</code> if there is no local consumer available to consume the message.</p>
 </div>
-<div class="paragraph">
-<p>An example of queue federation configuration is shown below.
-Local and remote queue policies have identical configuration parameters, only the policy element names are different.</p>
-</div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
-  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;federation&gt;</span>
-       <span class="nt">&lt;local-queue-policy</span> <span class="na">name=</span><span class="s">"example-local-queue-policy"</span><span class="nt">&gt;</span>
-         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"#"</span> <span class="na">queue-match=</span><span class="s">"remote-queue"</span> <span class="nt">/&gt;</span>
-         <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"excluded.#"</span> <span class="na">queue-match=</span><span class="s">"remote-queue-excluded"</span> <span class="nt">/&gt;</span>
-       <span class="nt">&lt;/local-queue-policy&gt;</span>
-    <span class="nt">&lt;/federation&gt;</span>
-  <span class="nt">&lt;/amqp-connection&gt;</span>
-<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+<img src="images/amqp-federation-queue-concept.png" alt="amqp federation queue concept">
 </div>
+<div class="title">Figure 3. Queue Federation</div>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">name</dt>
-<dd>
-<p>The name of the policy.
-These names should be unique within a broker connection&#8217;s federation policy elements.</p>
-</dd>
-<dt class="hdlist1">include</dt>
-<dd>
-<p>The queue-match pattern to use to match included queues.
-Multiple of these can be set.
-If none are set all queues are matched.</p>
-</dd>
-<dt class="hdlist1">exclude</dt>
-<dd>
-<p>The queue-match pattern to use to match excluded queues.
-Multiple of these can be set, or it can be omitted if no excludes are needed.</p>
-</dd>
-<dt class="hdlist1">priority-adjustment</dt>
-<dd>
-<p>When federation consumers are created this value can be used to ensure that those federation consumers have a lower priority value than other local consumers on the same queue.
-The default is <code>-1</code>.</p>
-</dd>
-<dt class="hdlist1">include-federated</dt>
-<dd>
-<p>Controls if consumers on a queue which come from federation instances should be counted when observing a queue for demand, by default this value is <code>false</code> and federation consumers are not counted.</p>
-</dd>
-</dl>
+<div class="paragraph">
+<p>For further details please see the <a href="amqp-queue-federation.html#queue-federation">Queue Federation</a> documentation.</p>
 </div>
 </div>
 </div>
@@ -1011,7 +913,8 @@ The default is <code>-1</code>.</p>
 <h2 id="bridges"><a class="anchor" href="#bridges"></a><a class="link" href="#bridges">10. Bridges</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>AMQP Bridges allows the local broker to create remote receivers for addresses or queues that have local demand and match configured policy constraints. Conversely the broker can create remote senders for addresses or queues that exist on the local broker and match configured policy constraints.</p>
+<p>AMQP Bridges allows the local broker to create remote receivers for addresses or queues that have local demand and match configured policy constraints.
+Conversely the broker can create remote senders for addresses or queues that exist on the local broker and match configured policy constraints.</p>
 </div>
 <div class="paragraph">
 <p>Add a <code>&lt;bridge&gt;</code> element within the <code>&lt;amqp-connection&gt;</code> element to configure AMQP bridge to the broker instance.
@@ -1048,7 +951,9 @@ See above sections to configure those values.</p>
 <div class="sect2">
 <h3 id="bridging-from-remote-addresses-and-queues"><a class="anchor" href="#bridging-from-remote-addresses-and-queues"></a><a class="link" href="#bridging-from-remote-addresses-and-queues">10.1. Bridging from remote addresses and queues</a></h3>
 <div class="paragraph">
-<p>Bridging from a remote address or queue involves monitoring a local address or queue for demand and reacting when demand is added or removed. When demand exists the bridge will create a receiver on the matching address or queue on the opposing AMQP peer. Because the receivers are created on addresses and queues on the opposing peer, the authentication credentials supplied to the broker connection must have sufficient access to the bridged address or queue on the remote peer in order to consume messages from them.</p>
+<p>Bridging from a remote address or queue involves monitoring a local address or queue for demand and reacting when demand is added or removed.
+When demand exists the bridge will create a receiver on the matching address or queue on the opposing AMQP peer.
+Because the receivers are created on addresses and queues on the opposing peer, the authentication credentials supplied to the broker connection must have sufficient access to the bridged address or queue on the remote peer in order to consume messages from them.</p>
 </div>
 <div class="paragraph">
 <p>An example of AMQP address and queue bridge from configurations are shown below.</p>
@@ -1077,7 +982,8 @@ See above sections to configure those values.</p>
 <dl>
 <dt class="hdlist1">name</dt>
 <dd>
-<p>The name of the policy. These names should be unique within a broker connection&#8217;s bridge policy elements.</p>
+<p>The name of the policy.
+These names should be unique within a broker connection&#8217;s bridge policy elements.</p>
 </dd>
 <dt class="hdlist1">priority</dt>
 <dd>
@@ -1085,7 +991,8 @@ See above sections to configure those values.</p>
 </dd>
 <dt class="hdlist1">priority-adjustment</dt>
 <dd>
-<p>When bridge receivers are created this value can be used to ensure that those bridge receivers have a lower priority value than other receivers on the same address or queue. The default is <code>-1</code>.</p>
+<p>When bridge receivers are created this value can be used to ensure that those bridge receivers have a lower priority value than other receivers on the same address or queue.
+The default is <code>-1</code>.</p>
 </dd>
 <dt class="hdlist1">includeDivertBindings</dt>
 <dd>
@@ -1097,19 +1004,23 @@ See above sections to configure those values.</p>
 </dd>
 <dt class="hdlist1">remoteAddress</dt>
 <dd>
-<p>An optional override of address that is set as the address in the Source configuration of the AMQP receiver that is bridging messages from the remote peer. The default action is to assign either the address or queue name depending on whether the policy is bridging an address or queue.</p>
+<p>An optional override of address that is set as the address in the Source configuration of the AMQP receiver that is bridging messages from the remote peer.
+The default action is to assign either the address or queue name depending on whether the policy is bridging an address or queue.</p>
 </dd>
 <dt class="hdlist1">remoteAddressPrefix</dt>
 <dd>
-<p>An optional address prefix that is set on the address in the Source configuration of the AMQP receiver that is bridging messages from the remote peer. The default value is <code>null</code> and no prefix is applied to the source address.</p>
+<p>An optional address prefix that is set on the address in the Source configuration of the AMQP receiver that is bridging messages from the remote peer.
+The default value is <code>null</code> and no prefix is applied to the source address.</p>
 </dd>
 <dt class="hdlist1">remoteAddressSuffix</dt>
 <dd>
-<p>An optional address suffix that is set on the address in the Source configuration of the AMQP receiver that is bridging messages from the remote peer. The default value is <code>null</code> and no suffix is applied to the source address.</p>
+<p>An optional address suffix that is set on the address in the Source configuration of the AMQP receiver that is bridging messages from the remote peer.
+The default value is <code>null</code> and no suffix is applied to the source address.</p>
 </dd>
 <dt class="hdlist1">remoteTerminusCapabilities</dt>
 <dd>
-<p>Optional set of remote source capabilities that are set on the receiver when bridging an address or queue from the remote peer. The capabilities are configured as a comma delimited list whose default value is <code>null</code>.</p>
+<p>Optional set of remote source capabilities that are set on the receiver when bridging an address or queue from the remote peer.
+The capabilities are configured as a comma delimited list whose default value is <code>null</code>.</p>
 </dd>
 </dl>
 </div>
@@ -1120,11 +1031,14 @@ See above sections to configure those values.</p>
 <dl>
 <dt class="hdlist1">enable-divert-bindings</dt>
 <dd>
-<p>Instructs the receive from address policy to look at diverts that matching address would forward to and check for demand on those diverts when processing demand on the matched address. By default this option is <code>false</code> and diverts are not checked.</p>
+<p>Instructs the receive from address policy to look at diverts that matching address would forward to and check for demand on those diverts when processing demand on the matched address.
+By default this option is <code>false</code> and diverts are not checked.</p>
 </dd>
 <dt class="hdlist1">use-durable-subscriptions</dt>
 <dd>
-<p>Instructs the receive from address policy that it should use an JMS over AMQP mapped durable subscription to create the remote receiver which is meant to result in a durable address subscription being created for receivers on addresses that have local demand. By adding a durable subscription the remote will accumulate messages when the broker connection if down and will recover stored messages if the remote server is shutdown and restarted. By default this option is set to <code>false</code> to avoid unwanted accumulation of remote messages and if enabled intervention may be needed from remote management to remove old subscriptions or clear space as needed.</p>
+<p>Instructs the receive from address policy that it should use an JMS over AMQP mapped durable subscription to create the remote receiver which is meant to result in a durable address subscription being created for receivers on addresses that have local demand.
+By adding a durable subscription the remote will accumulate messages when the broker connection if down and will recover stored messages if the remote server is shutdown and restarted.
+By default this option is set to <code>false</code> to avoid unwanted accumulation of remote messages and if enabled intervention may be needed from remote management to remove old subscriptions or clear space as needed.</p>
 </dd>
 </dl>
 </div>
@@ -1135,11 +1049,13 @@ See above sections to configure those values.</p>
 <dl>
 <dt class="hdlist1">include</dt>
 <dd>
-<p>The address-match or queue-match pattern to use to match included addresses and queues. Multiple of these can be set but if none is set then no matches would be made.</p>
+<p>The address-match or queue-match pattern to use to match included addresses and queues.
+Multiple of these can be set but if none is set then no matches would be made.</p>
 </dd>
 <dt class="hdlist1">exclude</dt>
 <dd>
-<p>The address-match or queue-match pattern to use to match excluded addresses and queues. Multiple of these can be set, or it can be omitted if no excludes are needed.</p>
+<p>The address-match or queue-match pattern to use to match excluded addresses and queues.
+Multiple of these can be set, or it can be omitted if no excludes are needed.</p>
 </dd>
 </dl>
 </div>
@@ -1147,7 +1063,9 @@ See above sections to configure those values.</p>
 <div class="sect2">
 <h3 id="bridging-to-remote-addresses-and-queues"><a class="anchor" href="#bridging-to-remote-addresses-and-queues"></a><a class="link" href="#bridging-to-remote-addresses-and-queues">10.2. Bridging to remote addresses and queues</a></h3>
 <div class="paragraph">
-<p>Bridging to a remote address or queue involves monitoring for the existence of a local address or queue amd reacting when one is added or removed. When the target address or queue exists the bridge will create a sender on the matching address or queue on the opposing AMQP peer. Because the senders are created on addresses and queues on the opposing peer, the authentication credentials supplied to the broker connection must have sufficient access to the bridged address or queue on the remote peer in order to produce messages to them.</p>
+<p>Bridging to a remote address or queue involves monitoring for the existence of a local address or queue amd reacting when one is added or removed.
+When the target address or queue exists the bridge will create a sender on the matching address or queue on the opposing AMQP peer.
+Because the senders are created on addresses and queues on the opposing peer, the authentication credentials supplied to the broker connection must have sufficient access to the bridged address or queue on the remote peer in order to produce messages to them.</p>
 </div>
 <div class="paragraph">
 <p>An example of AMQP address and queue bridge to configurations are shown below.</p>
@@ -1176,7 +1094,8 @@ See above sections to configure those values.</p>
 <dl>
 <dt class="hdlist1">name</dt>
 <dd>
-<p>The name of the policy. These names should be unique within a broker connection&#8217;s bridge policy elements.</p>
+<p>The name of the policy.
+These names should be unique within a broker connection&#8217;s bridge policy elements.</p>
 </dd>
 <dt class="hdlist1">priority</dt>
 <dd>
@@ -1184,7 +1103,8 @@ See above sections to configure those values.</p>
 </dd>
 <dt class="hdlist1">priority-adjustment</dt>
 <dd>
-<p>When bridge senders are created this value can be used to ensure that those bridge senders have a lower priority value than other senders on the same address or queue. The default is <code>-1</code>.</p>
+<p>When bridge senders are created this value can be used to ensure that those bridge senders have a lower priority value than other senders on the same address or queue.
+The default is <code>-1</code>.</p>
 </dd>
 <dt class="hdlist1">filter</dt>
 <dd>
@@ -1192,19 +1112,23 @@ See above sections to configure those values.</p>
 </dd>
 <dt class="hdlist1">remoteAddress</dt>
 <dd>
-<p>An optional override of address that is set as the address in the Target configuration of the AMQP sender that is bridging messages to the remote peer. The default action is to assign either the address or queue name depending on whether the policy is bridging an address or queue.</p>
+<p>An optional override of address that is set as the address in the Target configuration of the AMQP sender that is bridging messages to the remote peer.
+The default action is to assign either the address or queue name depending on whether the policy is bridging an address or queue.</p>
 </dd>
 <dt class="hdlist1">remoteAddressPrefix</dt>
 <dd>
-<p>An optional address prefix that is set on the address in the Target configuration of the AMQP sender that is bridging messages to the remote peer. The default value is <code>null</code> and no prefix is applied to the target address.</p>
+<p>An optional address prefix that is set on the address in the Target configuration of the AMQP sender that is bridging messages to the remote peer.
+The default value is <code>null</code> and no prefix is applied to the target address.</p>
 </dd>
 <dt class="hdlist1">remoteAddressSuffix</dt>
 <dd>
-<p>An optional address suffix that is set on the address in the Target configuration of the AMQP sender that is bridging messages to the remote peer. The default value is <code>null</code> and no suffix is applied to the target address.</p>
+<p>An optional address suffix that is set on the address in the Target configuration of the AMQP sender that is bridging messages to the remote peer.
+The default value is <code>null</code> and no suffix is applied to the target address.</p>
 </dd>
 <dt class="hdlist1">remoteTerminusCapabilities</dt>
 <dd>
-<p>Optional set of remote target capabilities that are set on the sender when bridging an address or queue to the remote peer. The capabilities are configured as a comma delimited list whose default value is <code>null</code>.</p>
+<p>Optional set of remote target capabilities that are set on the sender when bridging an address or queue to the remote peer.
+The capabilities are configured as a comma delimited list whose default value is <code>null</code>.</p>
 </dd>
 </dl>
 </div>
@@ -1215,7 +1139,8 @@ See above sections to configure those values.</p>
 <dl>
 <dt class="hdlist1">use-durable-subscriptions</dt>
 <dd>
-<p>Instructs the send to address policy that bindings created on local addresses that match the configured policy includes should create a durable address binding which will be reloaded on server restart and will store messages that were sent to the address while the broker connection is down. The option is <code>false</code> by default and a volatile binding is created on the local address that is deleted whenever the broker connection is down so that messages are not retained.</p>
+<p>Instructs the send to address policy that bindings created on local addresses that match the configured policy includes should create a durable address binding which will be reloaded on server restart and will store messages that were sent to the address while the broker connection is down.
+The option is <code>false</code> by default and a volatile binding is created on the local address that is deleted whenever the broker connection is down so that messages are not retained.</p>
 </dd>
 </dl>
 </div>
@@ -1226,11 +1151,13 @@ See above sections to configure those values.</p>
 <dl>
 <dt class="hdlist1">include</dt>
 <dd>
-<p>The address-match or queue-match pattern to use to match included addresses and queues. Multiple of these can be set but if none is set then no matches would be made.</p>
+<p>The address-match or queue-match pattern to use to match included addresses and queues.
+Multiple of these can be set but if none is set then no matches would be made.</p>
 </dd>
 <dt class="hdlist1">exclude</dt>
 <dd>
-<p>The address-match or queue-match pattern to use to match excluded addresses and queues. Multiple of these can be set, or it can be omitted if no excludes are needed.</p>
+<p>The address-match or queue-match pattern to use to match excluded addresses and queues.
+Multiple of these can be set, or it can be omitted if no excludes are needed.</p>
 </dd>
 </dl>
 </div>

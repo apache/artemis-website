@@ -34,11 +34,11 @@
 <div id="header">
 <h1>Intercepting Operations</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#implementing-the-interceptors">1. Implementing The Interceptors</a></li>
 <li><a href="#configuring-the-interceptors">2. Configuring The Interceptors</a></li>
-<li><a href="#interceptors-on-the-client-side">3. Interceptors on the Client Side</a></li>
+<li><a href="#interceptors-on-the-core-client">3. Interceptors on the Core Client</a></li>
 <li><a href="#examples">4. Examples</a></li>
 </ul>
 </div>
@@ -47,7 +47,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis supports <em>interceptors</em> to intercept packets entering and exiting the server.
+<p>The broker supports <em>interceptors</em> to intercept packets entering and exiting the server.
 Incoming and outgoing interceptors are be called for any packet entering or exiting the server respectively.
 This allows custom code to be executed, e.g. for auditing packets, filtering or other reasons.
 Interceptors can change the packets they intercept.
@@ -137,15 +137,15 @@ This makes interceptors powerful, but also potentially dangerous.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="interceptors-on-the-client-side"><a class="anchor" href="#interceptors-on-the-client-side"></a><a class="link" href="#interceptors-on-the-client-side">3. Interceptors on the Client Side</a></h2>
+<h2 id="interceptors-on-the-core-client"><a class="anchor" href="#interceptors-on-the-core-client"></a><a class="link" href="#interceptors-on-the-core-client">3. Interceptors on the Core Client</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The interceptors can also be run on the Apache ActiveMQ Artemis client side to intercept packets either sent by the client to the server or by the server to the client.
+<p>The interceptors can also be run on the Core client to intercept packets either sent by the client to the server or by the server to the client.
 This is done by adding the interceptor to the <code>ServerLocator</code> with the <code>addIncomingInterceptor(Interceptor)</code> or <code>addOutgoingInterceptor(Interceptor)</code> methods.</p>
 </div>
 <div class="paragraph">
-<p>As noted above, if an interceptor returns <code>false</code> then the sending of the packet is aborted which means that no other interceptors are be called and the packet is not be processed further by the client.
-Typically this process happens transparently to the client (i.e. it has no idea if a packet was aborted or not).
+<p>As noted above, if an interceptor returns <code>false</code> then the sending of the packet is aborted which means that no other interceptors are called and the packet is not processed further by the client.
+Typically, this process happens transparently to the client (i.e. it has no idea if a packet was aborted or not).
 However, in the case of an outgoing packet that is sent in a <code>blocking</code> fashion a <code>ActiveMQException</code> will be thrown to the caller.
 The exception is thrown because blocking sends provide reliability and it is considered an error for them not to succeed.
 <code>Blocking</code> sends occurs when, for example, an application invokes <code>setBlockOnNonDurableSend(true)</code> or <code>setBlockOnDurableSend(true)</code> on its <code>ServerLocator</code> or if an application is using a JMS connection factory retrieved from JNDI that has either <code>block-on-durable-send</code> or <code>block-on-non-durable-send</code> set to <code>true</code>.

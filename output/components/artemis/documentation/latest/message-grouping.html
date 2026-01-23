@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Message Grouping</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#using-core-api">1. Using Core API</a></li>
 <li><a href="#using-jms">2. Using JMS</a></li>
@@ -67,12 +67,12 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Messages in a message group share the same group id, i.e. they have same group identifier property (<code>JMSXGroupID</code> for JMS, <code>_AMQ_GROUP_ID</code> for Apache ActiveMQ Artemis Core API).</p>
+<p>Messages in a message group share the same group id, i.e. they have same group identifier property (<code>JMSXGroupID</code> for JMS, <code>_AMQ_GROUP_ID</code> for the Core API).</p>
 </li>
 <li>
 <p>Messages in a message group are always consumed by the same consumer, even if there are many consumers on a queue.
 They pin all messages with the same group id to the same consumer.
-If that consumer closes another consumer is chosen and will receive all messages with the same group id.</p>
+If that consumer closes, another consumer is chosen and will receive all messages with the same group id.</p>
 </li>
 </ul>
 </div>
@@ -187,7 +187,7 @@ However, if you really do want to close a group you can add a negative sequence 
 <h2 id="notifying-consumer-of-group-ownership-change"><a class="anchor" href="#notifying-consumer-of-group-ownership-change"></a><a class="link" href="#notifying-consumer-of-group-ownership-change">4. Notifying Consumer of Group Ownership change</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>ActiveMQ supports putting a boolean header on the first message sent to a consumer for a particular message group.</p>
+<p>Artemis supports putting a boolean header on the first message sent to a consumer for a particular message group.</p>
 </div>
 <div class="paragraph">
 <p>To enable this you must set a header key that the broker will use to set the flag.</p>
@@ -331,7 +331,7 @@ This can be useful on a multicast address,  where many queues exist but one queu
 </div>
 </div>
 <div class="paragraph">
-<p>Specified on creating a Queue by using the CORE api specifying the parameter  <code>group-buckets</code> to <code>20</code>.</p>
+<p>Specified on creating a Queue by using the Core API specifying the parameter  <code>group-buckets</code> to <code>20</code>.</p>
 </div>
 <div class="paragraph">
 <p>Or on auto-create when using the JMS Client by using address parameters when  creating the destination used by the consumer.</p>
@@ -489,7 +489,7 @@ This is because this will determine how often the last-time-use value should be 
 <div class="sect2">
 <h3 id="clustered-grouping-example"><a class="anchor" href="#clustered-grouping-example"></a><a class="link" href="#clustered-grouping-example">8.3. Clustered Grouping Example</a></h3>
 <div class="paragraph">
-<p>See the <a href="examples.html#clustered-grouping">Clustered Grouping Example</a> which shows how to configure message groups with a ActiveMQ Artemis Cluster.</p>
+<p>See the <a href="examples.html#clustered-grouping">Clustered Grouping Example</a> which shows how to configure message groups with a cluster.</p>
 </div>
 </div>
 </div>

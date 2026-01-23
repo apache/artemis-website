@@ -33,7 +33,7 @@
 <div id="header">
 <h1>Libaio Native Libraries</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#runtime-dependencies">1. Runtime dependencies</a></li>
 <li><a href="#compiling-the-native-libraries">2. Compiling the native libraries</a></li>
@@ -46,7 +46,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis distributes a native library, used as a bridge for its fast journal, between Apache ActiveMQ Artemis and Linux libaio.</p>
+<p>Apache Artemis distributes a native library, used to integrate with Linux libaio.</p>
 </div>
 <div class="paragraph">
 <p><code>libaio</code> is a library, developed as part of the Linux kernel project.
@@ -54,10 +54,10 @@ With <code>libaio</code> we submit writes to the operating system where they are
 Some time later the OS will call our code back when they have been processed.</p>
 </div>
 <div class="paragraph">
-<p>We use this in our high performance journal if configured to do so, please see <a href="persistence.html#persistence">Persistence</a>.</p>
+<p>We use this in our high-performance journal if configured to do so, please see <a href="persistence.html#persistence">Persistence</a>.</p>
 </div>
 <div class="paragraph">
-<p>These are the native libraries distributed by Apache ActiveMQ Artemis:</p>
+<p>These are the native libraries we distribute:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -71,7 +71,7 @@ While it&#8217;s not available on the distribution any longer it should still be
 </ul>
 </div>
 <div class="paragraph">
-<p>When using libaio, Apache ActiveMQ Artemis will always try loading these files as long as they are on the <a href="using-server.html#library-path">library path</a></p>
+<p>When using libaio, the broker will always load these files at startup as long as they are on the <a href="using-server.html#library-path">library path</a>.</p>
 </div>
 </div>
 </div>
@@ -79,7 +79,7 @@ While it&#8217;s not available on the distribution any longer it should still be
 <h2 id="runtime-dependencies"><a class="anchor" href="#runtime-dependencies"></a><a class="link" href="#runtime-dependencies">1. Runtime dependencies</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you just want to use the provided native binaries you need to install the required libaio dependency.
+<p>If you just want to use the provided native binaries, you need to install the required libaio dependency.
 You can install libaio using the following steps either as the root user or using <code>sudo</code>:</p>
 </div>
 <div class="ulist">
@@ -133,7 +133,7 @@ You can install libaio using the following steps either as the root user or usin
 </tbody>
 </table>
 <div class="paragraph">
-<p>Since the package name in later versions of Ubuntu and Debian is different you&#8217;ll also need to create a symlink on these versions so that the ActiveMQ Artemis Native library can find the shared library at the expected location, e.g.:</p>
+<p>Since the package name in later versions of Ubuntu and Debian is different, you&#8217;ll also need to create a symlink on these versions so that the libaio shared library can be found at the expected location, e.g.:</p>
 </div>
 <div class="listingblock">
 <div class="content">

@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Paging</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#page-files">1. Page Files</a>
 <ul class="sectlevel2">
@@ -47,22 +47,26 @@
 <li><a href="#max-size-bytes-and-max-size-messages-simultaneous-usage">2.2. max-size-bytes and max-size-messages simultaneous usage</a></li>
 </ul>
 </li>
-<li><a href="#global-max-size">3. Global Max Size</a></li>
-<li><a href="#global-max-messages">4. Global Max Messages</a></li>
-<li><a href="#dropping-messages">5. Dropping messages</a></li>
-<li><a href="#dropping-messages-and-throwing-an-exception-to-producers">6. Dropping messages and throwing an exception to producers</a></li>
-<li><a href="#blocking-producers">7. Blocking producers</a></li>
-<li><a href="#caution-with-addresses-with-multiple-multicast-queues">8. Caution with Addresses with Multiple Multicast Queues</a></li>
-<li><a href="#monitoring-disk">9. Monitoring Disk</a>
+<li><a href="#global-settings">3. Global Settings</a>
 <ul class="sectlevel2">
-<li><a href="#max-disk-usage">9.1. Max Disk Usage</a></li>
-<li><a href="#minimum-disk-free">9.2. Minimum Disk Free</a></li>
+<li><a href="#global-max-size">3.1. Global Max Size</a></li>
+<li><a href="#global-max-messages">3.2. Global Max Messages</a></li>
 </ul>
 </li>
-<li><a href="#page-sync-timeout">10. Page Sync Timeout</a></li>
-<li><a href="#memory-usage-from-paged-messages">11. Memory usage from Paged Messages.</a></li>
-<li><a href="#page-limits-and-page-full-policy">12. Page Limits and Page Full Policy</a></li>
-<li><a href="#example">13. Example</a></li>
+<li><a href="#dropping-messages">4. Dropping messages</a></li>
+<li><a href="#dropping-messages-and-throwing-an-exception-to-producers">5. Dropping messages and throwing an exception to producers</a></li>
+<li><a href="#blocking-producers">6. Blocking producers</a></li>
+<li><a href="#caution-with-addresses-with-multiple-multicast-queues">7. Caution with Addresses with Multiple Multicast Queues</a></li>
+<li><a href="#monitoring-disk">8. Monitoring Disk</a>
+<ul class="sectlevel2">
+<li><a href="#max-disk-usage">8.1. Max Disk Usage</a></li>
+<li><a href="#minimum-disk-free">8.2. Minimum Disk Free</a></li>
+</ul>
+</li>
+<li><a href="#page-sync-timeout">9. Page Sync Timeout</a></li>
+<li><a href="#memory-usage-from-paged-messages">10. Memory usage from Paged Messages.</a></li>
+<li><a href="#page-limits-and-page-full-policy">11. Page Limits and Page Full Policy</a></li>
+<li><a href="#example">12. Example</a></li>
 </ul>
 </div>
 </div>
@@ -70,16 +74,16 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis transparently supports huge queues containing millions of messages while the server is running with limited memory.</p>
+<p>The broker transparently supports huge queues containing millions of messages with limited memory.</p>
 </div>
 <div class="paragraph">
-<p>In such a situation it&#8217;s not possible to store all of the queues in memory at any one time, so Apache ActiveMQ Artemis transparently <em>pages</em> messages into and out of memory as they are needed, thus allowing massive queues with a low memory footprint.</p>
+<p>In such a situation it&#8217;s not possible to store all of the queues in memory at any one time, so the broker transparently <em>pages</em> messages into and out of memory as they are needed, thus allowing massive queues with a low memory footprint.</p>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis will start paging messages to disk, when the size of all messages in memory for an address exceeds a configured maximum size.</p>
+<p>The broker will start paging messages to disk when the size of all messages in memory for an address exceeds a configured maximum size.</p>
 </div>
 <div class="paragraph">
-<p>The default configuration from Artemis has destinations with paging.</p>
+<p>The default configuration uses paging.</p>
 </div>
 </div>
 </div>
@@ -127,7 +131,7 @@ The system will navigate the files as needed, and it will remove the page file a
 <ul>
 <li>
 <p><code>paging-directory</code> Where page files are stored.
-Apache ActiveMQ Artemis will create one folder for each address being paged under this configured location.
+The broker will create one folder for each address being paged under this configured location.
 Default is <code>data/paging</code>.</p>
 </li>
 </ul>
@@ -306,33 +310,42 @@ However this would keep the broker unprotected from consumers allocating huge tr
 </div>
 </div>
 <div class="sect1">
-<h2 id="global-max-size"><a class="anchor" href="#global-max-size"></a><a class="link" href="#global-max-size">3. Global Max Size</a></h2>
+<h2 id="global-settings"><a class="anchor" href="#global-settings"></a><a class="link" href="#global-settings">3. Global Settings</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Beyond the <code>max-size-bytes</code> on the address you can also set the global-max-size on the main configuration.
-If you set <code>max-size-bytes</code> = <code>-1</code> on paging the <code>global-max-size</code> can still be used.</p>
+<p>Aside from <code>max-size-bytes</code> and <code>max-messages</code>, which operate on a per-address basis, there are also <em>global</em> settings which apply to all addresses.</p>
+</div>
+<div class="paragraph">
+<p>When the total accumulated size or number of messages sent to a the broker exceeds the global limit then the <code>address-full-policy</code> for the corresponding address will be enforced.</p>
+</div>
+<div class="paragraph">
+<p>If both <code>max-size-bytes</code> and <code>max-messages</code> are set to <code>-1</code> on a particular address the global setting will still be enforced.</p>
+</div>
+<div class="sect2">
+<h3 id="global-max-size"><a class="anchor" href="#global-max-size"></a><a class="link" href="#global-max-size">3.1. Global Max Size</a></h3>
+<div class="paragraph">
+<p>The <code>global-max-size</code> is the total number of bytes that can be sent to all the addresses on the broker.
+It is calculated as a percentage of the max memory available to the Java Virtual Machine (i.e. the value of <code>-Xmx</code>), unless specified explicitly in <code>broker.xml</code>.
+By default, 50% of the max memory is used.
+However, this percentage can be changed using <code>global-max-size-percent-of-jvm-max-memory</code> in <code>broker.xml</code>.</p>
+</div>
+<div class="paragraph">
+<p>Use <code>-1</code> to disable this functionality.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="global-max-messages"><a class="anchor" href="#global-max-messages"></a><a class="link" href="#global-max-messages">3.2. Global Max Messages</a></h3>
+<div class="paragraph">
+<p>The <code>global-max-messages</code> is the total number of messages that can be sent to all the addresses on the broker.</p>
+</div>
+<div class="paragraph">
+<p>By default <code>global-max-messages</code> is <code>-1</code> (i.e. disabled).</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="global-max-messages"><a class="anchor" href="#global-max-messages"></a><a class="link" href="#global-max-messages">4. Global Max Messages</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You can also specify <code>global-max-messages</code> on the main configuration, specifying how many messages the system would accept before entering into the configured full policy mode configured.</p>
-</div>
-<div class="paragraph">
-<p>When you have more messages than what is configured <code>global-max-size</code> any new produced message will make that destination to go through its paging policy.</p>
-</div>
-<div class="paragraph">
-<p><code>global-max-size</code> is calculated as a percentage of the max memory available to the Java Virtual Machine, unless specified in the broker.xml configuration directly. The percentage value used is configurable using the option <code>global-max-size-percent-of-jvm-max-memory</code> in the XML configuration and if not specified the default value of <code>global-max-size-percent-of-jvm-max-memory</code> is 50% or half the max available memory.</p>
-</div>
-<div class="paragraph">
-<p>By default <code>global-max-messages</code> = <code>-1</code> meaning it&#8217;s disabled.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="dropping-messages"><a class="anchor" href="#dropping-messages"></a><a class="link" href="#dropping-messages">5. Dropping messages</a></h2>
+<h2 id="dropping-messages"><a class="anchor" href="#dropping-messages"></a><a class="link" href="#dropping-messages">4. Dropping messages</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Instead of paging messages when the max size is reached, an address can also be configured to just drop messages when the address is full.</p>
@@ -343,7 +356,7 @@ If you set <code>max-size-bytes</code> = <code>-1</code> on paging the <code>glo
 </div>
 </div>
 <div class="sect1">
-<h2 id="dropping-messages-and-throwing-an-exception-to-producers"><a class="anchor" href="#dropping-messages-and-throwing-an-exception-to-producers"></a><a class="link" href="#dropping-messages-and-throwing-an-exception-to-producers">6. Dropping messages and throwing an exception to producers</a></h2>
+<h2 id="dropping-messages-and-throwing-an-exception-to-producers"><a class="anchor" href="#dropping-messages-and-throwing-an-exception-to-producers"></a><a class="link" href="#dropping-messages-and-throwing-an-exception-to-producers">5. Dropping messages and throwing an exception to producers</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Instead of paging messages when the max size is reached, an address can also be configured to drop messages and also throw an exception on the client-side when the address is full.</p>
@@ -354,7 +367,7 @@ If you set <code>max-size-bytes</code> = <code>-1</code> on paging the <code>glo
 </div>
 </div>
 <div class="sect1">
-<h2 id="blocking-producers"><a class="anchor" href="#blocking-producers"></a><a class="link" href="#blocking-producers">7. Blocking producers</a></h2>
+<h2 id="blocking-producers"><a class="anchor" href="#blocking-producers"></a><a class="link" href="#blocking-producers">6. Blocking producers</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Instead of paging messages when the max size is reached, an address can also be configured to block producers from sending further messages when the address is full, thus preventing the memory being exhausted on the server.</p>
@@ -371,7 +384,7 @@ If you set <code>max-size-bytes</code> = <code>-1</code> on paging the <code>glo
 </div>
 </div>
 <div class="sect1">
-<h2 id="caution-with-addresses-with-multiple-multicast-queues"><a class="anchor" href="#caution-with-addresses-with-multiple-multicast-queues"></a><a class="link" href="#caution-with-addresses-with-multiple-multicast-queues">8. Caution with Addresses with Multiple Multicast Queues</a></h2>
+<h2 id="caution-with-addresses-with-multiple-multicast-queues"><a class="anchor" href="#caution-with-addresses-with-multiple-multicast-queues"></a><a class="link" href="#caution-with-addresses-with-multiple-multicast-queues">7. Caution with Addresses with Multiple Multicast Queues</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When a message is routed to an address that has multiple multicast queues bound to it, e.g. a JMS subscription in a Topic, there is only 1 copy of the message in memory.
@@ -407,12 +420,17 @@ This may cause performance issues if this is an undesirable state.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="monitoring-disk"><a class="anchor" href="#monitoring-disk"></a><a class="link" href="#monitoring-disk">9. Monitoring Disk</a></h2>
+<h2 id="monitoring-disk"><a class="anchor" href="#monitoring-disk"></a><a class="link" href="#monitoring-disk">8. Monitoring Disk</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The broker can be configured to perform scans on the disk to determine if disk is beyond a configured limit.
-Since the disk is a critical piece of infrastructure for data integrity the broker will automatically shut itself down if it runs out of disk space.
-Configuring a limit allows the broker to enforce flow control on clients sending messages to the broker so that the disk never fills up completely.</p>
+<p>The broker can be configured to perform scans on the disk to determine if it is beyond a configured limit.
+Since the disk is a critical piece of infrastructure for data integrity the broker will automatically shut itself down if it runs out of disk space.</p>
+</div>
+<div class="paragraph">
+<p>Configuring a limit allows the broker to enforce flow control on clients sending messages to the broker so that the disk never fills up.
+The <code>disk-full-policy</code> controls what the broker will do when the configured limit is exceeded.
+Similar to <code>address-full-policy</code>, valid values are <code>DROP</code>, <code>FAIL</code>, and <code>BLOCK</code>.
+The default is <code>BLOCK</code>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -427,7 +445,7 @@ If the protocol used to send the messages doesn&#8217;t support flow control (e.
 </table>
 </div>
 <div class="sect2">
-<h3 id="max-disk-usage"><a class="anchor" href="#max-disk-usage"></a><a class="link" href="#max-disk-usage">9.1. Max Disk Usage</a></h3>
+<h3 id="max-disk-usage"><a class="anchor" href="#max-disk-usage"></a><a class="link" href="#max-disk-usage">8.1. Max Disk Usage</a></h3>
 <div class="paragraph">
 <p>A limit on the <em>maximum</em> disk space used can be configured through <code>max-disk-usage</code>
 This is the <strong>percentage</strong> of disk used.
@@ -435,7 +453,7 @@ For example, if the disk&#8217;s capacity was 500GiB and <code>max-disk-usage</c
 </div>
 </div>
 <div class="sect2">
-<h3 id="minimum-disk-free"><a class="anchor" href="#minimum-disk-free"></a><a class="link" href="#minimum-disk-free">9.2. Minimum Disk Free</a></h3>
+<h3 id="minimum-disk-free"><a class="anchor" href="#minimum-disk-free"></a><a class="link" href="#minimum-disk-free">8.2. Minimum Disk Free</a></h3>
 <div class="paragraph">
 <p>A limit on the <em>minimum</em> disk space free can be configured through <code>min-disk-free</code>
 This is specific amount and not a percentage like with <code>max-disk-usage</code>.
@@ -457,7 +475,7 @@ If <em>both</em> <code>max-disk-usage</code> and <code>min-disk-free</code> are 
 </div>
 </div>
 <div class="sect1">
-<h2 id="page-sync-timeout"><a class="anchor" href="#page-sync-timeout"></a><a class="link" href="#page-sync-timeout">10. Page Sync Timeout</a></h2>
+<h2 id="page-sync-timeout"><a class="anchor" href="#page-sync-timeout"></a><a class="link" href="#page-sync-timeout">9. Page Sync Timeout</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The pages are synced periodically and the sync period is configured through <code>page-sync-timeout</code> in nanoseconds.
@@ -467,7 +485,7 @@ When using ASYNCIO, the default should be <code>3333333</code>.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="memory-usage-from-paged-messages"><a class="anchor" href="#memory-usage-from-paged-messages"></a><a class="link" href="#memory-usage-from-paged-messages">11. Memory usage from Paged Messages.</a></h2>
+<h2 id="memory-usage-from-paged-messages"><a class="anchor" href="#memory-usage-from-paged-messages"></a><a class="link" href="#memory-usage-from-paged-messages">10. Memory usage from Paged Messages.</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The system should keep at least one paged file in memory caching ahead reading messages.
@@ -477,7 +495,7 @@ So, if your system has too many queues it is recommended to minimize the page-si
 </div>
 </div>
 <div class="sect1">
-<h2 id="page-limits-and-page-full-policy"><a class="anchor" href="#page-limits-and-page-full-policy"></a><a class="link" href="#page-limits-and-page-full-policy">12. Page Limits and Page Full Policy</a></h2>
+<h2 id="page-limits-and-page-full-policy"><a class="anchor" href="#page-limits-and-page-full-policy"></a><a class="link" href="#page-limits-and-page-full-policy">11. Page Limits and Page Full Policy</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Since version <code>2.28.0</code> is possible to configure limits on how much data is paged.
@@ -506,10 +524,10 @@ If the limit determined from <code>page-limit-bytes</code>, once converted to a 
 </div>
 </div>
 <div class="sect1">
-<h2 id="example"><a class="anchor" href="#example"></a><a class="link" href="#example">13. Example</a></h2>
+<h2 id="example"><a class="anchor" href="#example"></a><a class="link" href="#example">12. Example</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>See the <a href="examples.html#paging">Paging Example</a> which shows how to use paging with  Apache ActiveMQ Artemis.</p>
+<p>See the <a href="examples.html#paging">Paging Example</a> which shows how to use paging.</p>
 </div>
 </div>
 </div>

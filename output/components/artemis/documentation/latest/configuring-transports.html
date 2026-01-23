@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Configuring the Transport</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.44.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#acceptors">1. Acceptors</a></li>
 <li><a href="#connectors">2. Connectors</a></li>
@@ -56,7 +56,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we&#8217;ll describe the concepts required for understanding Apache ActiveMQ Artemis transports and where and how they&#8217;re configured.</p>
+<p>In this chapter we&#8217;ll describe the concepts required for understanding transports and where and how they&#8217;re configured.</p>
 </div>
 </div>
 </div>
@@ -64,8 +64,8 @@
 <h2 id="acceptors"><a class="anchor" href="#acceptors"></a><a class="link" href="#acceptors">1. Acceptors</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>One of the most important concepts in Apache ActiveMQ Artemis transports is the <em>acceptor</em>.
-Let&#8217;s dive straight in and take a look at an acceptor defined in xml in the configuration file <code>broker.xml</code>.</p>
+<p>One of the most important concepts in transports is the <em>acceptor</em>.
+Let&#8217;s dive straight in and take a look at an acceptor defined in <code>broker.xml</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -78,7 +78,7 @@ There can be one or more acceptors defined in the <code>acceptors</code> element
 There&#8217;s no upper limit to the number of acceptors per server.</p>
 </div>
 <div class="paragraph">
-<p>Each acceptor defines a way in which connections can be made to the Apache ActiveMQ Artemis server.</p>
+<p>Each acceptor defines a way in which connections can be made to the broker.</p>
 </div>
 <div class="paragraph">
 <p>In the above example we&#8217;re defining an acceptor that uses <a href="https://netty.io/">Netty</a> to listen for connections at port <code>61617</code>.</p>
@@ -176,7 +176,7 @@ Although in this case there&#8217;s no need to define such a connector in the se
 <h2 id="configuring-the-netty-transport"><a class="anchor" href="#configuring-the-netty-transport"></a><a class="link" href="#configuring-the-netty-transport">4. Configuring the Netty transport</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Out of the box, Apache ActiveMQ Artemis currently uses <a href="https://netty.io/">Netty</a>, a high performance low level network library.</p>
+<p>Out of the box, the broker currently uses <a href="https://netty.io/">Netty</a>, a high performance low level network library.</p>
 </div>
 <div class="paragraph">
 <p>Our Netty transport can be configured in several different ways;
@@ -188,9 +188,10 @@ to use straightforward TCP sockets, SSL, or to tunnel over HTTP or HTTPS..</p>
 <div class="sect2">
 <h3 id="single-port-support"><a class="anchor" href="#single-port-support"></a><a class="link" href="#single-port-support">4.1. Single Port Support</a></h3>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis supports using a single port for all protocols, Apache ActiveMQ Artemis will automatically detect which protocol is being used CORE, AMQP, STOMP, MQTT or OPENWIRE and use the appropriate Apache ActiveMQ Artemis handler.
-It will also detect whether protocols such as HTTP or Web Sockets are being used and also use the appropriate decoders.
-Web Sockets are supported for AMQP, STOMP, and MQTT.</p>
+<p>The broker supports using a single port for all protocols.
+It will automatically detect which protocol is being used (i.e. Core, AMQP, STOMP, MQTT, or OpenWire) and use the appropriate handler.
+It will also detect whether protocols such as HTTP or WebSockets are being used and also use the appropriate decoders.
+WebSockets are supported for AMQP, STOMP, and MQTT.</p>
 </div>
 <div class="paragraph">
 <p>It is possible to limit which protocols are supported by using the <code>protocols</code> parameter on the Acceptor like so:</p>
@@ -225,7 +226,7 @@ The following parameters can be used to configure Netty for simple TCP:</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The <code>host</code> and <code>port</code> parameters are only used in the core API, in XML configuration these are set in the URI host and port.</p>
+<p>The <code>host</code> and <code>port</code> parameters are only used in the Core API, in XML configuration these are set in the URI host and port.</p>
 </div>
 </td>
 </tr>
@@ -306,13 +307,13 @@ The default value for this property is <code>32768</code> bytes (32KiB).</p>
 </dd>
 <dt class="hdlist1">writeBufferHighWaterMark</dt>
 <dd>
-<p>This parameter determines the high water mark of the Netty write buffer.
+<p>This parameter determines the high watermark of the Netty write buffer.
 If the number of bytes queued in the write buffer exceeds this value, Netty&#8217;s channel will start to be not writable.
 The default value for this property is <code>131072</code> bytes (128KiB).</p>
 </dd>
 <dt class="hdlist1">batchDelay</dt>
 <dd>
-<p>Before writing packets to the transport, Apache ActiveMQ Artemis can be configured to batch up writes for a maximum of <code>batchDelay</code> milliseconds.
+<p>Before writing packets to the transport, writes can be batched up for a maximum of <code>batchDelay</code> milliseconds.
 This can increase overall throughput for very small messages.
 It does so at the expense of an increase in average latency for message transfer.
 The default value for this property is <code>0</code> ms.</p>
@@ -321,7 +322,7 @@ The default value for this property is <code>0</code> ms.</p>
 <dd>
 <p>When a message arrives on the server and is delivered to waiting consumers, by default, the delivery is done on the same thread as that on which the message arrived.
 This gives good latency in environments with relatively small messages and a small number of consumers, but at the cost of overall throughput and scalability - especially on multi-core machines.
-If you want the lowest latency and a possible reduction in throughput then you can use the default value for <code>directDeliver</code> (i.e. <code>true</code>).
+If you want the lowest latency and a possible reduction in throughput, then you can use the default value for <code>directDeliver</code> (i.e. <code>true</code>).
 If you are willing to take some small extra hit on latency but want the highest throughput set <code>directDeliver</code> to <code>false</code>.</p>
 </dd>
 <dt class="hdlist1">nioRemotingThreads</dt>
@@ -331,8 +332,8 @@ It is replaced by <code>remotingThreads</code>, if you are using this please upd
 </dd>
 <dt class="hdlist1">remotingThreads</dt>
 <dd>
-<p>Apache ActiveMQ Artemis will, by default, use a number of threads equal to three times the number of cores (or hyper-threads) as reported by <code>Runtime.getRuntime().availableProcessors()</code> for processing incoming packets.
-If you want to override this value, you can set the number of threads by specifying this parameter.
+<p>An acceptor will, by default, use a number of threads equal to three times the number of cores (or hyper-threads) as reported by <code>Runtime.getRuntime().availableProcessors()</code> for processing incoming packets.
+To override this value, set the number of threads by specifying this parameter.
 The default value for this parameter is <code>-1</code> which means use the value from <code>Runtime.getRuntime().availableProcessors()</code> * 3.</p>
 </dd>
 <dt class="hdlist1">localAddress</dt>
@@ -378,11 +379,10 @@ Default value is <code>true</code>.</p>
 <div class="sect2">
 <h3 id="configuring-netty-native-transport"><a class="anchor" href="#configuring-netty-native-transport"></a><a class="link" href="#configuring-netty-native-transport">4.3. Configuring Netty Native Transport</a></h3>
 <div class="paragraph">
-<p>Netty Native Transport support exists for selected OS platforms.
-This allows Apache ActiveMQ Artemis to use native sockets/io instead of Java NIO.</p>
+<p>Netty Native Transport support exists for selected OS platforms in order to use native sockets/io instead of Java NIO.</p>
 </div>
 <div class="paragraph">
-<p>These Native transports add features specific to a particular platform, generate less garbage, and generally improve performance when compared to Java NIO based transport.</p>
+<p>These Native transports add features specific to a particular platform, generate less garbage, and generally improve performance when compared to Java NIO-based transport.</p>
 </div>
 <div class="paragraph">
 <p>Both Clients and Server can benefit from this.</p>
@@ -401,10 +401,10 @@ This allows Apache ActiveMQ Artemis to use native sockets/io instead of Java NIO
 </ul>
 </div>
 <div class="paragraph">
-<p>Apache ActiveMQ Artemis will by default enable the corresponding native transport if a supported platform is detected.</p>
+<p>The broker will by default enable the corresponding native transport if a supported platform is detected.</p>
 </div>
 <div class="paragraph">
-<p>If running on an unsupported platform or any issues loading native libs, Apache ActiveMQ Artemis will fallback onto Java NIO.</p>
+<p>If running on an unsupported platform or if there are any issues loading native libs, Java NIO will be used.</p>
 </div>
 <div class="sect3">
 <h4 id="linux-native-transport"><a class="anchor" href="#linux-native-transport"></a><a class="link" href="#linux-native-transport">4.3.1. Linux Native Transport</a></h4>
@@ -482,8 +482,8 @@ Default is <code>false</code>.</p>
 <p>When used on a <code>connector</code> this is the path to the client-side SSL key store which holds the client certificates.
 This is only relevant for a <code>connector</code> if you are using 2-way SSL (i.e. mutual authentication).
 Although this value is configured on the server, it is downloaded and used by the client.
-If the client needs to use a different path from that set on the server then it can override the server-side setting by either using the customary "javax.net.ssl.keyStore" system property or the ActiveMQ-specific "org.apache.activemq.ssl.keyStore" system property.
-The ActiveMQ-specific system property is useful if another component on the client is already making use of the standard Java system property.</p>
+If the client needs to use a different path from that set on the server then it can override the server-side setting by either using the customary "javax.net.ssl.keyStore" system property or the Artemis-specific "org.apache.activemq.ssl.keyStore" system property.
+The Artemis-specific system property is useful if another component on the client is already making use of the standard Java system property.</p>
 </div>
 </dd>
 <dt class="hdlist1">keyStorePassword</dt>
@@ -493,24 +493,24 @@ The ActiveMQ-specific system property is useful if another component on the clie
 <p>When used on a <code>connector</code> this is the password for the client-side keystore.
 This is only relevant for a <code>connector</code> if you are using 2-way SSL (i.e. mutual authentication).
 Although this value can be configured on the server, it is downloaded and used by the client.
-If the client needs to use a different password from that set on the server then it can override the server-side setting by either using the customary "javax.net.ssl.keyStorePassword" system property or the ActiveMQ-specific "org.apache.activemq.ssl.keyStorePassword" system property.
-The ActiveMQ-specific system property is useful if another component on the client is already making use of the standard Java system property.</p>
+If the client needs to use a different password from that set on the server then it can override the server-side setting by either using the customary "javax.net.ssl.keyStorePassword" system property or the Artemis-specific "org.apache.activemq.ssl.keyStorePassword" system property.
+The Artemis-specific system property is useful if another component on the client is already making use of the standard Java system property.</p>
 </div>
 </dd>
 <dt class="hdlist1">keyStoreType</dt>
 <dd>
 <p>The type of keystore being used.
 For example, <code>JKS</code>, <code>JCEKS</code>, <code>PKCS12</code>, <code>PEM</code> etc.
-This value can also be set via the "javax.net.ssl.keyStoreType" system property or the ActiveMQ-specific "org.apache.activemq.ssl.keyStoreType" system property.
-The ActiveMQ-specific system property is useful if another component on the  client is already making use of the standard Java system property.
+This value can also be set via the "javax.net.ssl.keyStoreType" system property or the Artemis-specific "org.apache.activemq.ssl.keyStoreType" system property.
+The Artemis-specific system property is useful if another component on the  client is already making use of the standard Java system property.
 Default is <code>JKS</code>.</p>
 </dd>
 <dt class="hdlist1">keyStoreProvider</dt>
 <dd>
 <p>The provider used for the keystore.
 For example, <code>SUN</code>, <code>SunJCE</code>, etc.
-This  value can also be set via the "javax.net.ssl.keyStoreProvider" system property or the ActiveMQ-specific "org.apache.activemq.ssl.keyStoreProvider" system property.
-The ActiveMQ-specific system property is useful if another component on the client is already making use of the standard Java system property.
+This  value can also be set via the "javax.net.ssl.keyStoreProvider" system property or the Artemis-specific "org.apache.activemq.ssl.keyStoreProvider" system property.
+The Artemis-specific system property is useful if another component on the client is already making use of the standard Java system property.
 Default is <code>null</code>.</p>
 </dd>
 <dt class="hdlist1">keyStoreAlias</dt>
@@ -531,8 +531,8 @@ This is only relevant for an <code>acceptor</code> if you are using 2-way SSL (i
 <div class="paragraph">
 <p>When used on a <code>connector</code> this is the path to the client-side SSL key store which holds the public keys of all the servers that the client trusts.
 Although this value can be configured on the server, it is downloaded and used by the client.
-If the client needs to use a different path from that set on the server then it can override the server-side setting by either using the customary "javax.net.ssl.trustStore" system property or the ActiveMQ-specific "org.apache.activemq.ssl.trustStore" system property.
-The ActiveMQ-specific system property is useful if another component on the client is already making use of the standard Java system property.</p>
+If the client needs to use a different path from that set on the server then it can override the server-side setting by either using the customary "javax.net.ssl.trustStore" system property or the Artemis-specific "org.apache.activemq.ssl.trustStore" system property.
+The Artemis-specific system property is useful if another component on the client is already making use of the standard Java system property.</p>
 </div>
 </dd>
 <dt class="hdlist1">trustStorePassword</dt>
@@ -542,24 +542,24 @@ This is only relevant for an <code>acceptor</code> if you are using 2-way SSL (i
 <div class="paragraph">
 <p>When used on a <code>connector</code> this is the password for the client-side truststore.
 Although this value can be configured on the server, it is downloaded and used by the client.
-If the client needs to use a different password from that set on the server then it can override the server-side setting by either using the customary "javax.net.ssl.trustStorePassword" system property or the ActiveMQ-specific "org.apache.activemq.ssl.trustStorePassword" system property.
-The ActiveMQ-specific system property is useful if another component on the client is already making use of the standard Java system property.</p>
+If the client needs to use a different password from that set on the server then it can override the server-side setting by either using the customary "javax.net.ssl.trustStorePassword" system property or the Artemis-specific "org.apache.activemq.ssl.trustStorePassword" system property.
+The Artemis-specific system property is useful if another component on the client is already making use of the standard Java system property.</p>
 </div>
 </dd>
 <dt class="hdlist1">trustStoreType</dt>
 <dd>
 <p>The type of truststore being used.
 For example, <code>JKS</code>, <code>JCEKS</code>, <code>PKCS12</code>, <code>PEM</code> etc.
-This value can also be set via the "javax.net.ssl.trustStoreType" system property or the ActiveMQ-specific "org.apache.activemq.ssl.trustStoreType" system property.
-The ActiveMQ-specific system property is useful if another component on the client is already making use of the standard Java system property.
+This value can also be set via the "javax.net.ssl.trustStoreType" system property or the Artemis-specific "org.apache.activemq.ssl.trustStoreType" system property.
+The Artemis-specific system property is useful if another component on the client is already making use of the standard Java system property.
 Default is <code>JKS</code>.</p>
 </dd>
 <dt class="hdlist1">trustStoreProvider</dt>
 <dd>
 <p>The provider used for the truststore.
 For example, <code>SUN</code>, <code>SunJCE</code>, etc.
-This value can also be set via the "javax.net.ssl.trustStoreProvider" system property or the ActiveMQ-specific "org.apache.activemq.ssl.trustStoreProvider" system property.
-The ActiveMQ-specific system property is useful if another component on the client is already making use of the standard Java system property.
+This value can also be set via the "javax.net.ssl.trustStoreProvider" system property or the Artemis-specific "org.apache.activemq.ssl.trustStoreProvider" system property.
+The Artemis-specific system property is useful if another component on the client is already making use of the standard Java system property.
 Default is <code>null</code>.</p>
 </dd>
 <dt class="hdlist1">enabledCipherSuites</dt>
@@ -645,7 +645,7 @@ Default is <code>false</code>.</p>
 </dd>
 <dt class="hdlist1">forceSSLParameters</dt>
 <dd>
-<p>When used on a <code>connector</code> any SSL settings that are set as parameters on the connector will be used instead of JVM system properties including both javax.net.ssl and ActiveMQ system properties to configure the SSL context for this connector.</p>
+<p>When used on a <code>connector</code> any SSL settings that are set as parameters on the connector will be used instead of JVM system properties including both javax.net.ssl and Artemis system properties to configure the SSL context for this connector.</p>
 <div class="paragraph">
 <p>Valid values are <code>true</code> or <code>false</code>.
 Default is <code>false</code>.</p>
@@ -679,6 +679,28 @@ If the incoming connection doesn&#8217;t include the <code>server_name</code> ex
 <p>When used on a <code>connector</code> the <code>sniHost</code> value is used for the <code>server_name</code> extension on the SSL connection.</p>
 </div>
 </dd>
+<dt class="hdlist1">crlPath</dt>
+<dd>
+<p>This is valid on either an <code>acceptor</code> or <code>connector</code>.
+It specifies the path to a Certificate Revocation List (CRL) file for additional certificate validation when using PKIX trust manager.
+The CRL file contains a list of certificates that have been revoked and should no longer be trusted.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">crcOptions</dt>
+<dd>
+<p>This is valid on either an <code>acceptor</code> or <code>connector</code>.
+It specifies a comma-separated list of PKIXRevocationChecker options to configure certificate revocation checking behavior when using PKIX trust manager.
+Available options include: <code>ONLY_END_ENTITY</code>, <code>PREFER_CRLS</code>, <code>NO_FALLBACK</code>, <code>SOFT_FAIL</code>.
+For further details about these options, see <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/cert/PKIXRevocationChecker.Option.html">PKIXRevocationChecker.Option JavaDoc</a>.
+Default is <code>null</code>.</p>
+</dd>
+<dt class="hdlist1">ocspResponderURL</dt>
+<dd>
+<p>This is valid on either an <code>acceptor</code> or <code>connector</code>.
+It specifies the URL of the OCSP (Online Certificate Status Protocol) responder to use for certificate revocation checking when using PKIX trust manager.
+This overrides the default OCSP responder specified in the certificate&#8217;s Authority Information Access (AIA) extension.
+Default is <code>null</code>.</p>
+</dd>
 <dt class="hdlist1">trustManagerFactoryPlugin</dt>
 <dd>
 <p>This is valid on either an <code>acceptor</code> or <code>connector</code>.
@@ -687,7 +709,7 @@ This is a simple interface with a single method which returns a <code>javax.net.
 The <code>TrustManagerFactory</code> will be used when the underlying <code>javax.net.ssl.SSLContext</code> is initialized.
 This allows fine-grained customization of who/what the broker &amp; client trusts.</p>
 <div class="paragraph">
-<p>This value takes precedence of all other SSL parameters which apply to the trust manager (i.e. <code>trustAll</code>, <code>truststoreProvider</code>, <code>truststorePath</code>, <code>truststorePassword</code>, <code>crlPath</code>).</p>
+<p>This value takes precedence of all other SSL parameters which apply to the trust manager (i.e. <code>trustAll</code>, <code>truststoreProvider</code>, <code>truststorePath</code>, <code>truststorePassword</code>, <code>crlPath</code>, <code>crcOptions</code>, <code>ocspResponderURL</code>).</p>
 </div>
 <div class="paragraph">
 <p>Any plugin specified will need to be placed on the <a href="using-server.html#adding-runtime-dependencies">broker&#8217;s classpath</a>.</p>
@@ -756,30 +778,14 @@ It can be useful in scenarios where firewalls only allow HTTP traffic to pass.</
 <dl>
 <dt class="hdlist1">httpEnabled</dt>
 <dd>
-<p>Activates http on the client.
+<p>Activates HTTP on the client.
 This is not needed on the broker.
-With single port support Apache ActiveMQ Artemis will now automatically detect if http is being used and configure itself.</p>
-</dd>
-<dt class="hdlist1">httpClientIdleTime</dt>
-<dd>
-<p>How long a client can be idle before sending an empty http request to keep the connection alive</p>
-</dd>
-<dt class="hdlist1">httpClientIdleScanPeriod</dt>
-<dd>
-<p>How often, in milliseconds, to scan for idle clients</p>
-</dd>
-<dt class="hdlist1">httpResponseTime</dt>
-<dd>
-<p>How long the server can wait before sending an empty http response to keep the connection alive</p>
-</dd>
-<dt class="hdlist1">httpServerScanPeriod</dt>
-<dd>
-<p>How often, in milliseconds, to scan for clients needing responses</p>
+With single port support the broker will now automatically detect if HTTP is being used and configure itself.</p>
 </dd>
 <dt class="hdlist1">httpRequiresSessionId</dt>
 <dd>
 <p>If <code>true</code> the client will wait after the first call to receive a session id.
-Used the http connector is connecting to servlet acceptor (not recommended)</p>
+Used when the HTTP connector is connecting to servlet acceptor (not recommended).</p>
 </dd>
 </dl>
 </div>
