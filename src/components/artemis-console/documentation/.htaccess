@@ -9,7 +9,7 @@ RewriteRule ^console(.*)$ latest/ [R=301,L]
 RewriteRule ^deploying(.*)$ latest/ [R=301,L]
 
 # 2. Force the trailing slash for the "bare" newest version URL so internal rewrite paths don't break
-RewriteRule ^version/1.5.0$ version/1.5.0/ [R=301,L]
+RewriteRule ^version/1.6.0$ version/1.6.0/ [R=301,L]
 
 # 3. Internal rewrite so that the latest version actually loads the latest docs
-RewriteRule ^version/1.5.0/(.*)$ latest/$1 [L]
+RewriteRule ^version/1.6.0/(.*)$ latest/$1 [L]
