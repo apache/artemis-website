@@ -63,7 +63,7 @@ fi
 DOCS_HOME="$WEBSITE_DIR/src/components/artemis-console/documentation"
 LATEST_DOCS="$DOCS_HOME/latest/"
 NEW_DOCS="$ARTEMIS_CONSOLE_DIR/target/checkout/artemis-console-website/target/classes/user-manual/"
-$PRIOR_DOCS="$DOCS_HOME/version/$PRIOR_VERSION"
+PRIOR_DOCS="$DOCS_HOME/version/$PRIOR_VERSION"
 
 echo "Moving previous release docs, from $LATEST_DOCS to $PRIOR_DOCS"
 mv $LATEST_DOCS $PRIOR_DOCS
