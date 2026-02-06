@@ -14,7 +14,7 @@
 
 <body>
 <br/>
-<h4>Release report 2.50.0(0ae68ef46e4e12ae251cdebaa047f53b7bb78aff) and 2.51.0(670b373d575d845e698cf31681229f69168b09df)</h4>
+<h4>Release report 2.50.0(0ae68ef46e4e12ae251cdebaa047f53b7bb78aff) and 2.51.0(cd0950de6c6dd122364377d7fa133c6b9eb23f5a)</h4>
 <br/>
 <table id="gitreport" class="display">
 <thead><tr><th>#</th><th>Commit</th><th>Date</th><th>Author</th><th>Short Message</th><th>ARTEMIS JIRAs</th><th>Add</th><th>Rep</th><th>Del</th><th>Tot</th><th>test</th><th>docs/</th><th>examples/</th></tr></thead>
@@ -124,8 +124,32 @@
 <tr><td><a href='https://github.com/apache/activemq-artemis/commit/670b373d575d845e698cf31681229f69168b09df'>35</a></td>
 <td><a href='https://github.com/apache/activemq-artemis/commit/670b373d575d845e698cf31681229f69168b09df'>670b373</a></td><td>2026/02/03 21:33:05</td><td>Clebert Suconic</td><td>[maven-release-plugin] prepare release 2.51.0</td><td></td>
 <td>0</td><td>0</td><td>0</td><td>0</td><td></td><td></td><td></td></tr>
+<tr><td><a href='https://github.com/apache/activemq-artemis/commit/11717d8d7e7fa43b8030cbeca79e4d005e517b25'>36</a></td>
+<td><a href='https://github.com/apache/activemq-artemis/commit/11717d8d7e7fa43b8030cbeca79e4d005e517b25'>11717d8</a></td><td>2026/02/03 21:33:06</td><td>Clebert Suconic</td><td>[maven-release-plugin] prepare for next development iteration</td><td></td>
+<td>0</td><td>0</td><td>0</td><td>0</td><td></td><td></td><td></td></tr>
+<tr><td><a href='https://github.com/apache/activemq-artemis/commit/6e2d0bc624b4a7f5265e5a7eb8ad0f251bc66c74'>37</a></td>
+<td><a href='https://github.com/apache/activemq-artemis/commit/6e2d0bc624b4a7f5265e5a7eb8ad0f251bc66c74'>6e2d0bc</a></td><td>2026/02/04 10:07:45</td><td>Clebert Suconic</td><td>NO-JIRA small observation about JDK</td><td></td>
+<td>0</td><td>0</td><td>0</td><td>0</td><td></td><td></td><td></td></tr>
+<tr><td><a href='https://github.com/apache/activemq-artemis/commit/75a0a9ab981be060c51a2a2091eb30807930ae7e'>38</a></td>
+<td><a href='https://github.com/apache/activemq-artemis/commit/75a0a9ab981be060c51a2a2091eb30807930ae7e'>75a0a9a</a></td><td>2026/02/04 11:32:55</td><td>Timothy Bish</td><td><a href='https://issues.apache.org/jira/browse/ARTEMIS-5890'>ARTEMIS-5890</a> AMQP LargeMessage writer should check sender state before attempting a write</td><td><p><a href='https://issues.apache.org/jira/browse/ARTEMIS-5890'>Major/Bug/Fixed/Resolved (ARTEMIS-5890)</a></p></td>
+<td>18</td><td>0</td><td>0</td><td>18</td><td><a href='https://github.com/apache/activemq-artemis/blob/75a0a9ab981be060c51a2a2091eb30807930ae7e/tests/integration-tests/src/test/java/org/apache/activemq/artemis/tests/integration/amqp/AmqpLargeMessageTest.java#L40-L1317'>AmqpLargeMessageTest.java</a><a href='https://github.com/apache/activemq-artemis//commits/75a0a9ab981be060c51a2a2091eb30807930ae7e/tests/integration-tests/src/test/java/org/apache/activemq/artemis/tests/integration/amqp/AmqpLargeMessageTest.java'>(+)</a> </td><td></td><td></td></tr>
+<tr><td><a href='https://github.com/apache/activemq-artemis/commit/212fc760f209d0351ae5acaa2a6f5aa75c391367'>39</a></td>
+<td><a href='https://github.com/apache/activemq-artemis/commit/212fc760f209d0351ae5acaa2a6f5aa75c391367'>212fc76</a></td><td>2026/02/06 10:54:12</td><td>Clebert Suconic</td><td>NO-JIRA Fixing assert on test</td><td></td>
+<td>0</td><td>0</td><td>0</td><td>0</td><td><a href='https://github.com/apache/activemq-artemis/blob/212fc760f209d0351ae5acaa2a6f5aa75c391367/tests/soak-tests/src/test/java/org/apache/activemq/artemis/tests/soak/brokerConnection/mirror/LogAssert.java#L23-L29'>LogAssert.java</a><a href='https://github.com/apache/activemq-artemis//commits/212fc760f209d0351ae5acaa2a6f5aa75c391367/tests/soak-tests/src/test/java/org/apache/activemq/artemis/tests/soak/brokerConnection/mirror/LogAssert.java'>(+)</a> </td><td></td><td></td></tr>
+<tr><td><a href='https://github.com/apache/activemq-artemis/commit/5b8b7498d9e45b5a6d29c1a5dee7099a419e8ed0'>40</a></td>
+<td><a href='https://github.com/apache/activemq-artemis/commit/5b8b7498d9e45b5a6d29c1a5dee7099a419e8ed0'>5b8b749</a></td><td>2026/02/06 10:54:38</td><td>Clebert Suconic</td><td><a href='https://issues.apache.org/jira/browse/ARTEMIS-5852'>ARTEMIS-5852</a> setLockCoordinator() should consider it null</td><td><p><a href='https://issues.apache.org/jira/browse/ARTEMIS-5852'>Major/New Feature/Fixed/Closed (ARTEMIS-5852)</a></p></td>
+<td>0</td><td>5</td><td>0</td><td>5</td><td><a href='https://github.com/apache/activemq-artemis/blob/5b8b7498d9e45b5a6d29c1a5dee7099a419e8ed0/tests/smoke-tests/src/test/java/org/apache/activemq/artemis/tests/smoke/simpleStart/DefaultServerSmokeTest.java#L1-L92'>DefaultServerSmokeTest.java</a><a href='https://github.com/apache/activemq-artemis//commits/5b8b7498d9e45b5a6d29c1a5dee7099a419e8ed0/tests/smoke-tests/src/test/java/org/apache/activemq/artemis/tests/smoke/simpleStart/DefaultServerSmokeTest.java'>(+)</a> </td><td></td><td></td></tr>
+<tr><td><a href='https://github.com/apache/activemq-artemis/commit/6f5a2ea45bb1f3916b986e163d0d472c48fc6de1'>41</a></td>
+<td><a href='https://github.com/apache/activemq-artemis/commit/6f5a2ea45bb1f3916b986e163d0d472c48fc6de1'>6f5a2ea</a></td><td>2026/02/06 11:46:20</td><td>Robbie Gemmell</td><td><a href='https://issues.apache.org/jira/browse/ARTEMIS-5839'>ARTEMIS-5839</a>: downgrade maven-dependency-plugin to 3.8.1</td><td><p><a href='https://issues.apache.org/jira/browse/ARTEMIS-5839'>Major/Dependency upgrade/Fixed/Closed (ARTEMIS-5839)</a></p></td>
+<td>0</td><td>0</td><td>0</td><td>0</td><td></td><td></td><td></td></tr>
+<tr><td><a href='https://github.com/apache/activemq-artemis/commit/ee0fe79f5a6bdd8ffda02e0f4f9f90eec539f533'>42</a></td>
+<td><a href='https://github.com/apache/activemq-artemis/commit/ee0fe79f5a6bdd8ffda02e0f4f9f90eec539f533'>ee0fe79</a></td><td>2026/02/06 12:55:47</td><td>Clebert Suconic</td><td>Revert 2.51.0 release commit. CR2 will be sent</td><td></td>
+<td>0</td><td>0</td><td>0</td><td>0</td><td></td><td></td><td></td></tr>
+<tr><td><a href='https://github.com/apache/activemq-artemis/commit/cd0950de6c6dd122364377d7fa133c6b9eb23f5a'>43</a></td>
+<td><a href='https://github.com/apache/activemq-artemis/commit/cd0950de6c6dd122364377d7fa133c6b9eb23f5a'>cd0950d</a></td><td>2026/02/06 13:02:23</td><td>Clebert Suconic</td><td>[maven-release-plugin] prepare release 2.51.0</td><td></td>
+<td>0</td><td>0</td><td>0</td><td>0</td><td></td><td></td><td></td></tr>
 </tbody></table>
 <br><h2>
-<a href='https://issues.apache.org/jira/issues/?jql=project%20%3D%20ARTEMIS%20AND%20key%20in%20(ARTEMIS-5879%2CARTEMIS-5869%2CARTEMIS-5886%2CARTEMIS-5863%2CARTEMIS-5852%2CARTEMIS-5885%2CARTEMIS-5874%2CARTEMIS-5887%2CARTEMIS-5854%2CARTEMIS-5860%2CARTEMIS-5882%2CARTEMIS-5870%2CARTEMIS-5881%2CARTEMIS-5851%2CARTEMIS-5862%2CARTEMIS-5884%2CARTEMIS-5850%2CARTEMIS-5861%2CARTEMIS-5883%2CARTEMIS-5872%2CARTEMIS-5880%2CARTEMIS-5839)'>22 JIRAS on ARTEMIS JIRAs</a></h2>
+<a href='https://issues.apache.org/jira/issues/?jql=project%20%3D%20ARTEMIS%20AND%20key%20in%20(ARTEMIS-5879%2CARTEMIS-5869%2CARTEMIS-5886%2CARTEMIS-5863%2CARTEMIS-5852%2CARTEMIS-5885%2CARTEMIS-5874%2CARTEMIS-5887%2CARTEMIS-5854%2CARTEMIS-5860%2CARTEMIS-5882%2CARTEMIS-5870%2CARTEMIS-5881%2CARTEMIS-5851%2CARTEMIS-5862%2CARTEMIS-5884%2CARTEMIS-5850%2CARTEMIS-5861%2CARTEMIS-5883%2CARTEMIS-5872%2CARTEMIS-5880%2CARTEMIS-5890%2CARTEMIS-5839)'>23 JIRAS on ARTEMIS JIRAs</a></h2>
 <br>Generated with <a href='https://github.com/rh-messaging/jira-git-report'> jira-git-report</a>
 </body></html>
