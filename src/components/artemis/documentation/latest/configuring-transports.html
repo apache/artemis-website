@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Configuring the Transport</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.51.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#acceptors">1. Acceptors</a></li>
 <li><a href="#connectors">2. Connectors</a></li>
@@ -372,6 +372,13 @@ Changing value needs to restart server to take effect.</p>
 <dd>
 <p>Determines whether or not an acceptor will start automatically when the broker is started.
 Default value is <code>true</code>.</p>
+</dd>
+<dt class="hdlist1">shutdownTimeout</dt>
+<dd>
+<p>This is only valid for acceptors.
+It is the number of milliseconds the broker will wait when shutting down each of the various Netty <code>ChannelGroup</code> instances as well as the <code>EventLoopGroup</code> instance associated with the acceptor.
+The default is <code>3000</code>.
+The default can also be set with the Java system property <code>org.apache.activemq.artemis.core.remoting.impl.netty.TransportConstants.DEFAULT_SHUTDOWN_TIMEOUT</code>.</p>
 </dd>
 </dl>
 </div>
