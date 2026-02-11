@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
 <link rel="icon" type="image/png" href="images/favicon.png">
-<title>Restart Sequence</title>
+<title>Restart Sequence if using Journal replication</title>
 <link rel="stylesheet" href="css/asciidoctor.css">
 <link rel="stylesheet" href="css/font-awesome.css">
 <script>
@@ -31,9 +31,9 @@
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Restart Sequence</h1>
+<h1>Restart Sequence if using Journal replication</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.50.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.51.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#restarting-1-broker-at-a-time">1. Restarting 1 broker at a time</a></li>
 <li><a href="#completely-shutting-down-the-brokers-and-starting">2. Completely shutting down the brokers and starting</a></li>
@@ -45,9 +45,23 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apache Artemis ships with 2 architectures for providing HA features.
-The primary and backup brokers can be configured either using network replication or using shared storage.
-This document will share restart sequences for the brokers under various circumstances when the client applications are  connected to it.</p>
+<p>Apache Artemis ships with 3 possibilities for providing HA:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Shared storage</p>
+</li>
+<li>
+<p>Network Journal Replication</p>
+</li>
+<li>
+<p>AMQP Broker Connection Mirroring</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This page will cover steps to restart the broker while using journal replication.</p>
 </div>
 </div>
 </div>
