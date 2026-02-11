@@ -65,7 +65,8 @@ Federation queue consumers can be configured to always have lower priority than 
 </div>
 <div class="paragraph">
 <p>Queue federation can be configured operate in a single direction between peers or can configured to operate in both directions between peers allowing message to flow in both directions delivering messages to consumers on either broker that were sent to the matching queue on the opposing broker instance.
-When configured for dual federation messages can migrate back and forth between brokers depending on capacity and available local consumers, this back and forth message flow can be reduced by ensuring that the federation policy uses a pull when space is available configuration which will only pull a batch of messages from the remote if the local queue does not already have a backlog.</p>
+When configured for dual federation messages can migrate back and forth between brokers depending on capacity and available local consumers, this back and forth message flow can be reduced by ensuring that the federation policy uses a pull when space is available configuration which will only pull a batch of messages from the remote if the local queue does not already have a backlog.
+For a more complete reference of the AMQP Queue Federation configuration elements refer to the <a href="amqp-federation-configuration-glossary.html">AMQP Federation Configuration Glossary</a></p>
 </div>
 </div>
 </div>
