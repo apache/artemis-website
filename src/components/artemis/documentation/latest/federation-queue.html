@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Queue Federation</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.51.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.52.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#use-cases">1. Use Cases</a></li>
 <li><a href="#configuring-queue-federation">2. Configuring Queue Federation</a>
@@ -389,7 +389,7 @@ This works by sending a command to the <code>downstream</code> broker to have it
 The benefit of this is being able to configure everything for federation on one broker in some cases to make it easier, such as a hub and spoke topology.</p>
 </div>
 <div class="paragraph">
-<p>All the same configuration options apply to <code>downstream</code> as does <code>upstream</code> with the exception of one extra configuration flag that needs to be set:</p>
+<p>All the same configuration options apply to <code>downstream</code> as does <code>upstream</code> with two exceptions:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -402,10 +402,19 @@ This reference is used to tell the downstream broker what connector to use to cr
 For more information about what connectors are and how to configure them, see <a href="configuring-transports.html#configuring-the-transport">Configuring the Transport</a>.</p>
 </div>
 </dd>
+<dt class="hdlist1">downstream-authorization</dt>
+<dd>
+<p>This is an attribute on the <code>federations</code> element that is set on the <em>downstream</em> broker so that it can properly authorize incoming federation requests.
+It is a comma-delimited list of roles which are authorized to deploy federation on this broker.
+The broker sending the federation command must use credentials for a user that is in one of the roles listed here.</p>
+<div class="paragraph">
+<p>If this is not defined then the broker will not process incoming federation commands.</p>
+</div>
+</dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>Sample Downstream Address Federation setup:</p>
+<p>Sample Downstream Address Federation setup on the upstream broker:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -455,6 +464,15 @@ For more information about what connectors are and how to configure them, see <a
       <span class="nt">&lt;/transformer&gt;</span>
    <span class="nt">&lt;/federation&gt;</span>
 <span class="nt">&lt;/federations&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sample Downstream Federation setup on the downstream broker:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="c">&lt;!-- the "federation_username" configured on the upstream broker must be in this role --&gt;</span>
+<span class="nt">&lt;federations</span> <span class="na">downstream-authorization=</span><span class="s">"federation_role"</span> <span class="nt">/&gt;</span></code></pre>
 </div>
 </div>
 </div>
