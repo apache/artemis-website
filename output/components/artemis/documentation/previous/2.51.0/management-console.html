@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<title>Management Console</title>
+<link rel="stylesheet" href="css/asciidoctor.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/rouge-github.css">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pathSegments = window.location.pathname.split('/');
+        if (window.location.hostname == "artemis.apache.org" && pathSegments[pathSegments.length - 2] != "latest") {
+            var message = document.createElement("div");
+            message.style.margin = "20px";
+            message.style.textAlign = "center";
+            message.style.backgroundColor = "#FFFFE0";
+            message.textContent = "Please be aware that this documentation is out of date. ";
+
+            var link = document.createElement("a");
+            link.href = "../../latest";
+            link.textContent = "Here is the latest documentation.";
+            message.appendChild(link);
+
+            document.body.insertBefore(message, document.body.firstChild);
+        }
+    });
+</script>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Management Console</h1>
+<div id="toc" class="toc2">
+<div id="toctitle"><a href="index.html">User Manual for 2.51.0</a></div>
+<ul class="sectlevel1">
+<li><a href="#security">1. Security</a>
+<ul class="sectlevel2">
+<li><a href="#logging-in">1.1. Logging In</a></li>
+</ul>
+</li>
+<li><a href="#status-logging">2. Status Logging</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache Artemis ships by default with a management console powered by <a href="http://hawt.io">Hawt.io</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="security"><a class="anchor" href="#security"></a><a class="link" href="#security">1. Security</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The management console communicates with the broker via HTTP(S).
+The broker uses the <a href="https://jolokia.org/">Jolokia JMX-HTTP bridge</a> to convert the contents of these HTTP requests into a JMX operations and then returns the results.</p>
+</div>
+<div class="paragraph">
+<p>Security for Jolokia is configured via <code>etc/jolokia-access.xml</code>.
+You can read more about the contents of this file in the <a href="https://jolokia.org/reference/html/manual/security.html">Jolokia Security Guide</a>.
+By default the console is locked down to <code>localhost</code>.
+Pay particular attention to the <code>&lt;cors&gt;</code> restrictions when exposing the console web endpoint over the network.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Any request with an <code>Origin</code> header using the HTTPS scheme which is ultimately received by Jolokia via HTTP is discarded by default since it is deemed insecure.
+If you use a TLS proxy that transforms secure requests to insecure requests (e.g. in a Kubernetes environment) then consider changing the proxy to preserve HTTPS and switching the embedded web server to HTTPS.
+If that isn’t feasible then you can accept the risk by specifying following element</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;cors&gt;</span>
+    ...
+    <span class="nt">&lt;ignore-scheme/&gt;</span>
+    ...
+<span class="nt">&lt;/cors&gt;</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Problems with Jolokia security are often observed as the ability to login to the console, but the console is blank.</p>
+</div>
+<div class="sect2">
+<h3 id="logging-in"><a class="anchor" href="#logging-in"></a><a class="link" href="#logging-in">1.1. Logging In</a></h3>
+<div class="paragraph">
+<p>To access the management console, use a browser and go to the URL <a href=""><a href="http://localhost:8161/console" class="bare">http://localhost:8161/console</a></a>.</p>
+</div>
+<div class="paragraph">
+<p>A login screen will be presented.
+If your broker is secured, you will need to use a user with admin role.
+If it is unsecured, enter any user/password.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/console-login.png" alt="Apache Artemis Console Login">
+</div>
+</div>
+<div class="paragraph">
+<p>Once logged in check out the <a href="https://artemis.apache.org/components/artemis-console/documentation/version/$1.6.0">Artemis Console documentation</a> for details on how to use the console.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="status-logging"><a class="anchor" href="#status-logging"></a><a class="link" href="#status-logging">2. Status Logging</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When the broker starts it will detect the presence of the web console and log status information, e.g.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">INFO  [org.apache.activemq.artemis] AMQ241002: Artemis Jolokia REST API available at http://localhost:8161/console/jolokia
+INFO  [org.apache.activemq.artemis] AMQ241004: Artemis Console available at http://localhost:8161/console</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The web console is detected by inspecting the value of the <code>&lt;display-name&gt;</code> tag in the war file&#8217;s <code>WEB-INF/web.xml</code> descriptor.
+By default it looks for <code>hawtio</code>.
+However, if this value is changed for any reason the broker can look for this new value by setting the following system property</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">-Dorg.apache.activemq.artemis.webConsoleDisplayName=newValue</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
