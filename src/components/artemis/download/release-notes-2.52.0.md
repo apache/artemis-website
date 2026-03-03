@@ -11,3 +11,7 @@ type: artemis
 **Note:** As part of [establishing Apache Artemis](/news/artemis-tlp) as an independent project, the [Maven groupId has switched to _org.apache.artemis_](/artemis-tlp-groupid-migration).
 
 **Note**: This release requires use of Java 17 or above.
+
+## Bugs Fixed
+
+* [ARTEMIS-5928](https://issues.apache.org/jira/browse/ARTEMIS-5928) - Refactor federation downstream packet handling
