@@ -9,6 +9,7 @@ Details of security problems fixed in released versions of Apache Artemis are de
 
 See the main [Security Advisories](../../security-advisories) page for details for other components and general information such as reporting new security issues.
 
+*   [CVE-2026-27446](../../security-advisories.data/CVE-2026-27446-announcement.txt) - Auth bypass for Core downstream federation
 *   [CVE-2025-27391](../../security-advisories.data/CVE-2025-27391-announcement.txt) - Passwords leaking from broker properties in the debug log
 *   [CVE-2025-27427](../../security-advisories.data/CVE-2025-27427-announcement.txt) - Address routing-type can be updated by user without the createAddress permission
 *   [CVE-2023-50780](../../security-advisories.data/CVE-2023-50780-announcement.txt) - Authenticated users could perform RCE via Jolokia MBeans
