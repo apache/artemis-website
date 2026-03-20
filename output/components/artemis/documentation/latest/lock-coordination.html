@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
 <link rel="icon" type="image/png" href="images/favicon.png">
-<title>Lock Coordination</title>
+<title>Lock Coordination / HA with Mirroring</title>
 <link rel="stylesheet" href="css/asciidoctor.css">
 <link rel="stylesheet" href="css/font-awesome.css">
 <link rel="stylesheet" href="css/rouge-github.css">
@@ -32,16 +32,20 @@
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>Lock Coordination</h1>
+<h1>Lock Coordination / HA with Mirroring</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.52.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.53.0</a></div>
 <ul class="sectlevel1">
-<li><a href="#configuration">1. Configuration</a></li>
+<li><a href="#configuration">1. Configuration</a>
+<ul class="sectlevel2">
+<li><a href="#configuration-example">1.1. Configuration Example</a></li>
+</ul>
+</li>
 <li><a href="#configuration-options">2. Configuration Options</a>
 <ul class="sectlevel2">
 <li><a href="#common-configuration">2.1. Common Configuration</a></li>
-<li><a href="#file">2.2. File</a></li>
-<li><a href="#zookeeper">2.3. ZooKeeper</a></li>
+<li><a href="#file-based-lock-manager">2.2. File-Based Lock Manager</a></li>
+<li><a href="#zookeeper-based-lock-manager">2.3. ZooKeeper-Based Lock Manager</a></li>
 </ul>
 </li>
 </ul>
@@ -52,19 +56,24 @@
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Lock Coordinator provides pluggable distributed lock mechanism monitoring.
-It allows multiple broker instances to coordinate the activation of specific configuration elements, ensuring that only one broker instance activates a particular element at any given time.</p>
+It allows multiple broker instances to coordinate the activation of specific configuration elements, ensuring that only one broker instance activates a particular element at any given time.
+This prevents split-brain scenarios where multiple brokers could simultaneously process messages, leading to duplicate processing or conflicting state.</p>
 </div>
 <div class="paragraph">
-<p>When a broker acquires a lock through a distributed lock, the associated configuration elements are activated.
-If the lock is lost or released, those elements are deactivated.</p>
+<p>In the current version, the Lock Coordinator can be applied to control the startup and shutdown of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Acceptors</strong> - When an acceptor is associated with a lock coordinator, it will only start accepting connections when the broker successfully acquires the distributed lock. If the lock is lost for any reason, the acceptor automatically stops accepting new connections.</p>
+</li>
+<li>
+<p><strong>Broker Connections</strong> - When a broker connection (AMQP mirror, federation, or bridge) is associated with a lock coordinator, it will only be active when the broker successfully acquires the distributed lock. If the lock is lost, the connection is paused, preventing message flow. When the lock is reacquired, the connection resumes automatically.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>In the current version, the Lock Coordinator can be applied to control the startup and shutdown of acceptors.
-When an acceptor is associated with a lock coordinator, it will only start accepting connections when the broker successfully acquires the distributed lock.
-If lock is lost for any reason, the acceptor automatically stops accepting new connections.</p>
-</div>
-<div class="paragraph">
-<p>The same pattern used on acceptors may eventually be applied to other configuration elements.
+<p>The same pattern used on acceptors and broker connections may eventually be applied to other configuration elements.
 If you have ideas for additional use cases where this pattern could be applied, please file a JIRA issue.</p>
 </div>
 <div class="admonitionblock warning">
@@ -85,36 +94,49 @@ This feature is in technical preview and its configuration elements are subject 
 <h2 id="configuration"><a class="anchor" href="#configuration"></a><a class="link" href="#configuration">1. Configuration</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>It is possible to specify multiple lock-coordinators and associate them with other broker elements.</p>
+<p>You can define multiple lock-coordinators and associate them with broker elements such as acceptors and broker connections.
+When a broker element is associated with a lock-coordinator, it will only activate when the distributed lock has been acquired.
+If the lock cannot be acquired or is lost, the elements are automatically stopped or paused.</p>
 </div>
 <div class="paragraph">
-<p>The broker element associated with a lock-coordinator (e.g., an acceptor) will only be started if the distributed lock can be acquired.
-If the lock cannot be acquired or is lost, the associated element will be stopped.</p>
+<p>Different lock implementations (File-based, ZooKeeper-based, or custom plugins) provide different configuration properties.
+See the <a href="#configuration-options">Configuration Options</a> section below for detailed tables of available options for each lock implementation.</p>
 </div>
+<div class="sect2">
+<h3 id="configuration-example"><a class="anchor" href="#configuration-example"></a><a class="link" href="#configuration-example">1.1. Configuration Example</a></h3>
 <div class="paragraph">
-<p>This pattern can be used to ensure clients connect to only one of your mirrored brokers at a time, preventing split-brain scenarios and duplicate message processing.</p>
-</div>
-<div class="paragraph">
-<p>Depending on the provider selector, multiple configuration options can be provided.
-Please consult the javadoc for your lock implementation.
-A simple table will be provided in this chapter for the two reference implementations we provide, but this could be a plugin being added to your broker.</p>
-</div>
-<div class="paragraph">
-<p>In this next example, we configure a broker with:</p>
+<p>The following example demonstrates a star topology HA configuration where only one broker is active at a time:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Two acceptors: one for mirroring traffic (<code>for-mirroring-only</code>) and one for client connections (<code>for-clients-only</code>)</p>
+<p>Two acceptors:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>for-mirroring-only</code> - Always active to receive mirrored data from other brokers</p>
 </li>
 <li>
-<p>A File-based lock-coordinator named <code>clients-lock</code></p>
+<p><code>for-clients-only</code> - Controlled by lock-coordinator; only active when lock is held</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>The client acceptor associated with the lock-coordinator, so it only activates when the distributed lock is acquired</p>
+<p>File-based lock-coordinator named <code>clients-lock</code> using shared storage</p>
 </li>
 <li>
-<p>A mirror connection to another broker for data replication</p>
+<p>Broker connections controlled by the lock-coordinator (mirrors, bridges, or federations):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Two mirror connections (<code>mirrorB</code> and <code>mirrorC</code>) for data replication</p>
+</li>
+<li>
+<p>One bridge connection for forwarding messages to a remote broker</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -138,14 +160,76 @@ A simple table will be provided in this chapter for the two reference implementa
 <span class="nt">&lt;/lock-coordinators&gt;</span>
 
 <span class="nt">&lt;broker-connections&gt;</span>
-   <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://otherBroker:61000"</span> <span class="na">name=</span><span class="s">"mirror"</span> <span class="na">retry-interval=</span><span class="s">"2000"</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://otherBroker:61001"</span> <span class="na">name=</span><span class="s">"mirrorB"</span> <span class="na">retry-interval=</span><span class="s">"2000"</span> <span class="na">lock-coordinator=</span><span class="s">"clients-lock"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;mirror</span> <span class="na">sync=</span><span class="s">"false"</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;/amqp-connection&gt;</span>
+   <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://otherBroker:61002"</span> <span class="na">name=</span><span class="s">"mirrorC"</span> <span class="na">retry-interval=</span><span class="s">"2000"</span> <span class="na">lock-coordinator=</span><span class="s">"clients-lock"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;mirror</span> <span class="na">sync=</span><span class="s">"false"</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;/amqp-connection&gt;</span>
+   <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://remoteBroker:61616"</span> <span class="na">name=</span><span class="s">"bridgeConnection"</span> <span class="na">retry-interval=</span><span class="s">"2000"</span> <span class="na">lock-coordinator=</span><span class="s">"clients-lock"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;bridge&gt;</span>
+         <span class="nt">&lt;bridge-to-queue</span> <span class="na">name=</span><span class="s">"orders"</span> <span class="na">remote-address=</span><span class="s">"orders"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;include</span> <span class="na">queue-match=</span><span class="s">"orders"</span> <span class="na">address-match=</span><span class="s">"orders"</span><span class="nt">/&gt;</span>
+         <span class="nt">&lt;/bridge-to-queue&gt;</span>
+      <span class="nt">&lt;/bridge&gt;</span>
    <span class="nt">&lt;/amqp-connection&gt;</span>
 <span class="nt">&lt;/broker-connections&gt;</span></code></pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="how-it-works"><a class="anchor" href="#how-it-works"></a><a class="link" href="#how-it-works">1.1.1. How It Works</a></h4>
 <div class="paragraph">
-<p>In the previous configuration, the broker will use a file lock, and the acceptor will only be active if it can hold the distributed lock between the mirrored brokers.</p>
+<p>When a broker successfully acquires the distributed lock:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The client acceptor (<code>for-clients-only</code>) starts accepting connections</p>
+</li>
+<li>
+<p>Mirror connections activate and begin replicating data to other brokers</p>
+</li>
+<li>
+<p>Bridge connections activate and forward messages to remote brokers</p>
+</li>
+<li>
+<p>Federation connections activate (if configured)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When the lock is lost (due to failure or network partition):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The client acceptor stops accepting new connections</p>
+</li>
+<li>
+<p>All broker connections (mirrors, bridges, and federations) pause immediately</p>
+</li>
+<li>
+<p>The broker continues to receive mirrored data on the <code>for-mirroring-only</code> acceptor</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This ensures only one broker actively processes client requests, replicates data, and forwards messages at any given time.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="important-considerations"><a class="anchor" href="#important-considerations"></a><a class="link" href="#important-considerations">1.1.2. Important Considerations</a></h4>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+When mixing bridges or federations with mirrors in the same configuration, message duplication is possible during failover transitions. When a message arrives at a mirror target and that node&#8217;s broker connections are active, the message may be forwarded even though it was already processed by the original source. Lock coordination significantly reduces this risk but cannot completely eliminate it during the brief window when locks are being transferred between brokers.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="images/lock-coordination-example.png" alt="HA with mirroring"></span></p>
@@ -155,13 +239,18 @@ A simple table will be provided in this chapter for the two reference implementa
 </div>
 </div>
 </div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="configuration-options"><a class="anchor" href="#configuration-options"></a><a class="link" href="#configuration-options">2. Configuration Options</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>All lock-coordinator implementations share common configuration elements and provide implementation-specific properties.</p>
+</div>
 <div class="sect2">
 <h3 id="common-configuration"><a class="anchor" href="#common-configuration"></a><a class="link" href="#common-configuration">2.1. Common Configuration</a></h3>
 <div class="paragraph">
-<p>The following elements are configured on lock-coordinator</p>
+<p>The following elements are configured on every lock-coordinator regardless of implementation:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -207,10 +296,16 @@ A simple table will be provided in this chapter for the two reference implementa
 </table>
 </div>
 <div class="sect2">
-<h3 id="file"><a class="anchor" href="#file"></a><a class="link" href="#file">2.2. File</a></h3>
+<h3 id="file-based-lock-manager"><a class="anchor" href="#file-based-lock-manager"></a><a class="link" href="#file-based-lock-manager">2.2. File-Based Lock Manager</a></h3>
 <div class="paragraph">
-<p>The file-based lock uses the file system to manage distributed locks.
-It is provided by the class-name=<code>org.apache.activemq.artemis.lockmanager.file.FileBasedLockManager</code></p>
+<p>The file-based lock manager uses the file system to manage distributed locks through file locking mechanisms.
+All brokers must have access to a shared file system location.</p>
+</div>
+<div class="paragraph">
+<p><strong>Class name:</strong> <code>org.apache.activemq.artemis.lockmanager.file.FileBasedLockManager</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Properties:</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -238,10 +333,16 @@ It is provided by the class-name=<code>org.apache.activemq.artemis.lockmanager.f
 </table>
 </div>
 <div class="sect2">
-<h3 id="zookeeper"><a class="anchor" href="#zookeeper"></a><a class="link" href="#zookeeper">2.3. ZooKeeper</a></h3>
+<h3 id="zookeeper-based-lock-manager"><a class="anchor" href="#zookeeper-based-lock-manager"></a><a class="link" href="#zookeeper-based-lock-manager">2.3. ZooKeeper-Based Lock Manager</a></h3>
 <div class="paragraph">
-<p>The ZooKeeper-based lock uses Apache Curator to manage distributed locks via ZooKeeper.
-It is provided by the class-name=<code>org.apache.activemq.artemis.lockmanager.zookeeper.CuratorDistributedLockManager</code></p>
+<p>The ZooKeeper-based lock manager uses Apache Curator to manage distributed locks via a ZooKeeper ensemble.
+This is the recommended approach for production deployments as it provides better fault tolerance and doesn&#8217;t require shared storage.</p>
+</div>
+<div class="paragraph">
+<p><strong>Class name:</strong> <code>org.apache.activemq.artemis.lockmanager.zookeeper.CuratorDistributedLockManager</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Properties:</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>

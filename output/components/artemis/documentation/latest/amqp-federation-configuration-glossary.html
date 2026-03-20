@@ -34,7 +34,7 @@
 <div id="header">
 <h1>AMQP Federation Configuration Glossary</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.52.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.53.0</a></div>
 <ul class="sectlevel2">
 <li><a href="#address-federation-configuration-elements">1. Address federation configuration elements</a></li>
 <li><a href="#queue-federation-configuration-elements">2. Queue federation configuration elements</a></li>
@@ -140,6 +140,7 @@ In this case the policy is sent across the connection to the remote broker and f
                              <span class="na">auto-delete-delay=</span><span class="s">"30000"</span>
                              <span class="na">auto-delete-message-count=</span><span class="s">"0"</span>
                              <span class="na">max-hops=</span><span class="s">"1"</span>
+                             <span class="na">allow-wildcard-groupings=</span><span class="s">"false"</span>
                              <span class="na">enable-divert-bindings=</span><span class="s">"true"</span><span class="nt">&gt;</span>
          <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"local-address.#"</span> <span class="nt">/&gt;</span>
          <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"local-address.excluded"</span> <span class="nt">/&gt;</span>
@@ -189,6 +190,13 @@ The default value is <code>0</code>.</p>
 <p>Setting to <code>true</code> enables divert bindings to be listened-to for demand.
 If a divert binding with an address matches the included addresses for the address policy, any queue bindings that match the forwarding address of the divert creates demand.
 The default value is <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">allow-wildcard-groupings</dt>
+<dd>
+<p>Setting to 'true' enables the address federation policy matches to define if a remote wildcard address will be used to host the address receiver bindings for the matching addresses if the match value is itself a wildcard.
+This can be useful if federating large numbers of addresses that have low traffic as it reduces the number of addresses that need to exist on the remote federation target at the expense of higher CPU load on the target in order to route messages to the appropriate wildcard bindings for the matched addresses.
+The default value is <code>false</code> and the federation receiver address bindings will be attached to the matching addresses on the remote.
+When enabled the remote broker must have wildcard routing enabled for this feature to work correctly.</p>
 </dd>
 </dl>
 </div>
