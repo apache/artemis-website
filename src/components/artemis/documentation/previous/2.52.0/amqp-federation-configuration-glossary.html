@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<title>AMQP Federation Configuration Glossary</title>
+<link rel="stylesheet" href="css/asciidoctor.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/rouge-github.css">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pathSegments = window.location.pathname.split('/');
+        if (window.location.hostname == "artemis.apache.org" && pathSegments[pathSegments.length - 2] != "latest") {
+            var message = document.createElement("div");
+            message.style.margin = "20px";
+            message.style.textAlign = "center";
+            message.style.backgroundColor = "#FFFFE0";
+            message.textContent = "Please be aware that this documentation is out of date. ";
+
+            var link = document.createElement("a");
+            link.href = "../../latest";
+            link.textContent = "Here is the latest documentation.";
+            message.appendChild(link);
+
+            document.body.insertBefore(message, document.body.firstChild);
+        }
+    });
+</script>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>AMQP Federation Configuration Glossary</h1>
+<div id="toc" class="toc2">
+<div id="toctitle"><a href="index.html">User Manual for 2.52.0</a></div>
+<ul class="sectlevel2">
+<li><a href="#address-federation-configuration-elements">1. Address federation configuration elements</a></li>
+<li><a href="#queue-federation-configuration-elements">2. Queue federation configuration elements</a></li>
+<li><a href="#federation-policy-property-configuration-index">3. Federation policy property configuration index</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Federation configuration occurs in a broker connection element where a set of policies defines the desired address or queue federation and the locality of that federation (local or remote).
+A single federation instance is supported per broker connection element however each federation instance can contain multiple address and queue policy elements.
+Address and queue policy configuration exist for both the local and the remote side of the federation over the broker connection.
+An example of such a federation configuration element follows which contains both local and remote policy elements.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"local-address.#"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"local-address.excluded"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+       <span class="nt">&lt;local-queue-policy</span> <span class="na">name=</span><span class="s">"example-local-queue-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"address"</span> <span class="na">queue-match=</span><span class="s">"local-queue"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-queue-policy&gt;</span>
+       <span class="nt">&lt;remote-address-policy</span> <span class="na">name=</span><span class="s">"example-remote-address-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"remote-address"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/remote-address-policy&gt;</span>
+       <span class="nt">&lt;remote-queue-policy</span> <span class="na">name=</span><span class="s">"example-remote-queue-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"#"</span> <span class="na">queue-match=</span><span class="s">"remote-queue"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"excluded.#"</span> <span class="na">queue-match=</span><span class="s">"remote-queue-excluded"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/remote-queue-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Local or Remote federation policies configure the local or remote broker to perform the federation operation over the defined connection but otherwise use the same configuration attributes and properties.
+The only difference is whether the federation occurs locally meaning local demand triggers consumers to be created towards the remote broker, or if remote demand triggers consumers to be created towards the local broker (local meaning the one that carries the configuration).
+For this reason the remainder of this documentation will use local federation policies when showing configuration examples for simplicity.</p>
+</div>
+<div class="paragraph">
+<p>Federation configuration can contain multiple policies of the same type (address or queue) along with a mix of types as seen in the configuration example above.
+This allows for policies with differing configurations for federating different addresses and queues within the same broker connection.
+It is important to note that the policy names must be unique within the federation configuration.
+The following configuration example demonstrates the mix of policy configurations within a single federation configuration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy-1"</span>
+                             <span class="na">auto-delete=</span><span class="s">"true"</span>
+                             <span class="na">auto-delete-delay=</span><span class="s">"30000"</span>
+                             <span class="na">auto-delete-message-count=</span><span class="s">"0"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"a.local-address.#"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"a.local-address.excluded"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy-2"</span>
+                             <span class="na">auto-delete=</span><span class="s">"false"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"b.local-address.#"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"b.local-address.excluded"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also supported to have only remote federation policies within a broker connection federation element.
+In this case the policy is sent across the connection to the remote broker and federation occurs on the remote for the life of that broker connection.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;remote-queue-policy</span> <span class="na">name=</span><span class="s">"example-remote-queue-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"#"</span> <span class="na">queue-match=</span><span class="s">"remote-queue"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"excluded.#"</span> <span class="na">queue-match=</span><span class="s">"remote-queue-excluded"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/remote-queue-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="address-federation-configuration-elements"><a class="anchor" href="#address-federation-configuration-elements"></a><a class="link" href="#address-federation-configuration-elements">1. Address federation configuration elements</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy"</span>
+                             <span class="na">auto-delete=</span><span class="s">"true"</span>
+                             <span class="na">auto-delete-delay=</span><span class="s">"30000"</span>
+                             <span class="na">auto-delete-message-count=</span><span class="s">"0"</span>
+                             <span class="na">max-hops=</span><span class="s">"1"</span>
+                             <span class="na">enable-divert-bindings=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"local-address.#"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"local-address.excluded"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"amqpCredits"</span> <span class="na">value=</span><span class="s">"100"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"amqpLowCredits"</span> <span class="na">value=</span><span class="s">"30"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"addressReceiverIdleTimeout"</span> <span class="na">value=</span><span class="s">"0"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The address policy element can be configured with the following set of attributes, or if the value is omitted the stated default value will be applied to the deployed policy.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">name</dt>
+<dd>
+<p>The name of the policy, these names should be unique within a broker connection&#8217;s federation policy elements.</p>
+</dd>
+<dt class="hdlist1">max-hops</dt>
+<dd>
+<p>The maximum number of hops that a message can perform to be federated.
+Default value is <code>0</code> and will work for most federation deployments.
+However, in certain topologies where a loop is configured a higher value may be required to prevent infinite looping of messages.</p>
+</dd>
+<dt class="hdlist1">auto-delete</dt>
+<dd>
+<p>For address federation, a durable queue is created on the broker from which messages are being federated.
+Set this property to <code>true</code> to mark the queue for automatic deletion once the initiating broker disconnects and the delay and message count parameters are met.
+This is a useful option if you want to automate the cleanup of dynamically-created queues.
+The default value is <code>false</code>, which means that the queue is not automatically deleted.</p>
+</dd>
+<dt class="hdlist1">auto-delete-delay</dt>
+<dd>
+<p>The amount of time in milliseconds after the initiating broker has disconnected before the created queue can be eligible for <code>auto-delete</code>.
+The default value is <code>0</code> when option is omitted.</p>
+</dd>
+<dt class="hdlist1">auto-delete-message-count</dt>
+<dd>
+<p>After the initiating broker has disconnected, the maximum number of messages allowed in the remote queue for the queue to be eligible for automatic deletion.
+The default value is <code>0</code>.</p>
+</dd>
+<dt class="hdlist1">enable-divert-bindings</dt>
+<dd>
+<p>Setting to <code>true</code> enables divert bindings to be listened-to for demand.
+If a divert binding with an address matches the included addresses for the address policy, any queue bindings that match the forwarding address of the divert creates demand.
+The default value is <code>false</code>.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The following set of elements can be configured within the address policy to control the behavior of the deployed policy.
+For the policy to actually match any addresses on the target broker an include must be provided at a minimum.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">include</dt>
+<dd>
+<p>The address-match pattern to use to match included addresses, multiple of these can be set per policy.</p>
+</dd>
+<dt class="hdlist1">exclude</dt>
+<dd>
+<p>The address-match pattern to use to match excluded addresses, multiple of these can be set, or it can be omitted if no excludes are needed.</p>
+</dd>
+<dt class="hdlist1">property</dt>
+<dd>
+<p>A key / value property setting that allows for configuration options to be set either at the root federation level or within each federation policy that affects some defined behavior of the policy implementation.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="queue-federation-configuration-elements"><a class="anchor" href="#queue-federation-configuration-elements"></a><a class="link" href="#queue-federation-configuration-elements">2. Queue federation configuration elements</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-queue-policy</span> <span class="na">name=</span><span class="s">"example-local-queue-policy"</span> <span class="na">priority-adjustment=</span><span class="s">"-1"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"#"</span> <span class="na">queue-match=</span><span class="s">"remote-queue"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;exclude</span> <span class="na">address-match=</span><span class="s">"excluded.#"</span> <span class="na">queue-match=</span><span class="s">"remote-queue-excluded"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"amqpCredits"</span> <span class="na">value=</span><span class="s">"0"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"amqpPullConsumerCredits"</span> <span class="na">value=</span><span class="s">"1"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-queue-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The queue policy element can be configured with the following set of attributes, or if the value is omitted the stated default value will be applied to the deployed policy.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">name</dt>
+<dd>
+<p>The name of the policy.
+These names should be unique within a broker connection&#8217;s federation policy elements.</p>
+</dd>
+<dt class="hdlist1">priority-adjustment</dt>
+<dd>
+<p>When federation consumers are created this value can be used to ensure that those federation consumers have a lower priority value than other local consumers on the same queue.
+The default is <code>-1</code>.</p>
+</dd>
+<dt class="hdlist1">include-federated</dt>
+<dd>
+<p>Controls if consumers on a queue which come from federation instances should be counted when observing a queue for demand, by default this value is <code>false</code> and federation consumers are not counted as local demand.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The following set of elements can be configured within the queue policy to control the behavior of the deployed policy.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">include</dt>
+<dd>
+<p>The queue-match pattern to use to match included queues and enforce that a matched queue is also bound to a specific address.
+Multiple of the include elements can be set per policy, but if none are set all queues would be matched unless there is an exclude configured.</p>
+</dd>
+<dt class="hdlist1">exclude</dt>
+<dd>
+<p>The queue-match pattern to use to match excluded queues that the policy should ignore.
+Multiple of these can be set, or it can be omitted if no excludes are needed.</p>
+</dd>
+<dt class="hdlist1">property</dt>
+<dd>
+<p>A key / value property setting that allows for configuration options to be set either at the root federation level or within each federation policy that affects some defined behavior of the policy implementation.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="federation-policy-property-configuration-index"><a class="anchor" href="#federation-policy-property-configuration-index"></a><a class="link" href="#federation-policy-property-configuration-index">3. Federation policy property configuration index</a></h3>
+<div class="paragraph">
+<p>The following properties can be set either at the federation element level or set per-policy in order to apply different behaviors to different policies within the same federation configuration.
+When remote address or queue policies are configured the value of these properties are sent to the remote along with the policies to ensure both sides are operating with the same configurations.
+Certain value can also be set in the broker connection URI when noted if not set in any of the available locations the configuration default value is used.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">attach-timeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Controls the timeout value for a federation receiver link attach to complete before the attach attempt is considered to have failed. The value is configured in seconds.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30 (Seconds)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">amqpCredits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the amount of credits to batch to an AMQP receiver link and the top up limit when sending more credit once the credits are determined to be running low. This value will be read from the broker connection URI if one was specified there and not set in the federation policy..</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000 (broker default)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">amqpLowCredits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A low water mark for receiver credits that indicates more should be sent to top it up to the original credit batch size. This value will be read from the broker connection URI if one was specified there and not overridden in the federation policy.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">300 (broker default)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">amqpPullConsumerCredits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the amount of credits to batch to an AMQP receiver link and the top up value when sending more credit once the broker has capacity available for them. In order for this value to take affect the <code>amqpCredits</code> value must be set to zero. If <code>amqpCredits</code> ist set to zero and this option is not configured the default value is used.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minLargeMessageSize</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to configure the value to use when considering if a message is a large message for federation consumers. This value will be read from the broker connection URI if one was specified there and not overridden in the federation policy.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Broker default</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ignoreAddressBindingFilters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to configure if federation address consumers should filter messages using the filters defined on individual matching address bindings. This value can be used to reduce the amount of messages that are federated for an address if the local consumers use filters but must be enabled with care as it can easily lead to duplicate messages being dispatched from the remote as each unique address binding filter creates a remote consumer with that matching filter. If any filters overlap in the messages they allow to pass or there are bindings without a filter then the remote will be sending the same message to multiple federation consumers in order to provide each group of bindings with their matching messages.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ignoreQueueConsumerFilters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to configure if federation queue consumers should filter messages using the filters defined on individual queue subscriptions. This can be used to prevent multiple subscriptions on the same queue based on local demand with differing subscription filters but does imply that message that don&#8217;t match those filters would be federated to the local broker.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ignoreQueueConsumerPriorities</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to control if federation queue consumers should apply a consumer priority offset based on the subscription priority or should use a singular priority offset based on policy configuration. This can be used to prevent multiple subscriptions on the same queue based on local demand with differing consumer priorities but does imply that care needs to be taken to ensure remote consumers would still normally have a higher priority value than the configured default priority offset. This value is off by default as that is the safest and simplest to manage as a single offset value is set and all federation consumer will be know to be using that value.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">amqpUseModifiedForTransientDeliveryErrors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to configure how a federation receiver should respond to delivery errors indicating that an address is full and cannot accept messages at this time. By default we will send Modified outcomes with the delivery failed value set to true such that the remote will deliver the message again after incrementing the delivery count of the message. Disabling this causes the Rejected outcome to be sent instead which is a terminal outcome which results in message being dropped and possibly sent to a DLA on is configured.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">amqpLinkQuiesceTimeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the time in milliseconds that a receiver will wait before considering a pending quiesce timeout to have failed and should close the link. This option can be used to override the value specified on the connector URI to allow federation to operate with a different default. This timeout applies to AMQP links that are being drained due to a transient delivery error such as the address being full and the address policy is set to send a failed response to the remote sender. If the drain on transient delivery errors option is set to false then this option is ignored.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Broker default (10 minutes)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">amqpDrainOnTransientDeliveryErrors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to control if a federation receiver should drain the link credit when a transient delivery error such as the address being full occurs. This option can be used to override the value specified on the connector URI to allow federation to operate with a different default.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Broker default (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">receiverQuiesceTimeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When a federation receiver link is being drained due to removal of local demand this timeout value enforces a maximum wait for drain and processing of in-flight messages before the link is forcibly terminated with the assumption that the remote is no longer responding.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">60s</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">addressReceiverIdleTimeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When a federation address receiver link has been successfully drained after demand was removed from the federated resource, this value controls how long the link can remain in an attached but idle state before it is closed. This can allow for quicker restoration of federated messages if the demand on a queue is removed and re-added quickly as the link is drained of credit but not immediately closed. For address receivers the default is kept short to prevent holding broadcast messages on the remote for a receiver which might not return in a timely manner.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5s</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">queueReceiverIdleTimeout</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When a federation queue receiver link has been successfully drained after demand was removed from the federated resource, this value controls how long the link can remain in an attached but idle state before it is closed. This can allow for quicker restoration of federated messages if the demand on a queue is removed and re-added quickly as the link is drained of credit but not immediately closed.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">60s</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+</html>

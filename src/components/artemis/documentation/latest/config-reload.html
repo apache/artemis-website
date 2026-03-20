@@ -33,7 +33,7 @@
 <div id="header">
 <h1>Configuration Reload</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.52.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.53.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#reloadable-parameters">1. Reloadable Parameters</a>
 <ul class="sectlevel2">
@@ -923,6 +923,12 @@ The effect of deletion of Address&#8217;s and Queue&#8217;s, not auto created is
 <p>Adding, updating and removing an <code>&lt;acceptor&gt;</code> is supported, updating or removing an <code>&lt;acceptor&gt;</code> results in the closure of all connections that were accepted previously. Added or updated acceptors are automatically started during the configuration reload process unless the <code>auto-start</code> option is set to false.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="connection-routers"><a class="anchor" href="#connection-routers"></a><a class="link" href="#connection-routers">1.1.7. <code>&lt;connection-routers&gt;</code></a></h4>
+<div class="paragraph">
+<p>Adding, updating and removing an <code>&lt;connection-router&gt;</code> is supported, updating or removing an <code>&lt;connection-router&gt;</code> results in the stop of the existing connection router and re-adding a new instance if updated.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="jms-deprecated"><a class="anchor" href="#jms-deprecated"></a><a class="link" href="#jms-deprecated">1.2. <code>&lt;jms&gt;</code> <em>(Deprecated)</em></a></h3>
@@ -938,7 +944,19 @@ The effect of deletion of Address&#8217;s and Queue&#8217;s, not auto created is
 <h2 id="broker-properties"><a class="anchor" href="#broker-properties"></a><a class="link" href="#broker-properties">2. Broker Properties</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The location of <a href="configuration-index.html#broker-properties">brokerProperties</a> files will be tracked for reload. Any property values that relfect reloadable parameters will take effect after the <code>configuration-file-refresh-period</code>.</p>
+<p>The location of <a href="configuration-index.html#broker-properties">brokerProperties</a> files will be tracked for reload. Any property values that reflect reloadable parameters will take effect after the <code>configuration-file-refresh-period</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If programmatic configuration is in play, any configuration object passed to the broker must not contain reloadable config <strong>and</strong> have a broker properties source. The broker does not have any config reload callbacks at this time to protect the programmatic configuration. An IllegalStateException will be thrown if this arises.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>

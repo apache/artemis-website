@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Upgrading the Broker</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.52.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.53.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#general-upgrade-procedure">1. General Upgrade Procedure</a></li>
 <li><a href="#upgrading-tool">2. Upgrading tool</a></li>
@@ -74,8 +74,22 @@ It also simplifies updating to newer versions.
 <div class="sect1">
 <h2 id="general-upgrade-procedure"><a class="anchor" href="#general-upgrade-procedure"></a><a class="link" href="#general-upgrade-procedure">1. General Upgrade Procedure</a></h2>
 <div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>Upgrading may require some specific steps noted in the <a href="versions.html#versions">versions</a>, but the general process is as follows:</p>
+<p>Review the <a href="versions.html#version-history">version</a> history for specific steps required for your upgrade before proceeding.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In general, the process is as follows:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -115,7 +129,7 @@ It contains a property which is relevant for the upgrade:</p>
 <div class="paragraph">
 <p>The <code>ARTEMIS_HOME</code> property is used to link the instance with the home.
 <em>In most cases</em> the instance can be upgraded to a newer version simply by changing the value of this property to the location of the new broker home.
-Please refer to the aforementioned <a href="versions.html#versions">versions</a> document for additional upgrade steps (if required).</p>
+Please refer to the aforementioned <a href="versions.html#version-history">versions</a> document for additional upgrade steps (if required).</p>
 </div>
 <div class="paragraph">
 <p>It is also possible to do many of these update steps automatically, as can be seen in the next section.</p>
