@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<title>Management Console</title>
+<link rel="stylesheet" href="css/asciidoctor.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/rouge-github.css">
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Management Console</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#deploying">1. Deploying</a>
+<ul class="sectlevel2">
+<li><a href="#deploying-embedded-in-artemis">1.1. Deploying embedded in Artemis</a></li>
+<li><a href="#deploying-in-jetty">1.2. Deploying in Jetty</a></li>
+<li><a href="#deploying-in-tomcat">1.3. Deploying in Tomcat</a></li>
+<li><a href="#running-from-the-command-line-jbang">1.4. Running from the Command Line (JBang)</a></li>
+</ul>
+</li>
+<li><a href="#connecting-to-a-broker">2. Connecting to a Broker</a>
+<ul class="sectlevel2">
+<li><a href="#adding-a-connection">2.1. Adding A Connection</a></li>
+</ul>
+</li>
+<li><a href="#using-the-console">3. Using the Console</a>
+<ul class="sectlevel2">
+<li><a href="#utility-menu">3.1. Utility Menu</a></li>
+<li><a href="#management-views">3.2. Management Views</a></li>
+<li><a href="#artemis-view">3.3. Artemis View</a>
+<ul class="sectlevel3">
+<li><a href="#status-tab">3.3.1. Status Tab</a></li>
+<li><a href="#connections-tab">3.3.2. Connections Tab</a></li>
+<li><a href="#sessions-tab">3.3.3. Sessions Tab</a></li>
+<li><a href="#producers-tab">3.3.4. Producers Tab</a></li>
+<li><a href="#consumers-tab">3.3.5. Consumers Tab</a></li>
+<li><a href="#addresses-tab">3.3.6. Addresses Tab</a></li>
+<li><a href="#queues-tab">3.3.7. Queues Tab</a></li>
+<li><a href="#broker-diagram">3.3.8. Broker Diagram</a></li>
+</ul>
+</li>
+<li><a href="#artemis-jmx-view">3.4. Artemis JMX View</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apache Artemis Console is powered by <a href="http://hawt.io">Hawt.io</a>. It ships by default in Apache Artemis.</p>
+</div>
+<div class="paragraph">
+<p>Its purpose is to expose the Apache Artemis <a href="https://artemis.apache.org/components/artemis/documentation/latest/management.html">Management API</a> via a user-friendly web interface.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deploying"><a class="anchor" href="#deploying"></a><a class="link" href="#deploying">1. Deploying</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The web console can be run within Apache Artemis or deployed into a standalone servlet container.</p>
+</div>
+<div class="sect2">
+<h3 id="deploying-embedded-in-artemis"><a class="anchor" href="#deploying-embedded-in-artemis"></a><a class="link" href="#deploying-embedded-in-artemis">1.1. Deploying embedded in Artemis</a></h3>
+<div class="paragraph">
+<p>By default, the console is integrated into Apache Artemis.
+Refer to the <a href="https://artemis.apache.org/components/artemis/documentation/latest/management-console.html#login">Apache Artemis documentation</a> for how to login.
+Once logged in, check out how to <a href="#using-the-console">use the console</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deploying-in-jetty"><a class="anchor" href="#deploying-in-jetty"></a><a class="link" href="#deploying-in-jetty">1.2. Deploying in Jetty</a></h3>
+<div class="paragraph">
+<p>Install <a href="https://jetty.org/download.html">Jetty 12</a> and make sure to add the modules <code>http</code> and <code>ee10-deploy</code>.
+See the
+<a href="https://jetty.org/docs/jetty/12/operations-guide/deploy/index.html">Jetty Deploy Guide</a> for more info.</p>
+</div>
+<div class="paragraph">
+<p>You will need to create a Jetty Context XML file in the <code>webapps</code> directory.
+Name it <code>artemis-console.xml</code> and add the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "https://jetty.org/configure_10_0.dtd"&gt;</span>
+
+<span class="nt">&lt;Configure</span> <span class="na">class=</span><span class="s">"org.eclipse.jetty.ee10.webapp.WebAppContext"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Set</span> <span class="na">name=</span><span class="s">"contextPath"</span><span class="nt">&gt;</span>/console<span class="nt">&lt;/Set&gt;</span>
+  <span class="nt">&lt;Set</span> <span class="na">name=</span><span class="s">"war"</span><span class="nt">&gt;</span>/myapps/artemis-console-war.war<span class="nt">&lt;/Set&gt;</span>
+<span class="nt">&lt;/Configure&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can then start Jetty using the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>java <span class="nt">-Dhawtio</span>.authenticationEnabled<span class="o">=</span><span class="nb">false</span> <span class="nt">-jar</span> <span class="nv">$JETTY_HOME</span>/start.jar</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Since this is only running the Connect plugin Hawtio authentication is disabled. Authentication will take place on connection to the Artemis Broker.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Connect a browser to <a href="http://localhost:8080/console" class="bare">http://localhost:8080/console</a> or the URL you configured for Jetty.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="#connecting-to-a-broker">connecting</a> section explains how to connect to a running broker.</p>
+</div>
+<div class="paragraph">
+<p>For full information on deploying applications in Jetty see <a href="https://jetty.org/docs/jetty/12/operations-guide/index.html">The Operations Guide</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deploying-in-tomcat"><a class="anchor" href="#deploying-in-tomcat"></a><a class="link" href="#deploying-in-tomcat">1.3. Deploying in Tomcat</a></h3>
+<div class="paragraph">
+<p>Firstly you will need to install <a href="https://tomcat.apache.org/download-10.cgi">Tomcat Version 10</a>.</p>
+</div>
+<div class="paragraph">
+<p>There are many ways to deploy a <strong>WAR</strong> file using Tomcat. The <a href="https://tomcat.apache.org/tomcat-10.1-doc">Tomcat Documentation</a> explains this in detail.</p>
+</div>
+<div class="paragraph">
+<p>You will need to make sure  that the context path for the console is configured to be <code>/console</code>, if the war were configured in
+the tomcat <code>server.xml</code> this would look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;Context</span> <span class="na">path=</span><span class="s">"/console"</span> <span class="na">docBase=</span><span class="s">"/myapps/artemis-console-war.war"</span><span class="nt">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since the console only deploys the <code>connect</code> plugin authentication by hawtio is done on connecting to the Artemis Broker
+you can disable authentication by setting the property:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="go">export CATALINA_OPTS="-Dhawtio.authenticationEnabled=false"</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once Tomcat is started connect a browser to <a href="http://localhost:8080/console" class="bare">http://localhost:8080/console</a> or the URL you configured for tomcat.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="#connecting-to-a-broker">connecting</a> section explains how to connect to a running broker.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-from-the-command-line-jbang"><a class="anchor" href="#running-from-the-command-line-jbang"></a><a class="link" href="#running-from-the-command-line-jbang">1.4. Running from the Command Line (JBang)</a></h3>
+<div class="paragraph">
+<p>You can install and run Hawtio from the command line using JBang.
+If you don’t have JBang locally yet, first install it following: <a href="https://www.jbang.dev/download/" class="bare">https://www.jbang.dev/download/</a>.</p>
+</div>
+<div class="paragraph">
+<p>Now you can install the latest Hawtio on your machine using the <a href="https://www.jbang.dev/">jbang</a> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>jbang app <span class="nb">install </span>hawtio@hawtio/hawtio</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will allow you to deploy Artemis Console using the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>hawtio <span class="nt">--war-location</span> /pathto/artemis-console-war.war <span class="nt">--context-path</span> /console</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The command will automatically open the console at <a href="http://localhost:8080/console/" class="bare">http://localhost:8080/console/</a>.</p>
+</div>
+<div class="paragraph">
+<p>For a full list of configuration options run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>hawtio <span class="nt">--help</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="connecting-to-a-broker"><a class="anchor" href="#connecting-to-a-broker"></a><a class="link" href="#connecting-to-a-broker">2. Connecting to a Broker</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="adding-a-connection"><a class="anchor" href="#adding-a-connection"></a><a class="link" href="#adding-a-connection">2.1. Adding A Connection</a></h3>
+<div class="paragraph">
+<p>Once you have navigated to the <strong>Connect</strong> view click <kbd>Add connection</kbd> and fill in the Jolokia endpoint configuration
+of your broker.</p>
+</div>
+<div class="paragraph">
+<p>The endpoint details will depend on your specific broker configuration, but can be easily found in a message printed to
+the console during broker startup. For instance, a fresh broker instance displaying startup message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">AMQ241002: Artemis Jolokia REST API available at http://localhost:8161/console/jolokia</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Would yield connection details of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">Host: localhost
+Port: 8161
+Path: /console/jolokia</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Configure these as needed for your specific broker instance.
+You can test the connection with <kbd>Test Connection</kbd> before clicking <strong>Add</strong> to save the connection:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/add_connection.png" alt="Apache Artemis Console Add Connection">
+</div>
+</div>
+<div class="paragraph">
+<p>Once the connection is added simply click <kbd>Connect</kbd> for your broker and this should open up a new tab and prompt for a login attempt.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using-the-console"><a class="anchor" href="#using-the-console"></a><a class="link" href="#using-the-console">3. Using the Console</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once logged in you should be presented with a screen similar to:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/console-artemis-plugin.png" alt="Apache Artemis Console Artemis Plugin">
+</div>
+</div>
+<div class="sect2">
+<h3 id="utility-menu"><a class="anchor" href="#utility-menu"></a><a class="link" href="#utility-menu">3.1. Utility Menu</a></h3>
+<div class="paragraph">
+<p>On the top right is a small menu area where you will see some icons:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/utility_menu.png" alt="Apache Artemis Console Utility Menu">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>?</code> (question mark) A drop-down menu with:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Help</code> The console user guide</p>
+</li>
+<li>
+<p><code>About</code> A screen displaying version number for the various components that comprise the web console</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>&lt;username&gt;</code> A drop-down menu with:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Preferences</code> Open the preference page for the current user</p>
+</li>
+<li>
+<p><code>Log out</code> self descriptive.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="management-views"><a class="anchor" href="#management-views"></a><a class="link" href="#management-views">3.2. Management Views</a></h3>
+<div class="paragraph">
+<p>On the left you will see menu items to switch between the various management views.
+The first two are specific to the broker.
+The rest of this document will focus on these two views.</p>
+</div>
+<div class="paragraph">
+<p>Use the <code>☰</code> icon in the top left to show or hide this menu.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/management_views.png" alt="Apache Artemis Console Management Views">
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Artemis</dt>
+<dd>
+<p>A tabbed view containing paged detailes about various broker resources like addresses, queues, connections, etc.
+The most common management operations for the corresponding resource are available on this view.</p>
+</dd>
+<dt class="hdlist1">Artemis JMX</dt>
+<dd>
+<p>A tree view allowing access to all the JMX MBeans registered by the broker.
+<em>Every</em> management operation and attribute is available in this view.</p>
+</dd>
+<dt class="hdlist1">JMX</dt>
+<dd>
+<p>A tree view allowing access to all the JMX MBeans registered in the JVM, not just ones registered by the broker.</p>
+</dd>
+<dt class="hdlist1">Runtime</dt>
+<dd>
+<p>A tabbed view containing information about system properties, metrics about system load, and thread details.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>In previous versions there was a "Connect" tab which could be used to connect to a remote broker from the same console.
+This was disabled by default for security purposes, but it can be enabled again by removing <code>-Dhawtio.disableProxy=true</code> from <code>artemis.profile</code> (or <code>artemis.profile.cmd</code> on Windows).</p>
+</div>
+<div class="paragraph">
+<p>You can install further Hawtio plugins if you wish to have further functionality.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="artemis-view"><a class="anchor" href="#artemis-view"></a><a class="link" href="#artemis-view">3.3. Artemis View</a></h3>
+<div class="paragraph">
+<p>Click the <kbd>Artemis</kbd> item in the left navigation bar to open the Artemis view.
+(The Artemis item is not present if there is no broker in this JVM).</p>
+</div>
+<div class="paragraph">
+<p>The following functionality is available on every data table:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Configurable Columns</dt>
+<dd>
+<p>The columns displayed are configurable via <kbd>Manage Columns</kbd>.
+This is persisted in the web session&#8217;s local storage and available when a new session is started.</p>
+</dd>
+<dt class="hdlist1">Ordered Rows</dt>
+<dd>
+<p>Data can be ordered by clicking on the sort icon on the top left toolbar, selecting the column to sort, and choosing either ascending or descending or by clicking <kbd>↑</kbd> or <kbd>↓</kbd>.</p>
+</dd>
+<dt class="hdlist1">Searchable</dt>
+<dd>
+<p>Data can also be filtered by a value in a particular column by selecting the column and operator from the dropdowns and entering a value to search for.</p>
+</dd>
+<dt class="hdlist1">Contextual Operations</dt>
+<dd>
+<p>At the end of most rows is a <kbd>⋮</kbd> which can be clicked to show a menu of contextual operations for that particular resource.</p>
+</dd>
+</dl>
+</div>
+<div class="sect3">
+<h4 id="status-tab"><a class="anchor" href="#status-tab"></a><a class="link" href="#status-tab">3.3.1. Status Tab</a></h4>
+<div class="paragraph">
+<p>The Status tab is the default tab shown after login and shows the basic state of the broker, including uptime, the address memory used, and the type of broker deployed.
+It also shows the status of each acceptor configured as well as the network status is a cluster of brokers.
+This status refreshes every 5 seconds.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="connections-tab"><a class="anchor" href="#connections-tab"></a><a class="link" href="#connections-tab">3.3.2. Connections Tab</a></h4>
+<div class="paragraph">
+<p>The Connections tab lists all the connection to the broker.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/connections_tab.png" alt="Apache Artemis Console Connections Tab">
+</div>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Session Count</code> <em>value</em> will navigate to the Sessions tab and automatically filter on the chosen connection.</p>
+</div>
+<div class="paragraph">
+<p>Contextual Operations in <kbd>⋮</kbd></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><kbd>Close</kbd></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sessions-tab"><a class="anchor" href="#sessions-tab"></a><a class="link" href="#sessions-tab">3.3.3. Sessions Tab</a></h4>
+<div class="paragraph">
+<p>The Sessions tab will list all the session open on the broker.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/sessions_tab.png" alt="Apache Artemis Console Sessions Tab">
+</div>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Connection ID</code> <em>value</em> will automatically navigate to the Connections tab and filter on that connection.</p>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Consumer Count</code> <em>value</em> will automatically navigate to the Consumers tab and filter on the consumer chosen.</p>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Producer Count</code> <em>value</em> will automatically navigate to the Producers tab and filter on the producer chosen.</p>
+</div>
+<div class="paragraph">
+<p>Contextual Operations in <kbd>⋮</kbd></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><kbd>Close</kbd></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="producers-tab"><a class="anchor" href="#producers-tab"></a><a class="link" href="#producers-tab">3.3.4. Producers Tab</a></h4>
+<div class="paragraph">
+<p>The Producers tab will list all the producers open on the broker.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/producers_tab.png" alt="Apache Artemis Console Producers Tab">
+</div>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Session</code> value will navigate to the Sessions tab and filter on the session chosen.</p>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Address</code> value will navigate to the Address tab and filter on that address</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="consumers-tab"><a class="anchor" href="#consumers-tab"></a><a class="link" href="#consumers-tab">3.3.5. Consumers Tab</a></h4>
+<div class="paragraph">
+<p>The Consumers tab will list all the Consumers open on the broker.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/consumers_tab.png" alt="Apache Artemis Console Consumers Tab">
+</div>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Session</code> value will navigate to the Sessions tab and filter on the session chosen.</p>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Address</code> value will navigate to the Address tab and filter on that address</p>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Queue</code> value will navigate to the Queue tab and filter on that queue</p>
+</div>
+<div class="paragraph">
+<p>Contextual Operations in <kbd>⋮</kbd></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><kbd>Close</kbd></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="addresses-tab"><a class="anchor" href="#addresses-tab"></a><a class="link" href="#addresses-tab">3.3.6. Addresses Tab</a></h4>
+<div class="paragraph">
+<p>The Addresses tab will list all the addresses on the broker.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/addresses_tab.png" alt="Apache Artemis Console Addresses Tab">
+</div>
+</div>
+<div class="paragraph">
+<p>To create a new address click <kbd>Create Address</kbd> and fill in the form presented.</p>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Queue Count</code> value will navigate to the Queues tab and filter on those queues.</p>
+</div>
+<div class="paragraph">
+<p>Contextual Operations in <kbd>⋮</kbd></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><kbd>Show in Artemis JMX</kbd> - Navigate to the Artemis JMX view and automatically select the addresses MBean.</p>
+</li>
+<li>
+<p><kbd>Attributes</kbd> - Show all the address MBean attributes and allow editing if permissions allow.</p>
+</li>
+<li>
+<p><kbd>Operations</kbd> - Show all the address MBean operations and allow execution of permissions allow.</p>
+</li>
+<li>
+<p><kbd>Delete Address</kbd> - Confirm deletion of the address if permissions allow.</p>
+</li>
+<li>
+<p><kbd>Send Message</kbd> - Send a message to this queue if permissions allow.
+This in turn will route it to any queues that are bound to this address.
+Both headers and a body can be added. The message type is always <em>text</em>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Sending will be authenticated using the <em>current user</em>.
+Unselect the current logged in user to specify a different user.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><kbd>Create Queue</kbd> - Open up a dialog which will allow the user to create queues that are bound to the corresponding address.
+A subset of queue parameters are available for direct configuration.
+However, parameters not exposed can be configured using a set of key/value pairs, for instance <code>delay-before-dispatch</code> or <code>auto-delete</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="queues-tab"><a class="anchor" href="#queues-tab"></a><a class="link" href="#queues-tab">3.3.7. Queues Tab</a></h4>
+<div class="paragraph">
+<p>The Queues tab will list all the queues on the broker.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/queues_tab.png" alt="Apache Artemis Console Queues Tab">
+</div>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Address</code> value will navigate to the Addresses tab and filter on the address chosen.</p>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Consumer Count</code> value will navigate to the Consumers tab and filter on the queue chosen.</p>
+</div>
+<div class="paragraph">
+<p>Clicking on the <code>Message Count</code> value will show a different view allowing the user to <a href="#browsing-messages">browse messages</a>.</p>
+</div>
+<div class="paragraph">
+<p>Contextual Operations in <kbd>⋮</kbd></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><kbd>Show in Artemis JMX</kbd> - Navigate to the Artemis JMX view and automatically select the queue MBean.</p>
+</li>
+<li>
+<p><kbd>Attributes</kbd> - Show all the queue MBean attributes and allow editing if permissions allow.</p>
+</li>
+<li>
+<p><kbd>Operations</kbd> - Show all the queue MBean operations and allow execution of permissions allow.</p>
+</li>
+<li>
+<p><kbd>Send Message</kbd> - Send a message to this queue if permissions allow.
+This in turn will route it to any queues that are bound to this address.
+Both headers and a body can be added. The message type is always <em>text</em>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Sending will be authenticated using the <em>current user</em>.
+Unselect the current logged in user to specify a different user.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><kbd>Purge</kbd> - Remove <strong>all</strong> messages from the queue if permissions allow.</p>
+</li>
+<li>
+<p><kbd>Browse</kbd> - Details <a href="#browsing-messages">here</a>.</p>
+</li>
+<li>
+<p><kbd>Delete</kbd> - Confirm deletion of the queue if permissions allow.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="browsing-messages"><a class="anchor" href="#browsing-messages"></a><a class="link" href="#browsing-messages">Browsing Messages</a></h5>
+<div class="paragraph">
+<p>Users can view a paginated list of the messages on a queue.
+Messages can be filtered, deleted, moved, copied, and resent.
+Although there may be a large number of messages in the queue the console only fetches a single page at a time from the broker.
+The console will retrieve each page of messages afresh when the list is iterated over or the order or filters are changed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/browse_messages.png" alt="Apache Artemis Console Browse Messages">
+</div>
+</div>
+<div class="sect5">
+<h6 id="filtering"><a class="anchor" href="#filtering"></a><a class="link" href="#filtering">Filtering</a></h6>
+<div class="paragraph">
+<p>Messages can be filtered using the JMS Message Selector Syntax as described <a href="filter-expressions.html#filter-expressions">here</a>.
+For example, if you wanted to filter on messages that contained the Message Header myheader which was set to octopus, you would enter <code>myheader=’octopus’</code> in the text box in the top left and click <kbd>Filter</kbd>.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="deleting"><a class="anchor" href="#deleting"></a><a class="link" href="#deleting">Deleting</a></h6>
+<div class="paragraph">
+<p>Messages can be deleted in bulk by selecting the relevant checkbox of each message on the left hand side and clicking <kbd>Delete</kbd>.
+This will open up a dialog box to confirm deletion.
+Note that this operation cannot be undone.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Messages can also be individually deleted by using the contextual operation in <kbd>⋮</kbd>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect5">
+<h6 id="moving"><a class="anchor" href="#moving"></a><a class="link" href="#moving">Moving</a></h6>
+<div class="paragraph">
+<p>Messages can be moved in bulk to another queue by selecting the relevant checkbox of each message on the left hand side and clicking <kbd>Move</kbd>.
+This will open up a dialog box that has a searchable drop down box for easy searching of available target queues.
+Start typing the name of the queue to which you want to move the messages.</p>
+</div>
+<div class="paragraph">
+<p>Moving a message removes it from the source queue and adds it to the target queue.
+This operation cannot be undone.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="copying"><a class="anchor" href="#copying"></a><a class="link" href="#copying">Copying</a></h6>
+<div class="paragraph">
+<p>Messages can be moved in bulk to another queue by selecting the relevant checkbox of each message on the left hand side and clicking <kbd>Copy</kbd>.
+This will open up a dialog box that has a searchable drop down box for easy searching of available target queues.
+Start typing the name of the queue to which you want to move the messages.</p>
+</div>
+<div class="paragraph">
+<p>Copying a message does <em>not</em> remove it from the source queue.
+It simply adds it to the target queue.
+This operation cannot be undone.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="resending"><a class="anchor" href="#resending"></a><a class="link" href="#resending">Resending</a></h6>
+<div class="paragraph">
+<p>Messages can be <em>re</em>sent to the original address by using the contextual operation in <kbd>⋮</kbd>.
+This will open up a dialog that allows you to send a <em>new</em> message <em>initialized with the details of the selected message</em>.</p>
+</div>
+<div class="paragraph">
+<p>This operation allows the user to change the details of the message if necessary (e.g. body, properties, user, etc.).
+It&#8217;s not necessarily a strict <em>copy</em> of the message.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="detailed-viewing"><a class="anchor" href="#detailed-viewing"></a><a class="link" href="#detailed-viewing">Detailed Viewing</a></h6>
+<div class="paragraph">
+<p>It&#8217;s possible to get a detailed view of a single message by clicking on the <code>Message ID</code> value or by using the contextual operation in <kbd>⋮</kbd>.
+Details include the body of the message (insofar as it can be deserialized), message properties, and message headers.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="broker-diagram"><a class="anchor" href="#broker-diagram"></a><a class="link" href="#broker-diagram">3.3.8. Broker Diagram</a></h4>
+<div class="paragraph">
+<p>The Broker Diagram tab shows a visual representation of the broker, its addresses &amp; queues, and any other broker that may be in the cluster.
+You can choose which nodes to show by clicking on <kbd>Node Options</kbd>.</p>
+</div>
+<div class="paragraph">
+<p>Clicking on the node will also fetch up the attributes of the associated MBean.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/broker_diagram_tab.png" alt="Apache Artemis Console Broker Diagram">
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="artemis-jmx-view"><a class="anchor" href="#artemis-jmx-view"></a><a class="link" href="#artemis-jmx-view">3.4. Artemis JMX View</a></h3>
+<div class="paragraph">
+<p>Click the <kbd>Artemis JMX</kbd> item in the left navigation bar to see the Artemis JMX view.
+(The Artemis JMX item is not present if there is no broker in this JVM).
+The Artemis JMX view is similar to the standard JMX view, however with a focus on interacting with an Artemis broker.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/artemis_jmx_tree.png" alt="Apache Artemis Console Broker Diagram">
+</div>
+</div>
+<div class="paragraph">
+<p>Aside from MBean attributes and operations other tabs are also available based on what kind of resource is being viewed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Address</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create Queue</p>
+</li>
+<li>
+<p>Delete Address</p>
+</li>
+<li>
+<p>Send Message</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Queue</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Browse Messages</p>
+</li>
+<li>
+<p>Delete Queue</p>
+</li>
+<li>
+<p>Send Message</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
