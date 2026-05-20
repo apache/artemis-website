@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Authentication &amp; Authorization</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.53.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.54.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#basic-configuration">1. Basic Configuration</a></li>
 <li><a href="#boot-time-security-configuration-via-system-properties">2. Boot-time Security Configuration via System Properties</a>
@@ -1050,11 +1050,13 @@ For example, to define the roles <code>admins</code>, <code>users</code>, and <c
 <p>As mentioned above, the <a href="using-cli.html#command-line-interface">command-line interface</a> supports a command to <code>add</code> a user.
 Commands to <code>list</code> (one or all) users, <code>remove</code> a user, and <code>reset</code> a user&#8217;s password and/or role(s) are also supported via the <a href="using-cli.html#command-line-interface">command-line interface</a> as well as the normal management interfaces (e.g. JMX, web console, etc.).</p>
 </div>
-<div class="quoteblock">
-<blockquote>
-<div class="paragraph">
-<p><strong>Warning</strong></p>
-</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
 <div class="paragraph">
 <p>Management and CLI operations to manipulate user &amp; role data are only available when using the <code>PropertiesLoginModule</code>.</p>
 </div>
@@ -1064,7 +1066,9 @@ The broker is designed to deal with messages.
 It&#8217;s not in the business of managing users, although that functionality is provided at a limited level for convenience.
 LDAP is recommended for enterprise level production use-cases.</p>
 </div>
-</blockquote>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -1672,7 +1676,18 @@ This Principal can then be used for <a href="#role-mapping">role mapping</a>.</p
 <h4 id="externalcertificateloginmodule"><a class="anchor" href="#externalcertificateloginmodule"></a><a class="link" href="#externalcertificateloginmodule">8.2.7. ExternalCertificateLoginModule</a></h4>
 <div class="paragraph">
 <p>The external certificate login module is used to propagate a validated TLS client certificate&#8217;s subjectDN into a JAAS UserPrincipal.
-This allows subsequent login modules to do role mapping for the TLS client certificate.</p>
+This allows subsequent login modules to do role mapping for the TLS client certificate.
+It is possible to populate RolePrincipals with values from the certificate Subject Alternative Name(SAN) URIs that match a configured prefix.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">sanUriRolePrefix</dt>
+<dd>
+<p>when non-null, this value is used as a prefix to extract role information from a certificate SAN URIs.
+If keytool was used with -ext "SAN=uri:urn:jaas:role:admin,uri:urn:jaas:role:view" to populate the certificate SAN.
+Then a sanUriRolePrefix value of <code>urn:jaas:role:</code> would extract them into subject RolePrincipals</p>
+</dd>
+</dl>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1764,6 +1779,186 @@ For example, to define the roles admins, users, and guests, you could create a f
 <pre class="rouge highlight nowrap"><code data-lang="properties"><span class="py">admins</span><span class="p">=</span><span class="s">system:serviceaccounts:example-ns:admin-sa</span>
 <span class="py">users</span><span class="p">=</span><span class="s">system:serviceaccounts:other-ns:test-sa</span></code></pre>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="oidcloginmodule"><a class="anchor" href="#oidcloginmodule"></a><a class="link" href="#oidcloginmodule">8.2.11. OIDCLoginModule</a></h4>
+<div class="paragraph">
+<p>OpenID Connect JAAS Login Module performs authentication based on credentials sent in the form of <a href="https://datatracker.ietf.org/doc/html/rfc7519">Json Web Token (JWT)</a>.</p>
+</div>
+<div class="paragraph">
+<p>This login module doesn&#8217;t require connection to OpenID Connect provider (like <a href="https://www.keycloak.org">Keycloak</a> or <a href="https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id">Microsoft Entra ID</a>) to perform the authentication. The connection is required only to retrieve a list of public keys used to verify signed JWT tokens.</p>
+</div>
+<div class="paragraph">
+<p>OIDCLoginModule doesn&#8217;t enforce any particular method of obtaining the tokens in the first place. The only requirement is mutual
+trust for the OpenID Connect provider.</p>
+</div>
+<div class="paragraph">
+<p>JWT tokens can be used in various scenarios involving distributed environments where credentials are more sophisticated than plain username and passwords. Generally, JWT token include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a set of <em>claims</em> which include standard information (like "issuer", "authorized party", "subject" or "expiration time") or custom information specific to particular OpenID Connect provider (like "set of associated roles" or "preferred username").</p>
+</li>
+<li>
+<p>a signature (created using asymmetric or symmetric algorithms) which can be used to validate the issuer of the token</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>OIDCLoginModule has two responsibilities:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Periodically (with configured interval) fetching a set of current public keys which can be used to verify signed JWT tokens</p>
+</li>
+<li>
+<p>Validate the JWT token during actual JAAS login process without any access to external services and APIs. Entire validation is performed
+offline and involves:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>validation of JWT signature</p>
+</li>
+<li>
+<p>validation of "not before" and "expires at" claims</p>
+</li>
+<li>
+<p>checking for required claims (with any value)</p>
+</li>
+<li>
+<p>checking for values of configured claims (like "audience")</p>
+</li>
+<li>
+<p>extracting <em>user identities</em> from configurable "JSON paths" which are then used as "user principals" of the JAAS subject</p>
+</li>
+<li>
+<p>extracting <em>user roles</em> from configurable "JSON paths" which are then used as "role principals" of the JAAS subject</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The simplest configuration of OIDC Login Module is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">activemq {
+    org.apache.activemq.artemis.spi.core.security.jaas.OIDCLoginModule required
+        provider="https://openid-provider-host"
+        audience="artemis-broker"
+        ;
+};</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s the full list of supported options.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">debug</dt>
+<dd>
+<p>Enable verbose logging. Details about authentication process will be logged.<br>
+Defaults to <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">userPrincipalClass</dt>
+<dd>
+<p>Implementation of <code>java.security.Principal</code> that will be used to collect "user principals" for the JAAS subject being authenticated.<br>
+Defaults to <code>org.apache.activemq.artemis.spi.core.security.jaas.UserPrincipal</code>.</p>
+</dd>
+<dt class="hdlist1">rolePrincipalClass</dt>
+<dd>
+<p>Implementation of <code>java.security.Principal</code> that will be used to collect "role principals" for the JAAS subject being authenticated.<br>
+Defaults to <code>org.apache.activemq.artemis.spi.core.security.jaas.RolePrincipal</code>.</p>
+</dd>
+<dt class="hdlist1">provider</dt>
+<dd>
+<p>URL of the OpenID Connect provider (like Keycloak or Entra ID). This URL is a <em>base</em> URL. It should be the part of the address which
+can be appended with <code>/.well-known/openid-configuration</code>.<br>
+There&#8217;s no default provider URL and this parameter is mandatory.</p>
+</dd>
+<dt class="hdlist1">cacheKeysSeconds</dt>
+<dd>
+<p>Public keys are fetched from <code>jwks_uri</code> endpoint as specified by <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata">OpenID Provider Metadata</a>. This information doesn&#8217;t change very often, so public keys may be safely
+cached for quite a long time. This option specifies the time for which the key information may be cached (in seconds).<br>
+Defaults to <code>3600</code> (seconds).</p>
+</dd>
+<dt class="hdlist1">metadataRetrySeconds</dt>
+<dd>
+<p>When the OIDC Login Module is initialized for the first time, OpenID Connect provider must be contacted to get information from two endpoints:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Main metadata from <code>&lt;provider-url&gt;/.well-known/openid-configuration</code> - only to get the <code>jwks_uri</code> endpoint</p>
+</li>
+<li>
+<p>Public key information from <code>jwks_uri</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When a problem occurs during first initialization, <code>metadataRetrySeconds</code> specifies the delay before the information is fetched again.<br>
+Defaults to <code>30</code> (seconds).</p>
+</div>
+</dd>
+<dt class="hdlist1">tlsVersion</dt>
+<dd>
+<p>TLS version to use when the provider uses <code>https</code> protocol. The value is passed to <code>javax.net.ssl.SSLContext.getInstance()</code>.<br>
+Defaults to <code>TLSv1.3</code>.</p>
+</dd>
+<dt class="hdlist1">caCertificate</dt>
+<dd>
+<p>Path to a certificate for OpenID Connect provider certificate validation (trust). Can be both PEM and DER format.
+There&#8217;s no default and if the CA is already available in JDK truststore, it can be omitted.</p>
+</dd>
+<dt class="hdlist1">httpTimeout</dt>
+<dd>
+<p>Timeout in milliseconds used when connecting to OpenID Connect provider (combined connection and read/request timeout).<br>
+Defaults to <code>5000</code> (milliseconds).</p>
+</dd>
+<dt class="hdlist1">allowPlainJWT</dt>
+<dd>
+<p>Option that can be used for test scenarios which allows unsigned JWT tokens to be processed (with <code>{"alg":"none"}</code> in JWT header).<br>
+Defaults to <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">maxClockSkew</dt>
+<dd>
+<p>Time skew to use when validation expiration time and not-before time for the JWT token.<br>
+Defaults to <code>60</code> (seconds).</p>
+</dd>
+<dt class="hdlist1">audience</dt>
+<dd>
+<p>Comma-separated list of values which must be present in the <code>aud</code> (<em>audience</em>) claim of the JWT token.<br>
+There&#8217;s no default value.</p>
+</dd>
+<dt class="hdlist1">identityPaths</dt>
+<dd>
+<p>Comma-separated <em>JSON paths</em> that point to the fields (direct or nested) in the JWT token which contain values (strings, JSON string
+arrays or whitespace-separated strings) used as <em>user identities</em> (translated into <code>org.apache.activemq.artemis.spi.core.security.jaas.UserPrincipal</code> principals).<br>
+Defaults to <code>sub</code>.</p>
+</dd>
+<dt class="hdlist1">rolesPaths</dt>
+<dd>
+<p>Comma-separated <em>JSON paths</em> that point to the fields (direct or nested) in the JWT token which contain values (strings, JSON string
+arrays or whitespace-separated strings) used as <em>user roles</em> (translated into <code>org.apache.activemq.artemis.spi.core.security.jaas.RolePrincipal</code> principals).<br>
+There&#8217;s no default value. For Keycloak OpenID Connect provider it could be for example <code>realm_access.roles</code>.</p>
+</dd>
+<dt class="hdlist1">requireOAuth2MTLS</dt>
+<dd>
+<p>This option adds extra layer of security and enforces <a href="https://datatracker.ietf.org/doc/html/rfc8705">OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens</a>.<br>
+With this option enabled, JWT tokens must include <code>cnf/x5t#256</code> claim which contains
+a SHA256 digest of client&#8217;s X.509 certificate. This certificate should match a certificate from TLS layer and requires mTLS
+being enabled at the broker level.<br>
+This mechanism protects against token stealing, making the tokens valid only in the
+context of mTLS connection with a matching certificate.<br>
+Defaults to <code>false</code>. But when the JWT token is sent with <code>cnf/x5t#256</code> claim, the validation is performed regardless of this
+option&#8217;s value.</p>
+</dd>
+</dl>
 </div>
 </div>
 </div>

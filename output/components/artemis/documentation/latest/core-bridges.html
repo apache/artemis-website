@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Core Bridges</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.53.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.54.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#configuring-core-bridges">1. Configuring Core Bridges</a></li>
 </ul>
@@ -272,14 +272,54 @@ Default is <code>1048576</code> (i.e. 1MiB).</p>
 </dd>
 <dt class="hdlist1">user</dt>
 <dd>
-<p>This optional parameter determines the user name to use when creating the bridge connection to the remote server.
-If it is not specified the default cluster user specified by <code>cluster-user</code> in <code>broker.xml</code> will be used.</p>
+<p>This is the user name to use when creating the bridge connection to the remote server.
+If it is not specified the <a href="clusters.html#cluster-user-credentials">default cluster user</a> will be used.</p>
 </dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Any target server with security enabled with reject the bridge&#8217;s default <code>user</code> and <code>password</code> values.
+If security is enabled on the target broker (which is recommended) then set a <code>user</code> value that corresponds to a valid user account on the target broker.
+The corresponding role on the target broker should have the <a href="security.html#role-based-security-for-addresses"><code>send</code> permission</a> for the bridge&#8217;s <code>forwarding-address</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
 <dt class="hdlist1">password</dt>
 <dd>
-<p>This optional parameter determines the password to use when creating the bridge connection to the remote server.
-If it is not specified the default cluster password specified by <code>cluster-password</code> in <code>broker.xml</code> will be used.</p>
+<p>This is the password to use when creating the bridge connection to the remote server.
+If it is not specified the <a href="clusters.html#cluster-user-credentials">default cluster password</a> will be used.</p>
 </dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Any target server with security enabled with reject the bridge&#8217;s default <code>user</code> and <code>password</code> values.
+If security is enabled on the target broker (which is recommended) then set a <code>user</code> value that corresponds to a valid user account on the target broker.
+The corresponding role on the target broker should have the <a href="security.html#role-based-security-for-addresses"><code>send</code> permission</a> for the bridge&#8217;s <code>forwarding-address</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
 <dt class="hdlist1">reconnect-attempts-same-node</dt>
 <dd>
 <p>This configures the number of times reconnection attempts will be made to the same node on the topology before reverting back to the initial connector(s).

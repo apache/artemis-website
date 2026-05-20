@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Configuring the Transport</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.53.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.54.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#acceptors">1. Acceptors</a></li>
 <li><a href="#connectors">2. Connectors</a></li>
@@ -502,6 +502,27 @@ This is only relevant for a <code>connector</code> if you are using 2-way SSL (i
 Although this value can be configured on the server, it is downloaded and used by the client.
 If the client needs to use a different password from that set on the server then it can override the server-side setting by either using the customary "javax.net.ssl.keyStorePassword" system property or the Artemis-specific "org.apache.activemq.ssl.keyStorePassword" system property.
 The Artemis-specific system property is useful if another component on the client is already making use of the standard Java system property.</p>
+</div>
+</dd>
+<dt class="hdlist1">keyPassword</dt>
+<dd>
+<p>The password used to access the private key within the keystore.
+When not set (the default), <code>keyStorePassword</code> is used for both opening the keystore and accessing the private key.
+This is useful when the keystore and its private key have different passwords, which is supported by JKS and JCEKS keystore types.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+PKCS12 keystores do not support separate key and store passwords.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Default is <code>null</code>.</p>
 </div>
 </dd>
 <dt class="hdlist1">keyStoreType</dt>

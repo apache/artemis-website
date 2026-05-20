@@ -34,7 +34,7 @@
 <div id="header">
 <h1>MQTT</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.53.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.54.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#mqtt-quality-of-service">1. MQTT Quality of Service</a></li>
 <li><a href="#mqtt-retain-messages">2. MQTT Retain Messages</a></li>
@@ -331,7 +331,9 @@ Web browsers can then connect to <code>ws://&lt;server&gt;:1883</code> using a W
 </div>
 </div>
 <div class="paragraph">
-<p>Web browsers can then connect to <code>wss://&lt;server&gt;:8883</code> using a Web Socket to send and receive MQTT messages.</p>
+<p>Web browsers can then connect to <code>wss://&lt;server&gt;:8883</code> using a Web Socket to send and receive MQTT messages.
+WebSockets per-message deflate is supported but not enabled by default, to enable it add the <code>webSocketCompressionSupported=true</code> option to the acceptor URI.
+The client must also support per-message deflate and request it via the standard WebSockets extension.</p>
 </div>
 </div>
 </div>

@@ -22,4 +22,5 @@ org.apache.activemq.artemis.spi.core.security
 org.apache.activemq.artemis.spi.core.security.jaas
 org.apache.activemq.artemis.spi.core.security.jaas.kubernetes.client
 org.apache.activemq.artemis.spi.core.security.jaas.kubernetes.model
+org.apache.activemq.artemis.spi.core.security.jaas.oidc
 org.apache.activemq.artemis.spi.core.security.scram
