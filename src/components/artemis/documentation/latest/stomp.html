@@ -34,7 +34,7 @@
 <div id="header">
 <h1>STOMP</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.53.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.54.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#limitations">1. Limitations</a>
 <ul class="sectlevel2">
@@ -444,7 +444,9 @@ Modern web browsers which support WebSockets can send and receive STOMP messages
 </div>
 <div class="paragraph">
 <p>With this configuration, the broker will accept STOMP connections over WebSockets on the port <code>61614</code>.
-Web browsers can then connect to <code>ws://&lt;server&gt;:61614</code> using a Web Socket to send and receive STOMP messages.</p>
+Web browsers can then connect to <code>ws://&lt;server&gt;:61614</code> using a Web Socket to send and receive STOMP messages.
+WebSockets per-message deflate is supported but not enabled by default, to enable it add the <code>webSocketCompressionSupported=true</code> option to the acceptor URI.
+The client must also support per-message deflate and request it via the standard WebSockets extension.</p>
 </div>
 <div class="paragraph">
 <p>A companion JavaScript library to ease client-side development is available from <a href="https://github.com/jmesnil/stomp-websocket">GitHub</a> (please see its <a href="http://jmesnil.net/stomp-websocket/doc/">documentation</a> for a complete description).</p>
