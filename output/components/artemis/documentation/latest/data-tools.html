@@ -213,6 +213,7 @@ SYNOPSIS
 <span class="gp">                [--bindings &lt;binding&gt;</span><span class="o">]</span> <span class="o">[</span><span class="nt">--jdbc</span><span class="o">]</span> <span class="o">[</span><span class="nt">--verbose</span><span class="o">]</span>
 <span class="gp">                [--jdbc-message-table-name &lt;jdbcMessages&gt;</span><span class="o">]</span>
 <span class="gp">                [--jdbc-node-manager-table-name &lt;jdbcNodeManager&gt;</span><span class="o">]</span> <span class="o">[</span><span class="nt">--output</span> &lt;output&gt;]
+<span class="gp">                [--queue &lt;queue&gt;</span><span class="o">]</span>
 <span class="gp">        artemis data imp [--legacy-prefixes] [--password &lt;password&gt;</span><span class="o">]</span>
 <span class="gp">                [--transaction] [--verbose] [--port &lt;port&gt;</span><span class="o">]</span> <span class="o">[</span><span class="nt">--user</span> &lt;user&gt;] <span class="o">[</span><span class="nt">--sort</span><span class="o">]</span>
 <span class="gp">                --input &lt;input&gt;</span><span class="w"> </span><span class="o">[</span><span class="nt">--host</span> &lt;host&gt;]
@@ -400,6 +401,9 @@ COMMANDS
             manager table
 
             With --output option, Output name for the file
+
+            With --queue option, Only export the specified queue(s). Repeatable.
+            When omitted, all queues are exported.
 
         imp
             Import all message-data using an XML that could be interpreted by
