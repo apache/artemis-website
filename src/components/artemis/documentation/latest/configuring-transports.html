@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Configuring the Transport</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.54.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#acceptors">1. Acceptors</a></li>
 <li><a href="#connectors">2. Connectors</a></li>
@@ -481,6 +481,13 @@ Default is <code>false</code>.</p>
 <p>Must be <code>true</code> to have the broker 'watch' an acceptors keyStorePath and/or trustStorePath and invoke reload() on update.
 The watch period is controlled by <a href="config-reload.html#configuration-reload">the configuration reload feature</a>.
 Default is <code>false</code>.</p>
+</dd>
+<dt class="hdlist1">sslHandshakeTimeout</dt>
+<dd>
+<p>This is only valid for acceptors.
+It is the number of seconds the broker will wait for a client to complete the SSL handshake before closing the connection.
+Any non-negative integer value is valid, where <code>0</code> disables the timeout.
+Default is <code>10</code>.</p>
 </dd>
 <dt class="hdlist1">keyStorePath</dt>
 <dd>

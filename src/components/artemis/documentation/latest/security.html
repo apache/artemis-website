@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Authentication &amp; Authorization</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.54.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#basic-configuration">1. Basic Configuration</a></li>
 <li><a href="#boot-time-security-configuration-via-system-properties">2. Boot-time Security Configuration via System Properties</a>
@@ -1935,6 +1935,12 @@ Defaults to <code>60</code> (seconds).</p>
 <p>Comma-separated list of values which must be present in the <code>aud</code> (<em>audience</em>) claim of the JWT token.<br>
 There&#8217;s no default value.</p>
 </dd>
+<dt class="hdlist1">requiredClaims</dt>
+<dd>
+<p>Comma-separated list of claim names that should be present (validation of the claim values is configured separately)
+in the JWT token.<br>
+Defaults to <code>aud, iss, sub, azp, exp</code> (audience, issuer, subject, authorize party, expiration date).</p>
+</dd>
 <dt class="hdlist1">identityPaths</dt>
 <dd>
 <p>Comma-separated <em>JSON paths</em> that point to the fields (direct or nested) in the JWT token which contain values (strings, JSON string
@@ -1946,6 +1952,14 @@ Defaults to <code>sub</code>.</p>
 <p>Comma-separated <em>JSON paths</em> that point to the fields (direct or nested) in the JWT token which contain values (strings, JSON string
 arrays or whitespace-separated strings) used as <em>user roles</em> (translated into <code>org.apache.activemq.artemis.spi.core.security.jaas.RolePrincipal</code> principals).<br>
 There&#8217;s no default value. For Keycloak OpenID Connect provider it could be for example <code>realm_access.roles</code>.</p>
+</dd>
+<dt class="hdlist1">roleMapping</dt>
+<dd>
+<p>Comma-separated list of <code>jwtRole=localRole</code> mappings.<br>
+This option allows configuration of possible <em>role mapping</em> if the roles present (as configured by <code>rolesPaths</code> option) in the JWT
+token should be <em>translated</em> into other role names. This behavior is usually specific to LDAP role mapping and is easy to avoid
+with JWT, but it is still an option.
+Defaults to no mapping and roles are taken directly from JWT token.</p>
 </dd>
 <dt class="hdlist1">requireOAuth2MTLS</dt>
 <dd>

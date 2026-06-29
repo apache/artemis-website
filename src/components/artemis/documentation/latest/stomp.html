@@ -34,7 +34,7 @@
 <div id="header">
 <h1>STOMP</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.54.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#limitations">1. Limitations</a>
 <ul class="sectlevel2">
@@ -214,11 +214,11 @@ For example, broker.xml could use the following:</p>
    <span class="nt">&lt;address-setting</span> <span class="na">match=</span><span class="s">"queue/#"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;default-address-routing-type&gt;</span>ANYCAST<span class="nt">&lt;/default-address-routing-type&gt;</span>
       <span class="nt">&lt;default-queue-routing-type&gt;</span>ANYCAST<span class="nt">&lt;/default-queue-routing-type&gt;</span>
-   <span class="nt">&lt;/address&gt;</span>
+   <span class="nt">&lt;/address-setting&gt;</span>
    <span class="nt">&lt;address-setting</span> <span class="na">match=</span><span class="s">"topic/#"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;default-address-routing-type&gt;</span>MULTICAST<span class="nt">&lt;/default-address-routing-type&gt;</span>
       <span class="nt">&lt;default-queue-routing-type&gt;</span>MULTICAST<span class="nt">&lt;/default-queue-routing-type&gt;</span>
-   <span class="nt">&lt;/address&gt;</span>
+   <span class="nt">&lt;/address-setting&gt;</span>
 <span class="nt">&lt;/address-settings&gt;</span>
 <span class="nt">&lt;wildcard-addresses&gt;</span>
    <span class="nt">&lt;delimiter&gt;</span>/<span class="nt">&lt;/delimiter&gt;</span>
