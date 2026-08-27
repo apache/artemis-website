@@ -1,5 +1,5 @@
 # Current release streams "x.y.[z]" prefixes
 artemis:
-  - "2.55."
+  - "2.56."
 artemis_console:
   - "1.8."
