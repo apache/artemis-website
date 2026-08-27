@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Persistence</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.56.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#file-journal-default">1. File Journal (Default)</a>
 <ul class="sectlevel2">
@@ -388,6 +388,20 @@ Note also that compacting won&#8217;t kick in until you have at least <code>jour
 <p>How long to wait (in milliseconds) to acquire a file lock on the journal before giving up</p>
 <div class="paragraph">
 <p>The default for this parameter is <code>-1</code> (i.e. indefinite))</p>
+</div>
+</dd>
+<dt class="hdlist1">journal-lock-monitor-timeout</dt>
+<dd>
+<p>How long (in milliseconds) between journal lock health checks. The lock monitor periodically verifies that the journal lock is still held.</p>
+<div class="paragraph">
+<p>The default for this parameter is <code>2000</code> (i.e. 2 seconds)</p>
+</div>
+</dd>
+<dt class="hdlist1">journal-lock-monitor-max-retries</dt>
+<dd>
+<p>How many consecutive failed lock health checks to tolerate before declaring the lock lost. This is useful for tolerating transient storage outages.</p>
+<div class="paragraph">
+<p>The default for this parameter is <code>0</code> (i.e. no retries - fail immediately on first check failure)</p>
 </div>
 </dd>
 <dt class="hdlist1">journal-datasync</dt>

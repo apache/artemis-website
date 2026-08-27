@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Artemis</title>
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <script defer src="/js/fontawesome-all.min.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"></script>
+    <script src="/js/jquery.slim.min.js" integrity="sha384-5AkRS45j4ukf+JbWAfHL8P4onPA9p0KwwP7pUdjSQA3ss9edbJUJc/XcYAiheSSz"></script>
+    <script src="/js/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"></script>
+    <script src="/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand mr-auto" href="/"><img src="/assets/img/artemis_text_black_small.png" style="height: 50px"/></a>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="ml-auto collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/news">News</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownComponents" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Components<span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-center" aria-labelledby="navbarDropdownComponents">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="multi-column-dropdown">
+                                    <li class="nav-item"><a class="dropdown-item" href="/components/artemis/">Artemis</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/components/artemis-console/">Artemis Console</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownCommunity" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Community<span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-center multi-column columns-1" aria-labelledby="navbarDropdownCommunity">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="multi-column-dropdown">
+                                    <li class="nav-item"><a class="dropdown-item" href="/contact">Contact Us</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/contributing">Contribute</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/issues">Report Issues</a></li>
+                                </ul>
+                            </div>
+                          </div>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownTeam" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/assets/img/asf_logo_wide.png" style="height:25px"> <span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-center multi-column columns-1" aria-labelledby="navbarDropdownTeam">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="multi-column-dropdown">
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org">The Apache Software Foundation</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/licenses/">License</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="/security-advisories">Security</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://www.apache.org/events/current-event">Events</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://people.apache.org/phonebook.html?pmc=artemis">PMC & Committers</a></li>
+                                    <li class="nav-item"><a class="dropdown-item" href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="content">
+  <div class="page-title-artemis">
+    <div class="container">
+      <h1>Artemis 2.56.0 Release Notes</h1>
+    </div>
+  </div>
+  <div class="container" >
+    <div class="row" style="margin-top: 30px">
+      <div class="col-12 artemis">
+        <ul>
+  <li>
+    <p><a href="commit-report-2.56.0">A list of commits</a>.</p>
+  </li>
+  <li>
+    <p>Please see the <a href="https://artemis.apache.org/components/artemis/documentation/latest/versions.html">“Versions”</a> chapter in the User Guide for upgrade instructions.</p>
+  </li>
+</ul>
+
+<p><strong>Note:</strong> As part of <a href="/news/artemis-tlp">establishing Apache Artemis</a> as an independent project, the <a href="/artemis-tlp-groupid-migration">Maven groupId has switched to <em>org.apache.artemis</em></a>.</p>
+
+<p><strong>Note</strong>: This release requires use of Java 17 or above.</p>
+
+<h2 id="bugs-fixed">Bugs Fixed</h2>
+
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6008">ARTEMIS-6008</a> - Critical Analyzer should not kick in during Failover phase of the broker</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6129">ARTEMIS-6129</a> - Broker can’t deal with empty foreign JMS MapMessage</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6146">ARTEMIS-6146</a> - LargeMessage Drop through Diver can cause issues on Mirroring</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6159">ARTEMIS-6159</a> - A lock coordinator with an unreachable ZooKeeper hangs broker startup and shutdown indefinitely</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6162">ARTEMIS-6162</a> - Lock coordinators contend for the lock before the broker is activated</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6172">ARTEMIS-6172</a> - HTTP tunneling server async packets starve request replies</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6179">ARTEMIS-6179</a> - Deadlock in QueueImpl between management thread (removeMessage) and paging thread when JMX attribute Paused is scraped concurrently</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6184">ARTEMIS-6184</a> - AMQP durable subscription unsub does not reutnr error results to the client</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6189">ARTEMIS-6189</a> - QoS 1 &amp; 2 message handling is not resilient</li>
+</ul>
+
+<h2 id="improvements">Improvements</h2>
+
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6117">ARTEMIS-6117</a> - allow the journal file lock check period to be configured from current default 2s</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6158">ARTEMIS-6158</a> - AbstractMapPersister for developers</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6163">ARTEMIS-6163</a> - Add auto-start attribute and management start/stop operations for lock coordinators</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6173">ARTEMIS-6173</a> - Update AGENTS.md</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6201">ARTEMIS-6201</a> - Consumer.close on a FQQN should not delete the queue</li>
+</ul>
+
+<h2 id="tests">Tests</h2>
+
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6156">ARTEMIS-6156</a> - Add compatibility/security tests</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6178">ARTEMIS-6178</a> - Upgrade compatibility test/hornetq to 2.4.11 and add test for topology</li>
+</ul>
+
+<h2 id="tasks">Tasks</h2>
+
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6126">ARTEMIS-6126</a> - Resolve “system property basedir is configured twice” warnings</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6127">ARTEMIS-6127</a> - Remove JDK8/IBM related code</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6128">ARTEMIS-6128</a> - Fix typo for Adler32</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6130">ARTEMIS-6130</a> - Clarify –consume -1 documentation for artemis check queue command</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6141">ARTEMIS-6141</a> - LargeMessageInterruptTest.killProcess() relies on non-portable kill -SIGINT flag</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6145">ARTEMIS-6145</a> - Remove unused activemq-stomp dependency from activemq5-unit-tests</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6153">ARTEMIS-6153</a> - race in ClusterConnectionImpl causing SF queue loss</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6155">ARTEMIS-6155</a> - Decrease github jobs timeout to 60m</li>
+</ul>
+
+<h2 id="dependency-upgrades">Dependency Upgrades</h2>
+
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6134">ARTEMIS-6134</a> - Bump activemq5-version from 5.19.7 to 5.19.9</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6135">ARTEMIS-6135</a> - Bump org.apache:apache from 38 to 39</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6136">ARTEMIS-6136</a> - Bump org.junit:junit-bom from 6.1.0 to 6.1.3</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6137">ARTEMIS-6137</a> - Bump org.postgresql:postgresql from 42.7.11 to 42.7.13</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6138">ARTEMIS-6138</a> - Bump io.netty:netty-tcnative-boringssl-static from 2.0.79.Final to 2.0.81.Final</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6148">ARTEMIS-6148</a> - Bump jline.version from 4.2.1 to 4.3.1</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6149">ARTEMIS-6149</a> - Bump log4j.version from 2.26.0 to 2.26.1</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6150">ARTEMIS-6150</a> - Bump org.apache.groovy:groovy-all from 5.0.6 to 5.1.0</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6151">ARTEMIS-6151</a> - Bump jetty.version from 12.1.10 to 12.1.12</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6152">ARTEMIS-6152</a> - Bump com.fasterxml.jackson:jackson-bom from 2.22.0 to 2.22.1</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6167">ARTEMIS-6167</a> - Bump netty.version from 4.1.135.Final to 4.1.137.Final</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6176">ARTEMIS-6176</a> - Update to proton-j 0.35.0</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6177">ARTEMIS-6177</a> - Bump commons-codec:commons-codec from 1.22.0 to 1.22.1</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6185">ARTEMIS-6185</a> - Bump Qpid JMS version from 1.16.0 to 1.17.0</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6186">ARTEMIS-6186</a> - Bump com.google.cloud.tools:jib-maven-plugin from 3.5.1 to 3.5.2</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6187">ARTEMIS-6187</a> - Bump bc-java-version from 1.84 to 1.85</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6188">ARTEMIS-6188</a> - Bump selenium.version from 4.45.0 to 4.47.0</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6192">ARTEMIS-6192</a> - Bump org.apache.qpid:protonj2-test-driver from 1.1.0 to 1.3.0</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6193">ARTEMIS-6193</a> - Bump org.apache.felix:maven-bundle-plugin from 6.0.2 to 6.1.0</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6194">ARTEMIS-6194</a> - Bump owasp.version from 12.2.2 to 13.0.0</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6196">ARTEMIS-6196</a> - Bump org.snakeyaml:snakeyaml-engine from 3.0.1 to 3.1.1</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6197">ARTEMIS-6197</a> - Bump org.jctools:jctools-core from 4.0.6 to 4.0.7</li>
+  <li><a href="https://issues.apache.org/jira/browse/ARTEMIS-6200">ARTEMIS-6200</a> - Bump activemq5-version from 5.19.9 to 5.19.10</li>
+</ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row sitemap">
+  <div class="col-sm-12">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div style="text-align: center; margin-bottom: 0px; margin-top: 30px; font-size: 65%" class="col-sm-6">
+              <p>Copyright &copy; 2026, The Apache Software Foundation. Apache, Artemis, Apache Artemis, the Apache logo, and the Apache Artemis project logo are either <a href="https://www.apache.org/foundation/marks/list/">registered trademarks or trademarks</a> of The Apache Software Foundation. Licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</p>
+            </div>
+            <div class="col-sm-3">
+              <div >
+                <a href="https://www.apache.org"><img class="float-right" style="margin-top: 10px; max-height: 80px" src="/assets/img/Apache_PoweredBy.png"/></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

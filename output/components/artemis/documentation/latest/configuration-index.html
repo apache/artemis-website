@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Configuration Reference</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.56.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#broker-configuration">1. Broker Configuration</a>
 <ul class="sectlevel2">
@@ -568,6 +568,16 @@ Setting this to 0 means compacting is disabled.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="persistence.html#configuring-the-message-journal">journal-lock-acquisition-timeout</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">how long (in ms) to wait to acquire a file lock on the journal.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="persistence.html#configuring-the-message-journal">journal-lock-monitor-timeout</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">how long (in ms) between journal lock health checks.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2000</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="persistence.html#configuring-the-message-journal">journal-lock-monitor-max-retries</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">how many consecutive failed lock health checks to tolerate before declaring the lock lost.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="persistence.html#configuring-the-message-journal">journal-max-io</a></p></td>
