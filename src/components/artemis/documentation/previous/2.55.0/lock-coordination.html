@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<title>Lock Coordination / HA with Mirroring</title>
+<link rel="stylesheet" href="css/asciidoctor.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/rouge-github.css">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pathSegments = window.location.pathname.split('/');
+        if (window.location.hostname == "artemis.apache.org" && pathSegments[pathSegments.length - 2] != "latest") {
+            var message = document.createElement("div");
+            message.style.margin = "20px";
+            message.style.textAlign = "center";
+            message.style.backgroundColor = "#FFFFE0";
+            message.textContent = "Please be aware that this documentation is out of date. ";
+
+            var link = document.createElement("a");
+            link.href = "../../latest";
+            link.textContent = "Here is the latest documentation.";
+            message.appendChild(link);
+
+            document.body.insertBefore(message, document.body.firstChild);
+        }
+    });
+</script>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Lock Coordination / HA with Mirroring</h1>
+<div id="toc" class="toc2">
+<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
+<ul class="sectlevel1">
+<li><a href="#configuration">1. Configuration</a>
+<ul class="sectlevel2">
+<li><a href="#configuration-example">1.1. Configuration Example</a></li>
+</ul>
+</li>
+<li><a href="#configuration-options">2. Configuration Options</a>
+<ul class="sectlevel2">
+<li><a href="#common-configuration">2.1. Common Configuration</a></li>
+<li><a href="#file-based-lock-manager">2.2. File-Based Lock Manager</a></li>
+<li><a href="#zookeeper-based-lock-manager">2.3. ZooKeeper-Based Lock Manager</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Lock Coordinator provides pluggable distributed lock mechanism monitoring.
+It allows multiple broker instances to coordinate the activation of specific configuration elements, ensuring that only one broker instance activates a particular element at any given time.
+This prevents split-brain scenarios where multiple brokers could simultaneously process messages, leading to duplicate processing or conflicting state.</p>
+</div>
+<div class="paragraph">
+<p>In the current version, the Lock Coordinator can be applied to control the startup and shutdown of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Acceptors</strong> - When an acceptor is associated with a lock coordinator, it will only start accepting connections when the broker successfully acquires the distributed lock. If the lock is lost for any reason, the acceptor automatically stops accepting new connections.</p>
+</li>
+<li>
+<p><strong>Broker Connections</strong> - When a broker connection (AMQP mirror, federation, or bridge) is associated with a lock coordinator, it will only be active when the broker successfully acquires the distributed lock. If the lock is lost, the connection is paused, preventing message flow. When the lock is reacquired, the connection resumes automatically.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The same pattern used on acceptors and broker connections may eventually be applied to other configuration elements.
+If you have ideas for additional use cases where this pattern could be applied, please file a JIRA issue.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This feature is in technical preview and its configuration elements are subject to possible modifications.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuration"><a class="anchor" href="#configuration"></a><a class="link" href="#configuration">1. Configuration</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can define multiple lock-coordinators and associate them with broker elements such as acceptors and broker connections.
+When a broker element is associated with a lock-coordinator, it will only activate when the distributed lock has been acquired.
+If the lock cannot be acquired or is lost, the elements are automatically stopped or paused.</p>
+</div>
+<div class="paragraph">
+<p>Different lock implementations (File-based, ZooKeeper-based, or custom plugins) provide different configuration properties.
+See the <a href="#configuration-options">Configuration Options</a> section below for detailed tables of available options for each lock implementation.</p>
+</div>
+<div class="sect2">
+<h3 id="configuration-example"><a class="anchor" href="#configuration-example"></a><a class="link" href="#configuration-example">1.1. Configuration Example</a></h3>
+<div class="paragraph">
+<p>The following example demonstrates a star topology HA configuration where only one broker is active at a time:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Two acceptors:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>for-mirroring-only</code> - Always active to receive mirrored data from other brokers</p>
+</li>
+<li>
+<p><code>for-clients-only</code> - Controlled by lock-coordinator; only active when lock is held</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>File-based lock-coordinator named <code>clients-lock</code> using shared storage</p>
+</li>
+<li>
+<p>Broker connections controlled by the lock-coordinator (mirrors, bridges, or federations):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Two mirror connections (<code>mirrorB</code> and <code>mirrorC</code>) for data replication</p>
+</li>
+<li>
+<p>One bridge connection for forwarding messages to a remote broker</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;acceptors&gt;</span>
+   <span class="nt">&lt;acceptor</span> <span class="na">name=</span><span class="s">"for-mirroring-only"</span><span class="nt">&gt;</span>tcp://0.0.0.0:61001?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300<span class="nt">&lt;/acceptor&gt;</span>
+   <span class="nt">&lt;acceptor</span> <span class="na">name=</span><span class="s">"for-clients-only"</span> <span class="na">lock-coordinator=</span><span class="s">"clients-lock"</span><span class="nt">&gt;</span>tcp://0.0.0.0:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300<span class="nt">&lt;/acceptor&gt;</span>
+<span class="nt">&lt;/acceptors&gt;</span>
+
+<span class="nt">&lt;lock-coordinators&gt;</span>
+   <span class="nt">&lt;lock-coordinator</span> <span class="na">name=</span><span class="s">"clients-lock"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;class-name&gt;</span>org.apache.activemq.artemis.lockmanager.file.FileBasedLockManager<span class="nt">&lt;/class-name&gt;</span>
+      <span class="nt">&lt;lock-id&gt;</span>mirror-cluster-clients<span class="nt">&lt;/lock-id&gt;</span>
+      <span class="nt">&lt;check-period&gt;</span>1000<span class="nt">&lt;/check-period&gt;</span> <span class="c">&lt;!-- how often to check if the lock is still valid, in milliseconds --&gt;</span>
+
+      <span class="nt">&lt;properties&gt;</span>
+         <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"locks-folder"</span> <span class="na">value=</span><span class="s">"/usr/somewhere/existing-folder"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/properties&gt;</span>
+   <span class="nt">&lt;/lock-coordinator&gt;</span>
+<span class="nt">&lt;/lock-coordinators&gt;</span>
+
+<span class="nt">&lt;broker-connections&gt;</span>
+   <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://otherBroker:61001"</span> <span class="na">name=</span><span class="s">"mirrorB"</span> <span class="na">retry-interval=</span><span class="s">"2000"</span> <span class="na">lock-coordinator=</span><span class="s">"clients-lock"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;mirror</span> <span class="na">sync=</span><span class="s">"false"</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;/amqp-connection&gt;</span>
+   <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://otherBroker:61002"</span> <span class="na">name=</span><span class="s">"mirrorC"</span> <span class="na">retry-interval=</span><span class="s">"2000"</span> <span class="na">lock-coordinator=</span><span class="s">"clients-lock"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;mirror</span> <span class="na">sync=</span><span class="s">"false"</span><span class="nt">/&gt;</span>
+   <span class="nt">&lt;/amqp-connection&gt;</span>
+   <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://remoteBroker:61616"</span> <span class="na">name=</span><span class="s">"bridgeConnection"</span> <span class="na">retry-interval=</span><span class="s">"2000"</span> <span class="na">lock-coordinator=</span><span class="s">"clients-lock"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;bridge&gt;</span>
+         <span class="nt">&lt;bridge-to-queue</span> <span class="na">name=</span><span class="s">"orders"</span> <span class="na">remote-address=</span><span class="s">"orders"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;include</span> <span class="na">queue-match=</span><span class="s">"orders"</span> <span class="na">address-match=</span><span class="s">"orders"</span><span class="nt">/&gt;</span>
+         <span class="nt">&lt;/bridge-to-queue&gt;</span>
+      <span class="nt">&lt;/bridge&gt;</span>
+   <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="how-it-works"><a class="anchor" href="#how-it-works"></a><a class="link" href="#how-it-works">1.1.1. How It Works</a></h4>
+<div class="paragraph">
+<p>When a broker successfully acquires the distributed lock:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The client acceptor (<code>for-clients-only</code>) starts accepting connections</p>
+</li>
+<li>
+<p>Mirror connections activate and begin replicating data to other brokers</p>
+</li>
+<li>
+<p>Bridge connections activate and forward messages to remote brokers</p>
+</li>
+<li>
+<p>Federation connections activate (if configured)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When the lock is lost (due to failure or network partition):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The client acceptor stops accepting new connections</p>
+</li>
+<li>
+<p>All broker connections (mirrors, bridges, and federations) pause immediately</p>
+</li>
+<li>
+<p>The broker continues to receive mirrored data on the <code>for-mirroring-only</code> acceptor</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This ensures only one broker actively processes client requests, replicates data, and forwards messages at any given time.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="important-considerations"><a class="anchor" href="#important-considerations"></a><a class="link" href="#important-considerations">1.1.2. Important Considerations</a></h4>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+When mixing bridges or federations with mirrors in the same configuration, message duplication is possible during failover transitions. When a message arrives at a mirror target and that node&#8217;s broker connections are active, the message may be forwarded even though it was already processed by the original source. Lock coordination significantly reduces this risk but cannot completely eliminate it during the brief window when locks are being transferred between brokers.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/lock-coordination-example.png" alt="HA with mirroring"></span></p>
+</div>
+<div class="paragraph">
+<p>You can find a <a href="https://github.com/apache/artemis-examples/tree/main/examples/features/broker-connection/ha-with-mirroring">working example</a> on how to run HA with Mirroring.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuration-options"><a class="anchor" href="#configuration-options"></a><a class="link" href="#configuration-options">2. Configuration Options</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All lock-coordinator implementations share common configuration elements and provide implementation-specific properties.</p>
+</div>
+<div class="sect2">
+<h3 id="common-configuration"><a class="anchor" href="#common-configuration"></a><a class="link" href="#common-configuration">2.1. Common Configuration</a></h3>
+<div class="paragraph">
+<p>The following elements are configured on every lock-coordinator regardless of implementation:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 50.0002%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique identifier for this lock-coordinator instance, used to reference it from other configuration elements</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">class-name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The lock provider implementation (e.g., <code>org.apache.activemq.artemis.lockmanager.file.FileBasedLockManager</code> or <code>org.apache.activemq.artemis.lockmanager.zookeeper.CuratorDistributedLockManager</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lock-id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique identifier for the distributed lock. All brokers competing for the same distributed lock must use the same lock-id</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">check-period</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">How often to check if the lock is still valid, in milliseconds</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="file-based-lock-manager"><a class="anchor" href="#file-based-lock-manager"></a><a class="link" href="#file-based-lock-manager">2.2. File-Based Lock Manager</a></h3>
+<div class="paragraph">
+<p>The file-based lock manager uses the file system to manage distributed locks through file locking mechanisms.
+All brokers must have access to a shared file system location.</p>
+</div>
+<div class="paragraph">
+<p><strong>Class name:</strong> <code>org.apache.activemq.artemis.lockmanager.file.FileBasedLockManager</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Properties:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 50.0002%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locks-folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the directory where lock files will be created and managed. The directory must be created in advance before using this lock.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="zookeeper-based-lock-manager"><a class="anchor" href="#zookeeper-based-lock-manager"></a><a class="link" href="#zookeeper-based-lock-manager">2.3. ZooKeeper-Based Lock Manager</a></h3>
+<div class="paragraph">
+<p>The ZooKeeper-based lock manager uses Apache Curator to manage distributed locks via a ZooKeeper ensemble.
+This is the recommended approach for production deployments as it provides better fault tolerance and doesn&#8217;t require shared storage.</p>
+</div>
+<div class="paragraph">
+<p><strong>Class name:</strong> <code>org.apache.activemq.artemis.lockmanager.zookeeper.CuratorDistributedLockManager</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Properties:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 50.0002%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connect-string</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ZooKeeper connection string (e.g., "localhost:2181" or "host1:2181,host2:2181,host3:2181")</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">namespace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Namespace prefix for all ZooKeeper paths to isolate data</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">session-ms</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Session timeout in milliseconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">session-percent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">33</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Percentage of session timeout to use for lock operations</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">connection-ms</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Connection timeout in milliseconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">retries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of retry attempts for failed operations</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">retries-ms</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delay in milliseconds between retry attempts</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

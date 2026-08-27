@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<title>Address Federation</title>
+<link rel="stylesheet" href="css/asciidoctor.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/rouge-github.css">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pathSegments = window.location.pathname.split('/');
+        if (window.location.hostname == "artemis.apache.org" && pathSegments[pathSegments.length - 2] != "latest") {
+            var message = document.createElement("div");
+            message.style.margin = "20px";
+            message.style.textAlign = "center";
+            message.style.backgroundColor = "#FFFFE0";
+            message.textContent = "Please be aware that this documentation is out of date. ";
+
+            var link = document.createElement("a");
+            link.href = "../../latest";
+            link.textContent = "Here is the latest documentation.";
+            message.appendChild(link);
+
+            document.body.insertBefore(message, document.body.firstChild);
+        }
+    });
+</script>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Address Federation</h1>
+<div id="toc" class="toc2">
+<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
+<ul class="sectlevel1">
+<li><a href="#common-address-federation-topologies">1. Common Address Federation Topologies</a>
+<ul class="sectlevel2">
+<li><a href="#two-way-address-federation">1.1. Two way Address Federation</a></li>
+<li><a href="#three-broker-mesh">1.2. Three Broker Mesh</a></li>
+<li><a href="#address-federation-ring">1.3. Address Federation Ring</a></li>
+<li><a href="#hub-and-spoke-address-federation">1.4. Hub and Spoke Address Federation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Address federation can be thought of as full multicast over the connected brokers.
+Every message sent to address on <code>Broker-1</code> will be delivered to every queue bound to that address on that broker, but also will be delivered to the matching address on <code>Broker-2</code>, <code>Broker-3</code> &#8230;&#8203; <code>Broker-N</code> and all the queues bound to that address.</p>
+</div>
+<div class="paragraph">
+<p>Address federation creates consumers that read messages from the matching address on the remote peer when demand is detected on a local address that matches a specific federation address policy.
+On the remote peer a queue binding is created on the federated address which will store and forward messages sent to that address back to the initiating broker.
+Once a message arrives at the federation address consumer on the initiating broker it is then published into the local address which routes the message into each of the queues bound to that address.</p>
+</div>
+<div class="paragraph">
+<p>Address federation can be configured to operate in a single direction between peers or can configured to operate in both directions between peers allowing message to flow in both directions delivering messages to consumers on either broker that were sent to the matching address on the opposing broker instance.
+For a more complete reference of the AMQP Address Federation configuration elements refer to the <a href="amqp-federation-configuration-glossary.html">AMQP Federation Configuration Glossary</a></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/amqp-federation-address-concept.png" alt="amqp federation address concept">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="common-address-federation-topologies"><a class="anchor" href="#common-address-federation-topologies"></a><a class="link" href="#common-address-federation-topologies">1. Common Address Federation Topologies</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The sections that follow discuss some common address federation topologies and some configuration considerations specific to those topologies.</p>
+</div>
+<div class="sect2">
+<h3 id="two-way-address-federation"><a class="anchor" href="#two-way-address-federation"></a><a class="link" href="#two-way-address-federation">1.1. Two way Address Federation</a></h3>
+<div class="paragraph">
+<p>This is a common case where consumers on either broker should receive messages sent from producers both on the local broker and on the remote broker.
+Messages only cross the federation connection if a consumer exists on the remote address otherwise messages do not leave the local broker.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/amqp-federation-address-bi-directional.png" alt="amqp federation address bi directional">
+</div>
+</div>
+<div class="paragraph">
+<p>This configuration can be setup by adding a federation policy on both broker instances that configure the address to federate and a connection URI pointing to the opposing broker.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"a.federated-address.#"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible to configure this on only one of the two brokers using a remote address federation policy in the broker connection configuration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"a.federated-address.#"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+       <span class="nt">&lt;remote-address-policy</span> <span class="na">name=</span><span class="s">"example-remote-address-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"a.federated-address.#"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/remote-address-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In either of these two configurations the federation implementation will protect itself from looping messages so unlike other implementations you do not need to configure a <code>max-hops</code> setting.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="three-broker-mesh"><a class="anchor" href="#three-broker-mesh"></a><a class="link" href="#three-broker-mesh">1.2. Three Broker Mesh</a></h3>
+<div class="paragraph">
+<p>An expansion of the previous configuration is a three broker mesh where each broker creates an address federation for the same address on each of the other two brokers when local demand is present.
+In this scenario any message published on an address on one of the brokers will be sent to consumers on that address that are active on the other two brokers.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/amqp-federation-address-mesh.png" alt="amqp federation address mesh">
+</div>
+</div>
+<div class="paragraph">
+<p>Because this configuration now creates a loop with more than two brokers the configuration must add a <code>max-hops</code> value to ensure that the messages sent to one of the brokers does not propagate beyond the two closest neighbors in the loop otherwise the messages would loop forever amongst the three brokers.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST-1:PORT"</span> <span class="na">name=</span><span class="s">"federation-example-to-1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy-1"</span> <span class="na">max-hops=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"a.federated-address.#"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST-2:PORT"</span> <span class="na">name=</span><span class="s">"federation-example-to-2"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy-2"</span> <span class="na">max-hops=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"a.federated-address.#"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By configuring each of the brokers with a <code>max-hops</code> value as above the message will be stopped from moving beyond the neighboring broker that receives it and no message looping occurs.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="address-federation-ring"><a class="anchor" href="#address-federation-ring"></a><a class="link" href="#address-federation-ring">1.3. Address Federation Ring</a></h3>
+<div class="paragraph">
+<p>Another less common configuration is a good demonstration of a case where using the <code>max-hops</code> settings is critical for preventing an infinite loop of message federation.
+This is also known as a ring and involves creating an address federation configuration that connects to a neighboring broker amongst three or more broker instances.
+In this scenario the configuration must set a <code>max-hops</code> value of N-1 where N is the number of brokers in the ring.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/amqp-federation-address-ring.png" alt="amqp federation address ring">
+</div>
+</div>
+<div class="paragraph">
+<p>To achieve this configuration each broker would need to add a broker connection for its neighbor as follows.
+Note the <code>max-hops=4</code> in this case since there are five brokers in the diagram, this ensures a federated message never cross back through the originating broker and thus cannot create an message loop.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST-1:PORT"</span> <span class="na">name=</span><span class="s">"federation-example-to-1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy-1"</span> <span class="na">max-hops=</span><span class="s">"4"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"a.federated-address.#"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="hub-and-spoke-address-federation"><a class="anchor" href="#hub-and-spoke-address-federation"></a><a class="link" href="#hub-and-spoke-address-federation">1.4. Hub and Spoke Address Federation</a></h3>
+<div class="paragraph">
+<p>Another configuration that allows consumers on brokers to read messages produced on any other broker peer is a hub and spoke configuration.
+In this configuration spoke brokers connect to a central hub and message traffic between the spokes passes through that hub broker which centralizes communication and allows the spokes to only need to know about one other broker, the hub broker.
+When demand exists on any of the spokes they create a federation consumer link to the hub, this in turn causes the hub to create federation consumer links to each of the spokes where the address exists regardless of the presence of a producer on those spokes in order to ensure that when a producer arrives the messages that it sends reach the other spokes with attached consumers (this is shown on diagram at <code>spoke 3</code>).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/amqp-federation-address-hub-spoke.png" alt="amqp federation address hub spoke">
+</div>
+</div>
+<div class="paragraph">
+<p>This is configured on the spoke brokers much the same as dual address federation where a local and remote policy is configured both sides to listen for demand on the given address and federate messages when demand is detected.
+This setup allows the hub to now sense demand and federate from the spoke as needed and since each spoke mirrors this configuration the message can travel in either direction based on which spoke a consumer has subscribed to the federated address and which spoke a producer sends to the address.
+There is no need to configure a <code>max-hops</code> value in this configuration since the federation implementation prevents a loop in this case in the same manner it does for dual federation configurations.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HUB-HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-address-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"a.federated-address.#"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-address-policy&gt;</span>
+       <span class="nt">&lt;remote-address-policy</span> <span class="na">name=</span><span class="s">"example-remote-address-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"a.federated-address.#"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/remote-address-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>While this is not the only configuration that can create this setup it does represent a simple and flexible configuration where spoke can be added without making configuration changes on the hub.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

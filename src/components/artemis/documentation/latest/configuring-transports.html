@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Configuring the Transport</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.56.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#acceptors">1. Acceptors</a></li>
 <li><a href="#connectors">2. Connectors</a></li>
@@ -817,10 +817,26 @@ It can be useful in scenarios where firewalls only allow HTTP traffic to pass.</
 This is not needed on the broker.
 With single port support the broker will now automatically detect if HTTP is being used and configure itself.</p>
 </dd>
+<dt class="hdlist1">httpClientIdleTime</dt>
+<dd>
+<p>How long a client can be idle before sending an empty HTTP request to keep the connection alive</p>
+</dd>
+<dt class="hdlist1">httpClientIdleScanPeriod</dt>
+<dd>
+<p>How often, in milliseconds, to scan for idle clients</p>
+</dd>
+<dt class="hdlist1">httpResponseTime</dt>
+<dd>
+<p>How long the server can wait before sending an empty HTTP response to keep the connection alive</p>
+</dd>
+<dt class="hdlist1">httpServerScanPeriod</dt>
+<dd>
+<p>How often, in milliseconds, to scan for clients needing responses</p>
+</dd>
 <dt class="hdlist1">httpRequiresSessionId</dt>
 <dd>
 <p>If <code>true</code> the client will wait after the first call to receive a session id.
-Used when the HTTP connector is connecting to servlet acceptor (not recommended).</p>
+Used the HTTP connector is connecting to servlet acceptor (not recommended)</p>
 </dd>
 </dl>
 </div>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<title>Threat Model</title>
+<link rel="stylesheet" href="css/asciidoctor.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pathSegments = window.location.pathname.split('/');
+        if (window.location.hostname == "artemis.apache.org" && pathSegments[pathSegments.length - 2] != "latest") {
+            var message = document.createElement("div");
+            message.style.margin = "20px";
+            message.style.textAlign = "center";
+            message.style.backgroundColor = "#FFFFE0";
+            message.textContent = "Please be aware that this documentation is out of date. ";
+
+            var link = document.createElement("a");
+            link.href = "../../latest";
+            link.textContent = "Here is the latest documentation.";
+            message.appendChild(link);
+
+            document.body.insertBefore(message, document.body.firstChild);
+        }
+    });
+</script>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Threat Model</h1>
+<div id="toc" class="toc2">
+<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
+<ul class="sectlevel1">
+<li><a href="#scope-and-intended-use">1. Scope and Intended Use</a>
+<ul class="sectlevel2">
+<li><a href="#versioning">1.1. Versioning</a></li>
+<li><a href="#primary-intended-use-cases">1.2. Primary intended use cases</a></li>
+<li><a href="#deployment-contexts">1.3. Deployment contexts</a></li>
+<li><a href="#actors">1.4. Actors</a></li>
+<li><a href="#component-family-table">1.5. Component-Family Table</a></li>
+</ul>
+</li>
+<li><a href="#out-of-scope">2. Out of Scope</a>
+<ul class="sectlevel2">
+<li><a href="#use-cases-artemis-does-not-support">2.1. Use cases Artemis does not support</a></li>
+<li><a href="#threats-artemis-does-not-attempt-to-defend-against">2.2. Threats Artemis does not attempt to defend against</a></li>
+<li><a href="#code-that-ships-but-is-not-covered-by-this-model">2.3. Code that ships but is not covered by this model</a></li>
+</ul>
+</li>
+<li><a href="#trust-boundaries-and-data-flow">3. Trust Boundaries and Data Flow</a>
+<ul class="sectlevel2">
+<li><a href="#primary-trust-boundary">3.1. Primary trust boundary</a></li>
+<li><a href="#trust-transitions">3.2. Trust transitions</a></li>
+<li><a href="#reachability-preconditions-per-component">3.3. Reachability preconditions per component</a></li>
+</ul>
+</li>
+<li><a href="#assumptions-about-the-environment">4. Assumptions About the Environment</a>
+<ul class="sectlevel2">
+<li><a href="#operating-system-and-runtime">4.1. Operating system and runtime</a></li>
+<li><a href="#concurrency">4.2. Concurrency</a></li>
+<li><a href="#filesystem-assumptions">4.3. Filesystem assumptions</a></li>
+<li><a href="#network-assumptions">4.4. Network assumptions</a></li>
+<li><a href="#what-artemis-does-not-do-to-its-host">4.5. What Artemis does <em>not</em> do to its host</a></li>
+</ul>
+</li>
+<li><a href="#configuration-variants">5. Configuration Variants</a></li>
+<li><a href="#adversary-model">6. Adversary Model</a>
+<ul class="sectlevel2">
+<li><a href="#adversaries-in-scope">6.1. Adversaries in Scope</a></li>
+<li><a href="#adversaries-out-of-scope">6.2. Adversaries Out of Scope</a></li>
+</ul>
+</li>
+<li><a href="#security-properties-provided">7. Security Properties Provided</a></li>
+<li><a href="#security-properties-not-provided">8. Security Properties Not Provided</a></li>
+<li><a href="#downstream-responsibilities">9. Downstream Responsibilities</a>
+<ul class="sectlevel2">
+<li><a href="#for-operators-deploying-the-broker">9.1. For operators deploying the broker</a></li>
+<li><a href="#for-applications-using-the-broker">9.2. For applications using the broker</a></li>
+</ul>
+</li>
+<li><a href="#conditions-that-might-change-this-model">10. Conditions That Might Change This Model</a></li>
+<li><a href="#triage-dispositions">11. Triage Dispositions</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document defines the security boundaries, assumptions, and guarantees of Apache Artemis.
+It serves as the authoritative reference for triaging security reports, guiding secure deployments, and understanding which threats Artemis defends against versus which are the responsibility of operators and applications.</p>
+</div>
+<div class="paragraph">
+<p>Security researchers, operators deploying Artemis in production, and application developers integrating with the broker should consult this model to understand the security contract.</p>
+</div>
+<div class="paragraph">
+<p>Findings should be reported according to the <a href="https://artemis.apache.org/security-advisories">Artemis' security disclosure process</a>.
+Findings that fall under <a href="#security-properties-provided">claimed properties</a> will be accepted.
+Findings that are <a href="#out-of-scope">out of the scope</a> or involve security properties <a href="#security-properties-not-provided">explicitly not provided</a> will be closed citing this document.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="scope-and-intended-use"><a class="anchor" href="#scope-and-intended-use"></a><a class="link" href="#scope-and-intended-use">1. Scope and Intended Use</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="versioning"><a class="anchor" href="#versioning"></a><a class="link" href="#versioning">1.1. Versioning</a></h3>
+<div class="paragraph">
+<p>This threat model is versioned alongside Artemis.
+A security report against project version <em>N</em> is triaged against the model <strong>as it stood at <em>N</em></strong>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="primary-intended-use-cases"><a class="anchor" href="#primary-intended-use-cases"></a><a class="link" href="#primary-intended-use-cases">1.2. Primary intended use cases</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Multi-protocol message broker for enterprise messaging systems</p>
+</li>
+<li>
+<p>Pub/sub and point-to-point messaging topologies</p>
+</li>
+<li>
+<p>Integration hub for heterogeneous client environments (Java, C++, Python, JavaScript, .NET)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deployment-contexts"><a class="anchor" href="#deployment-contexts"></a><a class="link" href="#deployment-contexts">1.3. Deployment contexts</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Standalone</p>
+</li>
+<li>
+<p>Embedded broker within another Java application</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="actors"><a class="anchor" href="#actors"></a><a class="link" href="#actors">1.4. Actors</a></h3>
+<div class="sect3">
+<h4 id="client-actors"><a class="anchor" href="#client-actors"></a><a class="link" href="#client-actors">1.4.1. Client actors</a></h4>
+<div class="paragraph">
+<p>Artemis distinguishes between two main client actors (network/API callers):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Messaging</strong> — send and consume messages via supported messaging protocols</p>
+</li>
+<li>
+<p><strong>Management</strong> — invoke management operations via web console, JMX, Jolokia HTTP, or management messages</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="operator-actor"><a class="anchor" href="#operator-actor"></a><a class="link" href="#operator-actor">1.4.2. Operator actor</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Operator</strong> — has filesystem or physical access to the broker (can edit <code>broker.xml</code>, access journal files, restart the broker process).
+This is not a "client" actor because there is no network call; the operator interacts directly with the host system.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="component-family-table"><a class="anchor" href="#component-family-table"></a><a class="link" href="#component-family-table">1.5. Component-Family Table</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 22.2222%;">
+<col style="width: 44.4444%;">
+<col style="width: 22.2222%;">
+<col style="width: 11.1112%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Family</th>
+<th class="tableblock halign-left valign-top">Representative API/Entry Point</th>
+<th class="tableblock halign-left valign-top">Touches External Resources?</th>
+<th class="tableblock halign-left valign-top">In Model?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Broker Core</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core protocol handler, journal, paging, routing engine</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes — filesystem (journal, paging), network (bridges, federation)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Yes</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Protocol Adapters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AMQP, MQTT, STOMP, OpenWire, Core protocol implementations</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes — network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Yes</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Management APIs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JMX MBeans, Jolokia HTTP, Management messages</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes — network (JMX/HTTP), local JMX</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Yes</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client Libraries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core client, JMS 2.0 client, Jakarta Messaging 3.1 client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes — network (to broker)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Partial</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="out-of-scope"><a class="anchor" href="#out-of-scope"></a><a class="link" href="#out-of-scope">2. Out of Scope</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="use-cases-artemis-does-not-support"><a class="anchor" href="#use-cases-artemis-does-not-support"></a><a class="link" href="#use-cases-artemis-does-not-support">2.1. Use cases Artemis does not support</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Message broker as a cryptographic confidentiality boundary — the broker has access to plaintext message payloads; end-to-end encryption between message producers and consumers must be implemented outside the broker.</p>
+</li>
+<li>
+<p>Defense against malicious operators with filesystem or JVM access — an operator with filesystem access can read journal files, modify configuration, or attach a debugger.</p>
+</li>
+<li>
+<p>Real-time guarantees or bounded latency — the broker is designed for reliability, not hard real-time performance.</p>
+</li>
+<li>
+<p>Byzantine fault tolerance in clustered deployments beyond simple fail-stop failures — the clustering model assumes cluster nodes are honest or fail-stop, not adversarial.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="threats-artemis-does-not-attempt-to-defend-against"><a class="anchor" href="#threats-artemis-does-not-attempt-to-defend-against"></a><a class="link" href="#threats-artemis-does-not-attempt-to-defend-against">2.2. Threats Artemis does not attempt to defend against</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Attacks requiring local JVM access (e.g., agent attachment, debugger, <code>-javaagent</code> instrumentation).</p>
+</li>
+<li>
+<p>Physical or hypervisor-level attacks on the host.</p>
+</li>
+<li>
+<p>Side-channel attacks (timing, speculative execution) on message metadata or routing decisions.</p>
+</li>
+<li>
+<p>Denial-of-service via resource exhaustion at OS level (e.g., file descriptor limits, kernel OOM) — operators must configure OS limits.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="code-that-ships-but-is-not-covered-by-this-model"><a class="anchor" href="#code-that-ships-but-is-not-covered-by-this-model"></a><a class="link" href="#code-that-ships-but-is-not-covered-by-this-model">2.3. Code that ships but is not covered by this model</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Third-party dependencies (Netty, JGroups, etc.) — threat-modeled separately by their respective projects.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="trust-boundaries-and-data-flow"><a class="anchor" href="#trust-boundaries-and-data-flow"></a><a class="link" href="#trust-boundaries-and-data-flow">3. Trust Boundaries and Data Flow</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="primary-trust-boundary"><a class="anchor" href="#primary-trust-boundary"></a><a class="link" href="#primary-trust-boundary">3.1. Primary trust boundary</a></h3>
+<div class="paragraph">
+<p>Data enters the broker via:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Network messaging protocols</strong> (AMQP/MQTT/STOMP/OpenWire/Core) from messaging clients.
+HTTP connections can upgrade to Core protocol.
+AMQP, MQTT, and STOMP support WebSocket as a transport.
+Beyond these specific upgrade/transport paths, protocol switching is not allowed.</p>
+</li>
+<li>
+<p><strong>Management interfaces</strong> (JMX, Jolokia HTTP, management messages) from management clients</p>
+</li>
+<li>
+<p><strong>Filesystem reads</strong> (configuration files, journal replay, paged messages) by operator or broker process</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="trust-transitions"><a class="anchor" href="#trust-transitions"></a><a class="link" href="#trust-transitions">3.2. Trust transitions</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Messaging Client → Broker Core:</strong> Messages from network clients (untrusted or authenticated) are parsed by protocol adapters and routed to the broker core.
+Authentication happens at connection establishment; authorization happens per operation (sending a message, creating a consumer, creating a queue, etc.).</p>
+</li>
+<li>
+<p><strong>Management Client → Broker Core:</strong> Management operations from management clients are subject to RBAC.</p>
+</li>
+<li>
+<p><strong>Broker Core → Filesystem:</strong> Broker writes to append-only journal and paging files; integrity of persisted data depends on filesystem and OS guarantees.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="reachability-preconditions-per-component"><a class="anchor" href="#reachability-preconditions-per-component"></a><a class="link" href="#reachability-preconditions-per-component">3.3. Reachability preconditions per component</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Protocol Adapters:</strong> A finding is in-model only if reachable from network input on the corresponding protocol port without requiring authenticated full management credentials.</p>
+</li>
+<li>
+<p><strong>Broker Core:</strong> A finding is in-model if reachable from messaging client-controlled payloads, headers, or addressing metadata.</p>
+</li>
+<li>
+<p><strong>Management APIs:</strong> A finding is in-model if reachable from an authenticated management client&#8217;s request.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assumptions-about-the-environment"><a class="anchor" href="#assumptions-about-the-environment"></a><a class="link" href="#assumptions-about-the-environment">4. Assumptions About the Environment</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="operating-system-and-runtime"><a class="anchor" href="#operating-system-and-runtime"></a><a class="link" href="#operating-system-and-runtime">4.1. Operating system and runtime</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The broker assumes a conformant JVM (Java 17 or later).</p>
+</li>
+<li>
+<p>The broker assumes the OS provides standard filesystem semantics (atomicity of writes &lt; page size, durability after fsync).</p>
+</li>
+<li>
+<p>The broker assumes the OS enforces process isolation (no untrusted local processes can ptrace or inject code).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="concurrency"><a class="anchor" href="#concurrency"></a><a class="link" href="#concurrency">4.2. Concurrency</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The broker is designed to be thread-safe for concurrent client connections.</p>
+</li>
+<li>
+<p>The broker assumes the JVM correctly implements Java&#8217;s multi-threading semantics (thread synchronization, memory visibility between threads, safe publication of shared data).
+A JVM with broken concurrency primitives could cause race conditions in authentication, authorization, or message routing.</p>
+</li>
+<li>
+<p>Runtime configuration reload (<code>broker.xml</code>, <code>security-settings</code>) is safe under load.
+Configuration changes do not cause inconsistent state or authorization bypass during reload.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="filesystem-assumptions"><a class="anchor" href="#filesystem-assumptions"></a><a class="link" href="#filesystem-assumptions">4.3. Filesystem assumptions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The broker assumes it has exclusive write access to its data directory (and all sub-directories).</p>
+</li>
+<li>
+<p>The broker assumes the filesystem does not arbitrarily corrupt data (bit flips, silent data corruption). <strong>Note:</strong> The broker performs no strict integrity checks on persisted data (see <a href="#security-properties-not-provided">Security Properties Not Provided</a>); tampering is not detected.
+Operators requiring such checks must use OS-level mechanisms (ZFS checksums, dm-integrity, etc.).</p>
+</li>
+<li>
+<p>The broker uses libaio on Linux for high-performance journal writes; it assumes libaio behaves correctly.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="network-assumptions"><a class="anchor" href="#network-assumptions"></a><a class="link" href="#network-assumptions">4.4. Network assumptions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The broker does not assume confidentiality or integrity of network traffic unless TLS/SSL is configured.</p>
+</li>
+<li>
+<p>The broker assumes the network can deliver or drop packets but does not inject malicious packets from non-client sources (i.e., no on-path attacker at IP layer unless TLS mitigates).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="what-artemis-does-not-do-to-its-host"><a class="anchor" href="#what-artemis-does-not-do-to-its-host"></a><a class="link" href="#what-artemis-does-not-do-to-its-host">4.5. What Artemis does <em>not</em> do to its host</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Does not install signal handlers beyond standard JVM handlers</p>
+</li>
+<li>
+<p>Does not spawn child processes in normal operation (CLI tools may spawn broker as child, but the broker itself does not spawn processes)</p>
+</li>
+<li>
+<p>Does not mutate process-wide JVM state (locale, timezone, default charset) beyond standard JVM behavior</p>
+</li>
+<li>
+<p>Does not modify system-wide state (iptables, kernel modules, global system properties)</p>
+</li>
+<li>
+<p>Does not open listening sockets on ports other than those explicitly configured</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuration-variants"><a class="anchor" href="#configuration-variants"></a><a class="link" href="#configuration-variants">5. Configuration Variants</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Knob</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>security-enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>false</code>, disables all authentication and authorization</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sslEnabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>true</code>, provides transport confidentiality and integrity</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>needClientAuth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>true</code>, enforces mutual TLS at the transport layer before any protocol interaction. Completely prevents unauthenticated network attackers from establishing connections. Stronger than protocol-level authentication as it operates at the TLS handshake.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Management RBAC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables fine-grained permissions on management operations</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="adversary-model"><a class="anchor" href="#adversary-model"></a><a class="link" href="#adversary-model">6. Adversary Model</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="adversaries-in-scope"><a class="anchor" href="#adversaries-in-scope"></a><a class="link" href="#adversaries-in-scope">6.1. Adversaries in Scope</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Unauthenticated network attacker:</strong></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>When mutual TLS is enforced:</strong> This threat is <strong>completely eliminated</strong>.
+The attacker cannot establish a network connection without a TLS certificate signed by a trusted CA.
+Enforcement happens at the transport layer during the TLS handshake, before any protocol interaction.</p>
+</li>
+<li>
+<p><strong>When authentication is enforced</strong>: Cannot meaningfully interact without authentication.
+Unauthenticated connection attempts are rejected at the protocol level (e.g., MQTT <code>CONNECT</code> with invalid credentials) before any messaging operations are permitted.
+However, the attacker can still establish network connections and send protocol frames/packets up to the authentication step; attempt authentication with guessed credentials; attempt DoS via connection exhaustion or malformed input during connection or authentication phase.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Authenticated messaging client (low-privilege):</strong> Has valid credentials but limited authorization (e.g., can send to specific addresses but not manage the broker).
+Can attempt privilege escalation via protocol exploits or misuse of broker features.</p>
+</li>
+<li>
+<p><strong>Authenticated management client (low-privilege):</strong> Has valid credentials but limited authorization; connects via web console, JMX, Jolokia HTTP, or management messages.
+Can potentially read broker state and metrics, enumerate queues, addresses, connections, and consumers, view message counts, etc.; monitor broker performance.
+Can attempt to exploit management API vulnerabilities to gain elevated privileges; denial of service via management interface abuse.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adversaries-out-of-scope"><a class="anchor" href="#adversaries-out-of-scope"></a><a class="link" href="#adversaries-out-of-scope">6.2. Adversaries Out of Scope</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Malicious operator with filesystem or JVM access:</strong> An operator with filesystem write access to the data directory, ability to attach a debugger, or <code>kill -9</code> access can read/modify all data, bypass all security controls, and cause arbitrary behavior.
+The broker does not defend against malicious operators.</p>
+</li>
+<li>
+<p><strong>Side-channel observers:</strong> Timing attacks on message routing, cache-timing on authentication, speculative execution side channels.</p>
+</li>
+<li>
+<p><strong>Co-tenant attackers in shared JVM:</strong> If multiple applications share the same JVM and classpath, the broker does not defend against malicious code in the same JVM.</p>
+</li>
+<li>
+<p><strong>On-path network attacker:</strong> Physical access to network infrastructure; mitigated by TLS.</p>
+</li>
+<li>
+<p><strong>Clients with full admin permissions:</strong> Such a client can perform any management operation, including reading message content.
+Reports about admin capabilities (e.g., "admin can read messages") are triaged as <code>BY-DESIGN</code>.</p>
+</li>
+<li>
+<p><strong>When <code>security-enabled=false</code>:</strong> Can send arbitrary protocol messages and perform messaging or management operations without authentication.
+This configuration is not supported in production.
+Reports against such deployments with are triaged as <code>OUT-OF-SCOPE</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="security-properties-provided"><a class="anchor" href="#security-properties-provided"></a><a class="link" href="#security-properties-provided">7. Security Properties Provided</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Authentication of messaging &amp; management clients:</strong> When just <code>security-enabled=true</code> then protocol-level authentication is enforced (e.g. via username &amp; password, JWT, etc.).
+However, when TLS client certificate authentication is also enabled then transport-layer authentication during TLS handshake is enforced.
+TLS client certificates provide stronger authentication as they prevent unauthenticated clients from establishing any connection.</p>
+</li>
+<li>
+<p><strong>Authorization of messaging clients:</strong> When <code>security-enabled=true</code> and <code>security-settings</code> are configured.</p>
+</li>
+<li>
+<p><strong>Authorization for management clients:</strong> When <code>management-message-rbac=true</code> <strong>or</strong> <code>management.xml</code> is configured appropriately and <code>security-settings</code> are in place.</p>
+</li>
+<li>
+<p><strong>Confidentiality and integrity of messages in transit:</strong> When <code>sslEnabled=true</code> on the relevant <code>acceptor</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="security-properties-not-provided"><a class="anchor" href="#security-properties-not-provided"></a><a class="link" href="#security-properties-not-provided">8. Security Properties Not Provided</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>End-to-end confidentiality of message payloads:</strong> The broker has access to plaintext message bodies.
+If message payloads must be kept confidential from the broker operator, the application must implement application-layer encryption.</p>
+</li>
+<li>
+<p><strong>Authentication of message content origin:</strong> The broker authenticates the <em>connection</em> that sends a message, not the message itself.
+A compromised client or a client authorized to send to an address can claim to be any logical sender.
+Applications requiring non-repudiation must implement message signing.</p>
+</li>
+<li>
+<p><strong>Comprehensive per-client message rate limiting across all protocols:</strong> Message rate limiting is available for Core and MQTT 5 clients, but <strong>not</strong> for AMQP, STOMP, OpenWire, or MQTT 3.x clients.
+Clients using protocols without rate limiting can send messages at line rate until paging or disk space limits are enforced.
+Operators must use network-level controls for protocols that lack broker-side rate limiting.</p>
+</li>
+<li>
+<p><strong>Memory growth within paging limits:</strong> Memory consumption that grows with messages up to configured paging limits is expected behavior, not a DoS vulnerability.
+However, super-linear CPU consumption or hangs on pathological input <strong>are</strong> bugs.</p>
+</li>
+<li>
+<p><strong>Byzantine fault tolerance in clustering:</strong> Clustered deployments assume peer brokers are honest or fail-stop.
+If a peer broker is compromised and sends adversarial messages, the cluster may enter an inconsistent state.
+Byzantine fault tolerance is not provided.</p>
+</li>
+<li>
+<p><strong>Protection against operator-level attacks:</strong> An operator with filesystem access can read all persisted messages, modify configuration to grant themselves any role, or inject/modify messages in the journal.
+The broker does not validate journal or paging file integrity; tampering is not detected.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="downstream-responsibilities"><a class="anchor" href="#downstream-responsibilities"></a><a class="link" href="#downstream-responsibilities">9. Downstream Responsibilities</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="for-operators-deploying-the-broker"><a class="anchor" href="#for-operators-deploying-the-broker"></a><a class="link" href="#for-operators-deploying-the-broker">9.1. For operators deploying the broker</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Enable authentication and authorization:</strong> Set <code>security-enabled=true</code>.</p>
+</li>
+<li>
+<p><strong>Configure TLS for network exposure:</strong> If the broker is exposed to an untrusted network, enable SSL/TLS on all protocol ports.
+Use strong cipher suites and disable weak protocols (SSLv3, TLS 1.0, TLS 1.1) to prevent protocol downgrade attacks.
+The broker inherits TLS configuration from the JVM; insecure TLS settings expose credentials and message content.</p>
+</li>
+<li>
+<p><strong>Consider mutual TLS for high-security deployments:</strong> Enable <code>needClientAuth=true</code> on acceptors to require clients to present valid certificates during the TLS handshake.
+This provides transport-layer authentication that completely eliminates unauthenticated network attackers since they cannot establish connections without valid certificates.
+This is stronger than protocol-level authentication because the TLS handshake is enforced before any messaging protocol interaction, preventing connection establishment attacks and protocol-level authentication bypass attempts.
+Recommended for internet-facing brokers or environments with untrusted networks.</p>
+</li>
+<li>
+<p><strong>Restrict filesystem access:</strong> Ensure read/write access to the broker&#8217;s instance directory (and all sub-directories) is restricted to trusted operators.
+Among other things, the instance directory includes all configuration, message data, and logs for the broker so protecting it is critical for security.
+For example, an attacker who can write to <code>broker.xml</code> can reconfigure <code>security-settings</code> and bypass all authorization.</p>
+</li>
+<li>
+<p><strong>Restrict management interface access:</strong> JMX is not exposed on the network by default whereas Jolokia HTTP and the web console are exposed on localhost by default.
+Ensure authentication and TLS are enabled; prefer localhost-only binding for management interfaces exposed to untrusted networks.</p>
+</li>
+<li>
+<p><strong>Review and harden JAAS configuration:</strong> If using JAAS, ensure login modules are correctly configured and credentials are not embedded in cleartext files with world-readable permissions.</p>
+</li>
+<li>
+<p><strong>Set resource limits at OS level:</strong> Configure ulimits (file descriptors, memory) to prevent resource exhaustion.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="for-applications-using-the-broker"><a class="anchor" href="#for-applications-using-the-broker"></a><a class="link" href="#for-applications-using-the-broker">9.2. For applications using the broker</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Validate message content:</strong> Applications must validate untrusted message content.</p>
+</li>
+<li>
+<p><strong>Implement application-layer encryption if needed:</strong> If message confidentiality from the broker operator is required, encrypt payloads before sending.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conditions-that-might-change-this-model"><a class="anchor" href="#conditions-that-might-change-this-model"></a><a class="link" href="#conditions-that-might-change-this-model">10. Conditions That Might Change This Model</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A new protocol is added — new parser, new attack surface.</p>
+</li>
+<li>
+<p>A new public API surface is exposed.</p>
+</li>
+<li>
+<p>A new deployment mode is supported (e.g., multi-tenancy in a single JVM with untrusted co-tenants).</p>
+</li>
+<li>
+<p>A default configuration value changes in a way that affects security (e.g., <code>security-enabled</code> default flips to <code>false</code>, or TLS ciphers change).</p>
+</li>
+<li>
+<p>A security property in <a href="#security-properties-provided">Security Properties Provided</a> is changed or disclaimed.</p>
+</li>
+<li>
+<p>A vulnerability report cannot be cleanly routed to one of the <a href="#triage-dispositions">Triage Dispositions</a> dispositions — this indicates a model gap.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="triage-dispositions"><a class="anchor" href="#triage-dispositions"></a><a class="link" href="#triage-dispositions">11. Triage Dispositions</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Disposition</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>VALID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Violates a <a href="#security-properties-provided">security property Artemis provides</a> and reachable via <a href="#adversaries-in-scope">in-scope adversary</a>. Requires fixing and CVE assignment.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>OUT-OF-SCOPE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires an <a href="#adversaries-out-of-scope">adversary</a>, <a href="#out-of-scope">use case, or threat</a> outside the threat model.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BY-DESIGN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concerns a property Artemis <a href="#security-properties-not-provided">explicitly does not provide</a>.
+Intentional behavior, not a vulnerability.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Note:</strong> If a report cannot be cleanly assigned to one of these dispositions, the model has a gap and <a href="#conditions-that-might-change-this-model">should be revised</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

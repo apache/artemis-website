@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Management</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.56.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#the-management-api">1. The Management API</a>
 <ul class="sectlevel2">
@@ -878,7 +878,7 @@ For a full guide as to how to use it refer to <a href="https://jolokia.org/refer
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>curl <span class="nt">-s</span> <span class="nt">-H</span> <span class="s2">"Origin: http://localhost"</span> <span class="nt">-u</span> myUser:myPass http://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker<span class="o">=</span><span class="se">\"</span>0.0.0.0<span class="se">\"</span>/Active</code></pre>
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>curl <span class="nt">-s</span> <span class="nt">-H</span> <span class="s2">"Origin: http://localhost"</span> <span class="nt">-u</span> myUser:myPass http://localhost:8161/console/jolokia/read/org.apache.activemq.artemis:broker<span class="o">=</span>%220.0.0.0%22/Active</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -938,7 +938,7 @@ For example, you can list the connections to the broker with <code>curl</code> a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>curl <span class="nt">-s</span> <span class="nt">-H</span> <span class="s2">"Origin: http://localhost"</span> <span class="nt">-u</span> myUser:myPass <span class="s2">"http://localhost:8161/console/jolokia/exec/org.apache.activemq.artemis:broker=</span><span class="se">\"</span><span class="s2">0.0.0.0</span><span class="se">\"</span><span class="s2">/listConnections/</span><span class="se">\"\"</span><span class="s2">/-1/-1"</span> | jq <span class="s1">'.value | fromjson'</span></code></pre>
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>curl <span class="nt">-s</span> <span class="nt">-H</span> <span class="s2">"Origin: http://localhost"</span> <span class="nt">-u</span> myUser:myPass <span class="s2">"http://localhost:8161/console/jolokia/exec/org.apache.activemq.artemis:broker=%220.0.0.0%22/listConnections/%22%22/-1/-1"</span> | jq <span class="s1">'.value | fromjson'</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -988,7 +988,7 @@ For example, you can list the connections to the broker with <code>curl</code> a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>curl <span class="nt">-s</span> <span class="nt">-H</span> <span class="s2">"Origin: http://localhost"</span> <span class="nt">-u</span> myUser:myPass <span class="s2">"http://localhost:8161/console/jolokia/exec/org.apache.activemq.artemis:broker=</span><span class="se">\"</span><span class="s2">0.0.0.0</span><span class="se">\"</span><span class="s2">/listConnections/</span><span class="se">\{\"</span><span class="s2">field</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">protocol</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">operation</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">EQUALS</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">value</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">OPENWIRE</span><span class="se">\"\}</span><span class="s2">/-1/-1"</span> | jq <span class="s1">'.value | fromjson'</span></code></pre>
+<pre class="rouge highlight nowrap"><code data-lang="console"><span class="gp">$</span><span class="w"> </span>curl <span class="nt">-s</span> <span class="nt">-H</span> <span class="s2">"Origin: http://localhost"</span> <span class="nt">-u</span> myUser:myPass <span class="s2">"http://localhost:8161/console/jolokia/exec/org.apache.activemq.artemis:broker=%220.0.0.0%22/listConnections/%7B%22field%22:%22protocol%22,%22operation%22:%22EQUALS%22,%22value%22:%22OPENWIRE%22%7D/-1/-1"</span> | jq <span class="s1">'.value | fromjson'</span></code></pre>
 </div>
 </div>
 <div class="paragraph">

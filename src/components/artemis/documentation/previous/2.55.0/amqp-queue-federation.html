@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<title>Queue Federation</title>
+<link rel="stylesheet" href="css/asciidoctor.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/rouge-github.css">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pathSegments = window.location.pathname.split('/');
+        if (window.location.hostname == "artemis.apache.org" && pathSegments[pathSegments.length - 2] != "latest") {
+            var message = document.createElement("div");
+            message.style.margin = "20px";
+            message.style.textAlign = "center";
+            message.style.backgroundColor = "#FFFFE0";
+            message.textContent = "Please be aware that this documentation is out of date. ";
+
+            var link = document.createElement("a");
+            link.href = "../../latest";
+            link.textContent = "Here is the latest documentation.";
+            message.appendChild(link);
+
+            document.body.insertBefore(message, document.body.firstChild);
+        }
+    });
+</script>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>Queue Federation</h1>
+<div id="toc" class="toc2">
+<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
+<ul class="sectlevel1">
+<li><a href="#common-queue-federation-topologies">1. Common Queue Federation Topologies</a>
+<ul class="sectlevel2">
+<li><a href="#simple-queue-load-balance">1.1. Simple Queue Load Balance</a></li>
+<li><a href="#bi-directional-queue-federation">1.2. Bi-directional Queue Federation</a></li>
+<li><a href="#queue-federation-with-intermediary-brokers">1.3. Queue Federation with Intermediary Brokers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Queue federation offers a means of load balancing message queues across multiple broker instances.
+Messages sent to a queue on <code>Broker-1</code> can be consumed and sent to the matching queue on <code>Broker-2</code> via a federation consumer if there is no local consumer available to consume the message.</p>
+</div>
+<div class="paragraph">
+<p>Queue federation creates consumers that consume messages from the matching queue on the remote peer when demand is detached on the local queue that matches a specific queue federation policy.
+The federation consumer acts as an addition consumer on the target remote queue competing with consumers on that remote queue for messages.
+Federation queue consumers can be configured to always have lower priority than the local queue consumers and also can be configured to only pull messages from the remote queue if there is capacity to handle those messages on the local broker.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/amqp-federation-queue-concept.png" alt="amqp federation queue concept">
+</div>
+</div>
+<div class="paragraph">
+<p>Queue federation can be configured operate in a single direction between peers or can configured to operate in both directions between peers allowing message to flow in both directions delivering messages to consumers on either broker that were sent to the matching queue on the opposing broker instance.
+When configured for dual federation messages can migrate back and forth between brokers depending on capacity and available local consumers, this back and forth message flow can be reduced by ensuring that the federation policy uses a pull when space is available configuration which will only pull a batch of messages from the remote if the local queue does not already have a backlog.
+For a more complete reference of the AMQP Queue Federation configuration elements refer to the <a href="amqp-federation-configuration-glossary.html">AMQP Federation Configuration Glossary</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="common-queue-federation-topologies"><a class="anchor" href="#common-queue-federation-topologies"></a><a class="link" href="#common-queue-federation-topologies">1. Common Queue Federation Topologies</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The sections that follow discuss some common queue federation topologies and some configuration considerations specific to those topologies.</p>
+</div>
+<div class="sect2">
+<h3 id="simple-queue-load-balance"><a class="anchor" href="#simple-queue-load-balance"></a><a class="link" href="#simple-queue-load-balance">1.1. Simple Queue Load Balance</a></h3>
+<div class="paragraph">
+<p>The simplest configuration of Queue federation involves a two broker setup where <code>broker-1</code> creates a federation consumer to <code>broker-2</code> when demand is present on a federated queue.
+The messages sent by a producer on <code>broker-2</code> are shared between any local consumer and the federation consumer.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/amqp-federation-queue-simple-lb.png" alt="amqp federation queue simple lb">
+</div>
+</div>
+<div class="paragraph">
+<p>This configuration can be setup by adding a federation policy on <code>broker-1</code> that configure the queue to federate and a connection URI pointing to the opposing broker.
+Note that this configuration adds properties to configure the federation queue consumer to pull messages as opposed to the default which allows messages to flow regardless of local queue backlogs, this helps to prevent pulling messages from the remote broker unless the local broker has a shortage which helps to prevent starving consumers directly attached to the remote broker.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-queue-policy</span> <span class="na">name=</span><span class="s">"example-local-address-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"#"</span> <span class="na">queue-match=</span><span class="s">"a.federated-queue"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"amqpCredits"</span> <span class="na">value=</span><span class="s">"0"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"amqpPullConsumerCredits"</span> <span class="na">value=</span><span class="s">"1"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-queue-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>While this configuration provides basic sharing of messages between brokers it can result in messages being stuck on <code>broker-1</code> if the consumer goes down as messages cannot flow back to <code>broker-2</code> to be be read by a consumer there which is why the next topology is often deployed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="bi-directional-queue-federation"><a class="anchor" href="#bi-directional-queue-federation"></a><a class="link" href="#bi-directional-queue-federation">1.2. Bi-directional Queue Federation</a></h3>
+<div class="paragraph">
+<p>In a bi-directional queue federation configuration both brokers are configured to federate a given queue between them allowing messages to flow in either direction.
+This configuration allows message that have been federated to one broker to flow back to the other if local demand is removed which can prevent stuck messages.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/amqp-federation-queue-bi-directional.png" alt="amqp federation queue bi directional">
+</div>
+</div>
+<div class="paragraph">
+<p>This configuration can be setup by adding a broker connection element to each of the broker instances with the same local queue federation policy or could be defined on only one broker using both a local and remote queue federation policy as shown below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+       <span class="nt">&lt;local-queue-policy</span> <span class="na">name=</span><span class="s">"example-local-queue-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"#"</span> <span class="na">queue-match=</span><span class="s">"a.federated-queue"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/local-queue-policy&gt;</span>
+       <span class="nt">&lt;remote-queue-policy</span> <span class="na">name=</span><span class="s">"example-remote-queue-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">address-match=</span><span class="s">"#"</span> <span class="na">queue-match=</span><span class="s">"a.federated-queue"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/remote-queue-policy&gt;</span>
+       <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"amqpCredits"</span> <span class="na">value=</span><span class="s">"0"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;property</span> <span class="na">key=</span><span class="s">"amqpPullConsumerCredits"</span> <span class="na">value=</span><span class="s">"10"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This configuration would result in only a single connection between the two brokers.
+Each policy will be configured by the shared properties of the federation element to use a pull consumer that batches ten messages at a time whenever the target queue has no pending messages already waiting to be read.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="queue-federation-with-intermediary-brokers"><a class="anchor" href="#queue-federation-with-intermediary-brokers"></a><a class="link" href="#queue-federation-with-intermediary-brokers">1.3. Queue Federation with Intermediary Brokers</a></h3>
+<div class="paragraph">
+<p>In some use cases a federated queue may need to cross through an intermediary broker before reaching a consumer.
+For example consider a three broker chain where messages produced on <code>broker-1</code> must pass through <code>broker-2</code> before reaching a consumer on <code>broker-3</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/amqp-federation-queue-with-hop.png" alt="amqp federation queue with hop">
+</div>
+</div>
+<div class="paragraph">
+<p>To accomplish this the federation queue policy for the intermediary broker must have additional configuration to allow for federation of messages when no local demand is present but a federation consumer is.
+Normally federation queue policies do no consider a federation queue binding on a local queue as demand to avoid creating loops.
+To disable that behavior the policy supports the attribute <code>include-federated</code> which defaults to <code>false</code>.
+The XML configuration for <code>broker-2</code> is below that employs this option.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+      <span class="nt">&lt;local-queue-policy</span> <span class="na">name=</span><span class="s">"example-local-queue-policy"</span> <span class="na">include-federated=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">queue-match=</span><span class="s">"a.federated-queue"</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/local-queue-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration on <code>broker-3</code> looks essentially the same as that on <code>broker-2</code> however the <code>include-federated</code> attribute can be omitted.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;broker-connections&gt;</span>
+  <span class="nt">&lt;amqp-connection</span> <span class="na">uri=</span><span class="s">"tcp://HOST:PORT"</span> <span class="na">name=</span><span class="s">"federation-example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;federation&gt;</span>
+      <span class="nt">&lt;local-queue-policy</span> <span class="na">name=</span><span class="s">"example-local-queue-policy"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;include</span> <span class="na">queue-match=</span><span class="s">"a.federated-queue"</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/local-queue-policy&gt;</span>
+    <span class="nt">&lt;/federation&gt;</span>
+  <span class="nt">&lt;/amqp-connection&gt;</span>
+<span class="nt">&lt;/broker-connections&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With this configuration in place messages produced on <code>broker-1</code> will be federated to <code>broker-2</code> and then on to <code>broker-3</code> whenever a consumer is attached to <code>broker-3</code>.
+It should be noted however that in a configuration such as this that messages can be left on <code>broker-2</code> if they were arriving there at the same time that the consumer on <code>broker-3</code> had gone away and the federation link between <code>broker-3</code> and <code>broker-2</code> was gearing down.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

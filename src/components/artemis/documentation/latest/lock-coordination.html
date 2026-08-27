@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Lock Coordination / HA with Mirroring</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.55.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.56.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#configuration">1. Configuration</a>
 <ul class="sectlevel2">
@@ -48,6 +48,7 @@
 <li><a href="#zookeeper-based-lock-manager">2.3. ZooKeeper-Based Lock Manager</a></li>
 </ul>
 </li>
+<li><a href="#management-operations">3. Management Operations</a></li>
 </ul>
 </div>
 </div>
@@ -292,8 +293,26 @@ When mixing bridges or federations with mirrors in the same configuration, messa
 <td class="tableblock halign-left valign-top"><p class="tableblock">5000</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">How often to check if the lock is still valid, in milliseconds</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auto-start</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether the lock coordinator starts polling for the distributed lock as soon as the broker is activated. When <code>false</code>, the coordinator stays stopped, and the lock is not contended for, until it is started explicitly through management (see <a href="#management-operations">Management Operations</a>).</p></td>
+</tr>
 </tbody>
 </table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In a journal HA setup with either shared storage or journal replication, lock coordinators will stay inactive and will not poll for the lock until the server is activated.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="file-based-lock-manager"><a class="anchor" href="#file-based-lock-manager"></a><a class="link" href="#file-based-lock-manager">2.2. File-Based Lock Manager</a></h3>
@@ -404,6 +423,27 @@ This is the recommended approach for production deployments as it provides bette
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="management-operations"><a class="anchor" href="#management-operations"></a><a class="link" href="#management-operations">3. Management Operations</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>ActiveMQServerControl</code> management interface exposes the following operations for lock coordinators, on top of the existing <code>listLockCoordinatorsAsJSON</code> that reports their current status:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>startLockCoordinator(name)</code> - starts polling for the distributed lock of a lock coordinator that isn&#8217;t already started, most commonly one configured with <code>auto-start="false"</code>. Calling it on an already started lock coordinator is a no-op. An unknown <code>name</code> throws <code>IllegalArgumentException</code>.</p>
+</li>
+<li>
+<p><code>stopLockCoordinator(name)</code> - stops polling for the distributed lock. If the lock is currently held, it is released, and any element bound to the lock coordinator (acceptors, broker connections) is paused as if the lock had been lost. An unknown <code>name</code> throws <code>IllegalArgumentException</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These operations allow an administrator to manually control which broker owns a lock coordinator&#8217;s elements, e.g. to force a controlled fail-over, or to defer contention for a coordinator configured with <code>auto-start="false"</code> until some external condition is met.</p>
 </div>
 </div>
 </div>
