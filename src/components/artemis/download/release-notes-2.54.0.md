@@ -27,6 +27,7 @@ type: artemis
 * [ARTEMIS-6031](https://issues.apache.org/jira/browse/ARTEMIS-6031) - Handle credit starvation affecting Core bridge
 * [ARTEMIS-6033](https://issues.apache.org/jira/browse/ARTEMIS-6033) - The CLI transfer command doesn't close the connection factory
 * [ARTEMIS-6034](https://issues.apache.org/jira/browse/ARTEMIS-6034) - The CLI perf client command doesn't close the connection factory
+* [ARTEMIS-6043](https://issues.apache.org/jira/browse/ARTEMIS-6043) - Updating divert via management API can persist invalid config
 
 ## New Features
 
@@ -54,9 +55,11 @@ type: artemis
 * [ARTEMIS-5974](https://issues.apache.org/jira/browse/ARTEMIS-5974) - Replace FactoryFinder with Java ServiceLoader
 * [ARTEMIS-5993](https://issues.apache.org/jira/browse/ARTEMIS-5993) - Add license header to all Service Provider configuration files
 * [ARTEMIS-5995](https://issues.apache.org/jira/browse/ARTEMIS-5995) - Remove activemq-broker dependency from integration tests
+* [ARTEMIS-5996](https://issues.apache.org/jira/browse/ARTEMIS-5996) - Refactor STOMP to use checkAutoCreate from ServerSession
 * [ARTEMIS-6013](https://issues.apache.org/jira/browse/ARTEMIS-6013) - Add unit tests for SecurityManagerUtil
 * [ARTEMIS-6020](https://issues.apache.org/jira/browse/ARTEMIS-6020) - Add checkstyle for generic whitespace
 * [ARTEMIS-6037](https://issues.apache.org/jira/browse/ARTEMIS-6037) - Refactor handling of cluster credentials
+* [ARTEMIS-6055](https://issues.apache.org/jira/browse/ARTEMIS-6055) - Refactor CLI default password handling
 * [ARTEMIS-6058](https://issues.apache.org/jira/browse/ARTEMIS-6058) - Enforce Checkstyle for double spaces
 
 ## Dependency Upgrades
