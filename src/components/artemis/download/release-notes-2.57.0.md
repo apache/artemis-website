@@ -15,4 +15,5 @@ type: artemis
 
 ## Tasks
 
+* [ARTEMIS-6125](https://issues.apache.org/jira/browse/ARTEMIS-6125) - Convert examples to static connectors
 * [ARTEMIS-6203](https://issues.apache.org/jira/browse/ARTEMIS-6203) - Make MQTT resiliency soak tests more robust
