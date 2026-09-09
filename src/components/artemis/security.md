@@ -8,6 +8,7 @@ type: artemis
 Details of security problems fixed in released versions of Apache Artemis are detailed below.
 
 See the main [Security Advisories](../../security-advisories) page for details for other components and general information such as reporting new security issues.
+*   [CVE-2026-75880](../../security-advisories.data/CVE-2026-75880-announcement.txt) - Message selector wildcard handling could lead to denial of service
 *   [CVE-2026-67593](../../security-advisories.data/CVE-2026-67593-announcement.txt) - Pre-authentication Openwire protocol handling can result in queue deletion
 *   [CVE-2026-57967](../../security-advisories.data/CVE-2026-57967-announcement.txt) - Missing authentication on CORE protocol session reattachment
 *   [CVE-2026-57822](../../security-advisories.data/CVE-2026-57822-announcement.txt) - Message-based management parameter deserialization may lead to denial of service
