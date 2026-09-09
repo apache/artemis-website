@@ -8,6 +8,7 @@ type: artemis
 Details of security problems fixed in released versions of Apache Artemis are detailed below.
 
 See the main [Security Advisories](../../security-advisories) page for details for other components and general information such as reporting new security issues.
+*   [CVE-2026-49363](../../security-advisories.data/CVE-2026-49363-announcement.txt) - Pre-Authentication Information Disclosure in CORE Protocol Topology Subscription
 *   [CVE-2026-49362](../../security-advisories.data/CVE-2026-49362-announcement.txt) - Missing Authentication in CORE Protocol Handler Allows Unauthorized Queue Creation
 *   [CVE-2026-40914](../../security-advisories.data/CVE-2026-40914-announcement.txt) - Address routing-type can be updated by STOMP protocol user without the createAddress permission
 *   [CVE-2026-32642](../../security-advisories.data/CVE-2026-32642-announcement.txt) - Temporary address auto-created for OpenWire consumer without createAddress permission
