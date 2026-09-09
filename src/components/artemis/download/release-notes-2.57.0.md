@@ -12,6 +12,9 @@ type: artemis
 
 **Note**: This release requires use of Java 17 or above.
 
+## Bugs Fixed
+
+**Note**: See also the [security page](/components/artemis/security) for issues addressed in this release.
 
 ## Tasks
 
