@@ -90,28 +90,160 @@
         <p>Details of security problems fixed in released versions of Apache Artemis are detailed below.</p>
 
 <p>See the main <a href="../../security-advisories">Security Advisories</a> page for details for other components and general information such as reporting new security issues.</p>
-<ul>
-  <li><a href="../../security-advisories.data/CVE-2026-75880-announcement.txt">CVE-2026-75880</a> - Message selector wildcard handling could lead to denial of service</li>
-  <li><a href="../../security-advisories.data/CVE-2026-67593-announcement.txt">CVE-2026-67593</a> - Pre-authentication Openwire protocol handling can result in queue deletion</li>
-  <li><a href="../../security-advisories.data/CVE-2026-57967-announcement.txt">CVE-2026-57967</a> - Missing authentication on CORE protocol session reattachment</li>
-  <li><a href="../../security-advisories.data/CVE-2026-57822-announcement.txt">CVE-2026-57822</a> - Message-based management parameter deserialization may lead to denial of service</li>
-  <li><a href="../../security-advisories.data/CVE-2026-49364-announcement.txt">CVE-2026-49364</a> - Pre-Authentication Cluster Credential Exposure to Discovered Peers</li>
-  <li><a href="../../security-advisories.data/CVE-2026-49363-announcement.txt">CVE-2026-49363</a> - Pre-Authentication Information Disclosure in CORE Protocol Topology Subscription</li>
-  <li><a href="../../security-advisories.data/CVE-2026-49362-announcement.txt">CVE-2026-49362</a> - Missing Authentication in CORE Protocol Handler Allows Unauthorized Queue Creation</li>
-  <li><a href="../../security-advisories.data/CVE-2026-40914-announcement.txt">CVE-2026-40914</a> - Address routing-type can be updated by STOMP protocol user without the createAddress permission</li>
-  <li><a href="../../security-advisories.data/CVE-2026-32642-announcement.txt">CVE-2026-32642</a> - Temporary address auto-created for OpenWire consumer without createAddress permission</li>
-  <li><a href="../../security-advisories.data/CVE-2026-27446-announcement.txt">CVE-2026-27446</a> - Auth bypass for Core downstream federation</li>
-  <li><a href="../../security-advisories.data/CVE-2025-27391-announcement.txt">CVE-2025-27391</a> - Passwords leaking from broker properties in the debug log</li>
-  <li><a href="../../security-advisories.data/CVE-2025-27427-announcement.txt">CVE-2025-27427</a> - Address routing-type can be updated by user without the createAddress permission</li>
-  <li><a href="../../security-advisories.data/CVE-2023-50780-announcement.txt">CVE-2023-50780</a> - Authenticated users could perform RCE via Jolokia MBeans</li>
-  <li><a href="../../security-advisories.data/CVE-2022-35278-announcement.txt">CVE-2022-35278</a> - HTML Injection in ActiveMQ Artemis Web Console</li>
-  <li><a href="../../security-advisories.data/CVE-2022-23913-announcement.txt">CVE-2022-23913</a> - Apache ActiveMQ Artemis DoS</li>
-  <li><a href="../../security-advisories.data/CVE-2021-26117-announcement.txt">CVE-2021-26117</a> - ActiveMQ: LDAP-Authentication does not verify passwords on servers with anonymous bind</li>
-  <li><a href="../../security-advisories.data/CVE-2021-26118-announcement.txt">CVE-2021-26118</a> - Flaw in ActiveMQ Artemis OpenWire support</li>
-  <li><a href="../../security-advisories.data/CVE-2020-13932-announcement.txt">CVE-2020-13932</a> - Apache ActiveMQ Artemis - Remote XSS in Web console Diagram Plugin</li>
-  <li><a href="../../security-advisories.data/CVE-2017-12174-announcement.txt">CVE-2017-12174</a> - Memory exhaustion via UDP and JGroups discovery</li>
-  <li><a href="../../security-advisories.data/CVE-2016-4978-announcement.txt">CVE-2016-4978</a> - Apache ActiveMQ Artemis: Deserialization of untrusted input vunerability</li>
-</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>CVE</th>
+      <th>Severity</th>
+      <th>Description</th>
+      <th>Affected Versions</th>
+      <th>Fixed In</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-75880-announcement.txt">CVE-2026-75880</a></td>
+      <td>Moderate</td>
+      <td>Message selector wildcard handling could lead to denial of service</td>
+      <td>1.0.0 through 2.56.0</td>
+      <td>2.57.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-67593-announcement.txt">CVE-2026-67593</a></td>
+      <td>Important</td>
+      <td>Pre-authentication Openwire protocol handling can result in queue deletion</td>
+      <td>1.0.0 through 2.56.0</td>
+      <td>2.57.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-57967-announcement.txt">CVE-2026-57967</a></td>
+      <td>Important</td>
+      <td>Missing authentication on CORE protocol session reattachment</td>
+      <td>1.0.0 through 2.56.0</td>
+      <td>2.57.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-57822-announcement.txt">CVE-2026-57822</a></td>
+      <td>Important</td>
+      <td>Message-based management parameter deserialization may lead to denial of service</td>
+      <td>1.3.0 through 2.56.0</td>
+      <td>2.57.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-49364-announcement.txt">CVE-2026-49364</a></td>
+      <td>Important</td>
+      <td>Pre-Authentication Cluster Credential Exposure to Discovered Peers</td>
+      <td>1.0.0 through 2.56.0</td>
+      <td>2.57.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-49363-announcement.txt">CVE-2026-49363</a></td>
+      <td>Moderate</td>
+      <td>Pre-Authentication Information Disclosure in CORE Protocol Topology Subscription</td>
+      <td>1.0.0 through 2.56.0</td>
+      <td>2.57.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-49362-announcement.txt">CVE-2026-49362</a></td>
+      <td>Important</td>
+      <td>Missing Authentication in CORE Protocol Handler Allows Unauthorized Queue Creation</td>
+      <td>1.0.0 through 2.56.0</td>
+      <td>2.57.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-40914-announcement.txt">CVE-2026-40914</a></td>
+      <td>Low</td>
+      <td>Address routing-type can be updated by STOMP protocol user without the createAddress permission</td>
+      <td>2.0.0 through 2.53.0</td>
+      <td>2.54.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-32642-announcement.txt">CVE-2026-32642</a></td>
+      <td>Low</td>
+      <td>Temporary address auto-created for OpenWire consumer without createAddress permission</td>
+      <td>2.0.0 through 2.52.0</td>
+      <td>2.53.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2026-27446-announcement.txt">CVE-2026-27446</a></td>
+      <td>Critical</td>
+      <td>Auth bypass for Core downstream federation</td>
+      <td>2.11.0 through 2.51.0</td>
+      <td>2.52.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2025-27391-announcement.txt">CVE-2025-27391</a></td>
+      <td>Moderate</td>
+      <td>Passwords leaking from broker properties in the debug log</td>
+      <td>1.5.1 through 2.39.0</td>
+      <td>2.40.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2025-27427-announcement.txt">CVE-2025-27427</a></td>
+      <td>Low</td>
+      <td>Address routing-type can be updated by user without the createAddress permission</td>
+      <td>2.0.0 through 2.39.0</td>
+      <td>2.40.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2023-50780-announcement.txt">CVE-2023-50780</a></td>
+      <td>Moderate</td>
+      <td>Authenticated users could perform RCE via Jolokia MBeans</td>
+      <td>before 2.29.0</td>
+      <td>2.29.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2022-35278-announcement.txt">CVE-2022-35278</a></td>
+      <td>Moderate</td>
+      <td>HTML Injection in ActiveMQ Artemis Web Console</td>
+      <td>before 2.24.0</td>
+      <td>2.24.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2022-23913-announcement.txt">CVE-2022-23913</a></td>
+      <td>High</td>
+      <td>Apache ActiveMQ Artemis DoS</td>
+      <td>before 2.20.0</td>
+      <td>2.20.0 / 2.19.1</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2021-26117-announcement.txt">CVE-2021-26117</a></td>
+      <td>High</td>
+      <td>LDAP-Authentication does not verify passwords on servers with anonymous bind</td>
+      <td>before 2.16.0</td>
+      <td>2.16.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2021-26118-announcement.txt">CVE-2021-26118</a></td>
+      <td>High</td>
+      <td>Flaw in ActiveMQ Artemis OpenWire support</td>
+      <td>2.15.0</td>
+      <td>2.16.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2020-13932-announcement.txt">CVE-2020-13932</a></td>
+      <td>Medium</td>
+      <td>Remote XSS in Web console Diagram Plugin</td>
+      <td>2.5.0 through 2.13.0</td>
+      <td>2.14.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2017-12174-announcement.txt">CVE-2017-12174</a></td>
+      <td>High</td>
+      <td>Memory exhaustion via UDP and JGroups discovery</td>
+      <td>1.0.0 through 2.3.0</td>
+      <td>1.5.6 / 2.4.0</td>
+    </tr>
+    <tr>
+      <td><a href="../../security-advisories.data/CVE-2016-4978-announcement.txt">CVE-2016-4978</a></td>
+      <td>Important</td>
+      <td>Deserialization of untrusted input vulnerability</td>
+      <td>1.0.0 through 1.3.0</td>
+      <td>1.4.0</td>
+    </tr>
+  </tbody>
+</table>
 
       </div>
     </div>
