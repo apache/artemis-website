@@ -33,7 +33,7 @@
 <div id="header">
 <h1>Threat Model</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.56.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.57.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#scope-and-intended-use">1. Scope and Intended Use</a>
 <ul class="sectlevel2">
@@ -527,6 +527,11 @@ Reports about admin capabilities (e.g., "admin can read messages") are triaged a
 This configuration is not supported in production.
 Reports against such deployments with are triaged as <code>OUT-OF-SCOPE</code>.</p>
 </li>
+<li>
+<p>*When <code>artemis.discovery.enabled=true</code> and insecure server discovery broadcast endpoint: *If unauthenticated senders send discovery packets, the broker does not defend against malicious discovery packets.
+This configuration is not supported in production.
+Reports against such deployments with are triaged as <code>OUT-OF-SCOPE</code>.</p>
+</li>
 </ol>
 </div>
 </div>
@@ -568,6 +573,10 @@ If message payloads must be kept confidential from the broker operator, the appl
 <p><strong>Authentication of message content origin:</strong> The broker authenticates the <em>connection</em> that sends a message, not the message itself.
 A compromised client or a client authorized to send to an address can claim to be any logical sender.
 Applications requiring non-repudiation must implement message signing.</p>
+</li>
+<li>
+<p><strong>Authentication of server discovery packets:</strong> The broker and the client don&#8217;t authenticate the server discovery packets.
+Server discovery broadcast endpoints must implement authentication.</p>
 </li>
 <li>
 <p><strong>Comprehensive per-client message rate limiting across all protocols:</strong> Message rate limiting is available for Core and MQTT 5 clients, but <strong>not</strong> for AMQP, STOMP, OpenWire, or MQTT 3.x clients.

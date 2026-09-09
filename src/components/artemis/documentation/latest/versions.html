@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Version History</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.56.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.57.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#version-2-56-0">Version 2.56.0</a>
 <ul class="sectlevel2">
@@ -499,6 +499,24 @@ See <a href="persistence.html#configuring-the-message-journal">configuring the m
 <div class="ulist">
 <ul>
 <li>
+<p>The Core protocol connect handshake packet was extended in a backward-compatible way on the wire (same packet type identifiers).
+When security is enabled, Core clients that authenticate at connection time should pass credentials via <code>ServerLocator.setConnectionCredentials(user, password)</code> or <code>ServerLocator.createSessionFactory(user, password)</code>.
+Cluster components on new brokers (cluster connections, bridges, backups, federation) do this automatically using the configured <code>cluster-user</code> / <code>cluster-password</code> or bridge <code>user</code> / <code>password</code>.
+See <a href="core.html#core-connection-handshake">Core connection handshake</a> for details.</p>
+</li>
+<li>
+<p>On secured Core connections the broker initially limits frame size to 4 KiB until the connection is authenticated, then raises the limit to 128 KiB.
+Unauthenticated clients no longer receive real cluster topology; they receive a placeholder response until authentication succeeds.
+Both behaviors can be tuned or disabled per acceptor; see <a href="core.html#core-connection-handshake">Core connection handshake</a>.</p>
+</li>
+<li>
+<p><strong>Upgrade brokers before mixing old and new versions in a secured cluster.</strong>
+An old broker connecting to a broker that has already been upgraded does not send connection-level credentials in the Core connect handshake.
+The upgraded broker therefore treats the connection as unauthenticated and responds with only the placeholder topology entry, not the real cluster view.
+Until that old broker is upgraded as well, it may be unable to discover or connect properly to the new brokers (cluster connections, bridges, replication, backup registration, and similar Core links can fail or stall).
+Upgrade every broker in the cluster, or temporarily disable <code>coreConnectionSecurityEnabled</code> on acceptors during a transitional window, before relying on cross-version cluster connectivity.</p>
+</li>
+<li>
 <p>Due to <a href="https://issues.apache.org/jira/browse/ARTEMIS-6128">ARTEMIS-6128</a> the <code>Alder32</code> and <code>fileAlder32</code> properties have been deprecated in favor of <code>Adler32</code> and <code>fileAdler32</code> respectively.</p>
 </li>
 <li>
@@ -520,6 +538,14 @@ Of course, this is a traditional trade-off for increased reliability.
 The exact impact will depend on your specific use-case.
 Generally speaking, the recommendation is to use the lowest QoS possible to avoid unnecessary overhead.</p>
 </div>
+</li>
+<li>
+<p>Server discovery is disabled by default, see the <a href="clusters.html#server-discovery">Server Discovery</a> section in the user manual for security requirements and enablement.</p>
+</li>
+<li>
+<p>Selector filters now limit <code>%</code> wildcards to 5 by default.
+Configure via system property <code>org.apache.activemq.artemis.selector.maxWildcards</code> or environment variable <code>ARTEMIS_SELECTOR_MAX_WILDCARDS</code>.
+The broker will fail to start if existing durable subscriptions exceed this limit, so increase the value before upgrading if needed.</p>
 </li>
 </ul>
 </div>

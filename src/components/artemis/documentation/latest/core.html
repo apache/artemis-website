@@ -34,7 +34,7 @@
 <div id="header">
 <h1>Using Core</h1>
 <div id="toc" class="toc2">
-<div id="toctitle"><a href="index.html">User Manual for 2.56.0</a></div>
+<div id="toctitle"><a href="index.html">User Manual for 2.57.0</a></div>
 <ul class="sectlevel1">
 <li><a href="#core-messaging-concepts">1. Core Messaging Concepts</a>
 <ul class="sectlevel2">
@@ -45,9 +45,10 @@
 <ul class="sectlevel2">
 <li><a href="#serverlocator">2.1. ServerLocator</a></li>
 <li><a href="#clientsessionfactory">2.2. ClientSessionFactory</a></li>
-<li><a href="#clientsession">2.3. ClientSession</a></li>
-<li><a href="#clientconsumer">2.4. ClientConsumer</a></li>
-<li><a href="#clientproducer">2.5. ClientProducer</a></li>
+<li><a href="#core-connection-handshake">2.3. Connection handshake</a></li>
+<li><a href="#clientsession">2.4. ClientSession</a></li>
+<li><a href="#clientconsumer">2.5. ClientConsumer</a></li>
+<li><a href="#clientproducer">2.6. ClientProducer</a></li>
 </ul>
 </li>
 <li><a href="#a-simple-example-of-using-core">3. A simple example of using Core</a></li>
@@ -156,7 +157,121 @@ The broker will not deliver messages after its expiry time has been exceeded.</p
 </div>
 </div>
 <div class="sect2">
-<h3 id="clientsession"><a class="anchor" href="#clientsession"></a><a class="link" href="#clientsession">2.3. ClientSession</a></h3>
+<h3 id="core-connection-handshake"><a class="anchor" href="#core-connection-handshake"></a><a class="link" href="#core-connection-handshake">2.3. Connection handshake</a></h3>
+<div class="paragraph">
+<p>When a Core client connects to a broker it sends:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the expected node id in case of failover</p>
+</li>
+<li>
+<p>the client&#8217;s protocol version</p>
+</li>
+<li>
+<p>optional connection-level username and password</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Core application clients can pass credentials when creating a session factory to authenticate the underlying connection:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="java"><span class="nc">ServerLocator</span> <span class="n">locator</span> <span class="o">=</span> <span class="o">...;</span>
+<span class="n">locator</span><span class="o">.</span><span class="na">setConnectionCredentials</span><span class="o">(</span><span class="n">user</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
+<span class="nc">ClientSessionFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">locator</span><span class="o">.</span><span class="na">createSessionFactory</span><span class="o">(</span><span class="n">user</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The JMS connection factory sets connection credentials automatically when <code>setUser</code> / <code>setPassword</code> are called.</p>
+</div>
+<div class="paragraph">
+<p>Cluster-internal components on current brokers (cluster connections, bridges, replicated backups, federation links, etc.) pass their configured <code>cluster-user</code> / <code>cluster-password</code> or bridge credentials in the connect handshake automatically.</p>
+</div>
+<div class="paragraph">
+<p>When security is enabled and no connection credentials are supplied, the broker responds to topology subscription with a placeholder entry so the client can complete its handshake, but real broker topology is sent only after authentication succeeds.</p>
+</div>
+<div class="sect3">
+<h4 id="server-side-configuration"><a class="anchor" href="#server-side-configuration"></a><a class="link" href="#server-side-configuration">2.3.1. Server-side configuration</a></h4>
+<div class="paragraph">
+<p>Core connection security applies only when broker security is enabled (<code>security-enabled</code> in <code>broker.xml</code>).
+It is configured per acceptor on the Core protocol manager using URL parameters, in the same way as other protocol-specific acceptor settings (see <a href="configuring-transports.html#configuring-the-transport">Configuring the Transport</a>).</p>
+</div>
+<div class="paragraph">
+<p>The following parameters are supported on any acceptor that handles the Core protocol:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>coreConnectionSecurityEnabled</code></dt>
+<dd>
+<p>Whether connection-level security is enabled for Core on this acceptor.
+When <code>true</code> (the default) and broker security is enabled, the broker:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>validates optional credentials in the connect packet</p>
+</li>
+<li>
+<p>sends a placeholder topology response to unauthenticated clients</p>
+</li>
+<li>
+<p>installs a reduced Netty frame size limit until the connection is authenticated</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1"><code>coreInitialMaxFrameSize</code></dt>
+<dd>
+<p>Maximum Core frame size in bytes allowed on a Netty connection <strong>before</strong> authentication completes.
+Default: <code>4096</code> (4 KiB).
+Frames larger than this limit are rejected with a decoder error and the connection is closed.</p>
+</dd>
+<dt class="hdlist1"><code>coreMaxFrameSize</code></dt>
+<dd>
+<p>Maximum Core frame size in bytes allowed on a Netty connection <strong>after</strong> authentication completes.
+Default: <code>131072</code> (128 KiB).
+The limit is raised automatically once the connection <code>Subject</code> is set (for example after a successful <code>CONNECT</code> with credentials or after <code>CREATE_SESSION</code>).</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Example disabling Core connection security on an acceptor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;acceptor</span> <span class="na">name=</span><span class="s">"artemis"</span><span class="nt">&gt;</span>tcp://0.0.0.0:61616?protocols=CORE,AMQP;coreConnectionSecurityEnabled=false<span class="nt">&lt;/acceptor&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example keeping Core connection security enabled but increasing the post-authentication frame limit:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight nowrap"><code data-lang="xml"><span class="nt">&lt;acceptor</span> <span class="na">name=</span><span class="s">"artemis"</span><span class="nt">&gt;</span>tcp://0.0.0.0:61616?protocols=CORE,AMQP;coreInitialMaxFrameSize=4096;coreMaxFrameSize=1048576<span class="nt">&lt;/acceptor&gt;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+These frame size limits apply to Netty-based Core connections.
+In-VM Core connections do not use the size-limited decoder.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For embedded brokers, the same settings can be applied programmatically on <code>CoreProtocolManager</code> via <code>setCoreConnectionSecurityEnabled</code>, <code>setCoreInitialMaxFrameSize</code>, and <code>setCoreMaxFrameSize</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clientsession"><a class="anchor" href="#clientsession"></a><a class="link" href="#clientsession">2.4. ClientSession</a></h3>
 <div class="paragraph">
 <p>A client uses a <code>ClientSession</code>for consuming and producing messages and for grouping them in transactions.
 <code>ClientSession</code> instances can support both transactional and non-transactional semantics and also provide an <code>XAResource</code> interface so messaging operations can be performed as part of a <a href="http://www.oracle.com/technetwork/java/javaee/tech/jta-138684.html">JTA</a> transaction.</p>
@@ -173,7 +288,7 @@ By not blocking and receiving send acknowledgements asynchronously, you can crea
 For more information on this advanced feature, please see the section <a href="send-guarantees.html#guarantees-of-sends-and-commits">Guarantees of sends and commits</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="identifying-your-client-application-for-management-and-debugging"><a class="anchor" href="#identifying-your-client-application-for-management-and-debugging"></a><a class="link" href="#identifying-your-client-application-for-management-and-debugging">2.3.1. Identifying your client application for management and debugging</a></h4>
+<h4 id="identifying-your-client-application-for-management-and-debugging"><a class="anchor" href="#identifying-your-client-application-for-management-and-debugging"></a><a class="link" href="#identifying-your-client-application-for-management-and-debugging">2.4.1. Identifying your client application for management and debugging</a></h4>
 <div class="paragraph">
 <p>Assigning IDs to your Core session can help you with monitoring and debugging using the <a href="management-console.html#management-console">management console</a>, e.g.:</p>
 </div>
@@ -193,7 +308,7 @@ For more information on this advanced feature, please see the section <a href="s
 </div>
 </div>
 <div class="sect2">
-<h3 id="clientconsumer"><a class="anchor" href="#clientconsumer"></a><a class="link" href="#clientconsumer">2.4. ClientConsumer</a></h3>
+<h3 id="clientconsumer"><a class="anchor" href="#clientconsumer"></a><a class="link" href="#clientconsumer">2.5. ClientConsumer</a></h3>
 <div class="paragraph">
 <p>Clients use <code>ClientConsumer</code> instances to consume messages from a queue.
 Core messaging supports both synchronous and asynchronous message consumption semantics.
@@ -201,7 +316,7 @@ Core messaging supports both synchronous and asynchronous message consumption se
 </div>
 </div>
 <div class="sect2">
-<h3 id="clientproducer"><a class="anchor" href="#clientproducer"></a><a class="link" href="#clientproducer">2.5. ClientProducer</a></h3>
+<h3 id="clientproducer"><a class="anchor" href="#clientproducer"></a><a class="link" href="#clientproducer">2.6. ClientProducer</a></h3>
 <div class="paragraph">
 <p>Clients create <code>ClientProducer</code> instances on <code>ClientSession</code> instances so they can send messages.
 <code>ClientProducer</code> instances can specify an address to which all sent messages are routed, or they can have no specified address, and the address is specified at send time for the message.</p>
