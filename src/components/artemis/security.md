@@ -8,7 +8,7 @@ type: artemis
 Details of security problems fixed in released versions of Apache Artemis are detailed below.
 
 See the main [Security Advisories](../../security-advisories) page for details for other components and general information such as reporting new security issues.
-
+*   [CVE-2026-57967](../../security-advisories.data/CVE-2026-57967-announcement.txt) - Missing authentication on CORE protocol session reattachment
 *   [CVE-2026-57822](../../security-advisories.data/CVE-2026-57822-announcement.txt) - Message-based management parameter deserialization may lead to denial of service
 *   [CVE-2026-49364](../../security-advisories.data/CVE-2026-49364-announcement.txt) - Pre-Authentication Cluster Credential Exposure to Discovered Peers
 *   [CVE-2026-49363](../../security-advisories.data/CVE-2026-49363-announcement.txt) - Pre-Authentication Information Disclosure in CORE Protocol Topology Subscription
