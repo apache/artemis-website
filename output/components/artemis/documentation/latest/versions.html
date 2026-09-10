@@ -506,6 +506,14 @@ The upgraded broker therefore treats the connection as unauthenticated and respo
 Until that old broker is upgraded as well, it may be unable to discover or connect properly to the new brokers (cluster connections, bridges, replication, backup registration, and similar Core links can fail or stall).
 Upgrade every broker in the cluster, or temporarily disable <code>coreConnectionSecurityEnabled</code> on acceptors during a transitional window, before relying on cross-version cluster connectivity.</p>
 </li>
+<li>
+<p>Server discovery is disabled by default, see the <a href="clusters.html#server-discovery">Server Discovery</a> section in the user manual for security requirements and enablement.</p>
+</li>
+<li>
+<p>Selector filters now limit <code>%</code> wildcards to 5 by default.
+Configure via system property <code>org.apache.activemq.artemis.selector.maxWildcards</code> or environment variable <code>ARTEMIS_SELECTOR_MAX_WILDCARDS</code>.
+The broker will fail to start if existing durable subscriptions exceed this limit, so increase the value before upgrading if needed.</p>
+</li>
 </ul>
 </div>
 </div>
@@ -566,14 +574,6 @@ Of course, this is a traditional trade-off for increased reliability.
 The exact impact will depend on your specific use-case.
 Generally speaking, the recommendation is to use the lowest QoS possible to avoid unnecessary overhead.</p>
 </div>
-</li>
-<li>
-<p>Server discovery is disabled by default, see the <a href="clusters.html#server-discovery">Server Discovery</a> section in the user manual for security requirements and enablement.</p>
-</li>
-<li>
-<p>Selector filters now limit <code>%</code> wildcards to 5 by default.
-Configure via system property <code>org.apache.activemq.artemis.selector.maxWildcards</code> or environment variable <code>ARTEMIS_SELECTOR_MAX_WILDCARDS</code>.
-The broker will fail to start if existing durable subscriptions exceed this limit, so increase the value before upgrading if needed.</p>
 </li>
 </ul>
 </div>
