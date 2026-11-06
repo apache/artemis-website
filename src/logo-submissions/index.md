@@ -10,7 +10,7 @@ Apache Artemis is looking for a new logo! We welcome submissions from the commun
 #### How to Submit
 
 1. Fork the [artemis-website](https://github.com/apache/artemis-website) repository.
-2. Create a folder under `src/logo-submissions/` with your name (e.g., `src/logo-submissions/jane-doe/`).
+2. Create a folder under [`src/logo-submissions/`](https://github.com/apache/artemis-website/tree/main/src/logo-submissions) with your name (e.g., `src/logo-submissions/jane-doe/`).
 3. Add your logo files to your folder. Include your name in all submitted file names.
 4. Optionally add an `index.md` page in your folder with more details about your submission (see [current-logo](current-logo/) as an example).
 5. Add your submission to the list below.
