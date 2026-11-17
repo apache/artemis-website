@@ -36,4 +36,32 @@ Apache Artemis is looking for a new logo! We welcome submissions from the commun
 
 #### Submissions
 
-*(No submissions yet — be the first!)*
+##### Anton Roskvist — [PR #7](https://github.com/apache/artemis-website/pull/7)
+
+<div style="text-align: center; margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+  <img src="https://raw.githubusercontent.com/apache/artemis-website/refs/pull/7/head/src/logo-submissions/anton-roskvist/anton-roskvist_artemis.png" alt="Logo by Anton Roskvist" style="max-width: 300px;"/>
+</div>
+
+---
+
+##### Grzegorz Grzybek — [PR #8](https://github.com/apache/artemis-website/pull/8)
+
+<div style="text-align: center; margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+  <img src="https://raw.githubusercontent.com/apache/artemis-website/refs/pull/8/head/src/logo-submissions/grzegorz-grzybek/artemis-grzegorz-grzybek-logo-draft.svg" alt="Logo by Grzegorz Grzybek" style="max-width: 300px;"/>
+</div>
+
+---
+
+##### Justin Bertram — [PR #9](https://github.com/apache/artemis-website/pull/9)
+
+<div style="text-align: center; margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+  <img src="https://raw.githubusercontent.com/apache/artemis-website/refs/pull/9/head/src/logo-submissions/jbertram/ArtemisLogoAttempt1-2colors.png" alt="Logo by Justin Bertram" style="max-width: 300px;"/>
+</div>
+
+---
+
+##### Marcel Bil — [PR #10](https://github.com/apache/artemis-website/pull/10)
+
+<div style="text-align: center; margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+  <img src="https://raw.githubusercontent.com/apache/artemis-website/refs/pull/10/head/src/logo-submissions/marcel-bil/marcel-bil-artemis-logo-1a.svg" alt="Logo by Marcel Bil" style="max-width: 300px;"/>
+</div>
