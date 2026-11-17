@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="28 92 576 576" width="576" height="576" role="img" aria-label="Apache Artemis Icon - Marcel Bil">
+  <defs>
+    <path id="hex" d="
+      M -12.50,-142.78 A 25,25 0 0,1 12.50,-142.78
+      L 117.40,-82.22  A 25,25 0 0,1 129.90,-60.57
+      L 129.90,60.57   A 25,25 0 0,1 117.40,82.22
+      L 12.50,142.78   A 25,25 0 0,1 -12.50,142.78
+      L -117.40,82.22  A 25,25 0 0,1 -129.90,60.57
+      L -129.90,-60.57 A 25,25 0 0,1 -117.40,-82.22 Z" />
+  </defs>
+
+  <use href="#hex" transform="translate(316, 262.44)" fill="#B87CE8" />
+  <use href="#hex" transform="translate(180, 498.00)" fill="#8738D6" />
+  <use href="#hex" transform="translate(452, 498.00)" fill="#581D8A" />
+
+  <polygon points="316,262.44 180,498 452,498" fill="none" stroke="#FFFFFF" stroke-width="14.5" stroke-linejoin="round" />
+
+  <circle cx="316" cy="262.44" r="28" fill="#FFFFFF" />
+  <circle cx="452" cy="498.00" r="28" fill="#FFFFFF" />
+
+  <polygon points="175.8,490.6 495.9,308.5 472.1,287.0 549.0,288.1 510.7,354.8 504.3,323.3 184.2,505.4" fill="#FFFFFF" stroke="#3A105E" stroke-width="5.5" stroke-linejoin="round"/>
+
+  <circle cx="180" cy="498.00" r="28" fill="#FFFFFF" />
+</svg>
