@@ -1,6 +1,6 @@
 ---
 layout: default_md
-title: Current Logo
+title: Apache Artemis Logo Submission by Marcel Bil
 title-class: page-title-artemis
 type: artemis
 ---
