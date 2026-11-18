@@ -39,4 +39,5 @@ Apache Artemis is looking for a new logo! We welcome submissions from the commun
 - Anton Roskvist — [PR #7](https://github.com/apache/artemis-website/pull/7) — [view logo](https://github.com/AntonRoskvist/artemis-website/blob/logo_submission_anton-roskvist/src/logo-submissions/anton-roskvist/index.md)
 - Grzegorz Grzybek — [PR #8](https://github.com/apache/artemis-website/pull/8) — [view logo](https://github.com/grgrzybek/artemis-website/blob/ggrzegorz-grzybek-logo-draft/src/logo-submissions/grzegorz-grzybek/index.md)
 - Justin Bertram — [PR #9](https://github.com/apache/artemis-website/pull/9) — [view logo](https://github.com/jbertram/artemis-website/blob/main/src/logo-submissions/jbertram/index.md)
-- Marcel Bil — [PR #10](https://github.com/apache/artemis-website/pull/10) — [view logo](https://github.com/marcelbil/artemis-website/blob/main/src/logo-submissions/marcel-bil/index.md)
+- Marcel Bil Submission 1 — [PR #10](https://github.com/apache/artemis-website/pull/10) — [view logo](https://github.com/marcelbil/artemis-website/blob/main/src/logo-submissions/marcel-bil/index.md)
+- Marcel Bil Submission 2 — [PR #11](https://github.com/apache/artemis-website/pull/11) — [view logo](https://github.com/marcelbil/artemis-website/blob/artemis-logo-bundle/src/logo-submissions/marcel-bil-2/index.md)
